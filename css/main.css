@@ -1175,7 +1175,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #4b716e;
+  background: #ff4ba8;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2594,5 +2594,5 @@ ul.breadcrumb li + li:last-child {
   }
 }
 body {
-  background: url("/images/timg.jpg");
+  background: url("../../images/timg.jpg");
 }
