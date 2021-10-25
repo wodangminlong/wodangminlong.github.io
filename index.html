@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/10/24/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2021/10/24/hello-world/" class="post-title-link" itemprop="url">Centos7安装redis5.0.5单机版设置远程访问和开机启动</a>
         </h2>
 
         <div class="post-meta">
@@ -190,6 +190,13 @@
 
               <time title="创建时间：2021-10-24 21:46:43" itemprop="dateCreated datePublished" datetime="2021-10-24T21:46:43+08:00">2021-10-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-25 22:43:23" itemprop="dateModified" datetime="2021-10-25T22:43:23+08:00">2021-10-25</time>
+              </span>
 
           
 
@@ -202,20 +209,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
+          <p>每次增加新的环境或服务器时需要安装一大堆基础服务,记录一下redis安装步骤,以后不用百度啦~</p>
+<h3 id="一、安装gcc"><a href="#一、安装gcc" class="headerlink" title="一、安装gcc"></a>一、安装gcc</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install gcc</span></span><br></pre></td></tr></table></figure>
+<h3 id="二、下载redis"><a href="#二、下载redis" class="headerlink" title="二、下载redis"></a>二、下载redis</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wget http://download.redis.io/releases/redis-5.0.5.tar.gz</span></span><br></pre></td></tr></table></figure>
+<h3 id="三、解压"><a href="#三、解压" class="headerlink" title="三、解压"></a>三、解压</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf redis-5.0.5.tar.gz</span></span><br></pre></td></tr></table></figure>
+<h3 id="四、进入解压后的文件夹并编译"><a href="#四、进入解压后的文件夹并编译" class="headerlink" title="四、进入解压后的文件夹并编译"></a>四、进入解压后的文件夹并编译</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cd redis-5.0.5</span></span><br><span class="line"><span class="comment"># make</span></span><br></pre></td></tr></table></figure>
+<h3 id="五、第四步正常会显示-It’s-a-good-idea-to-run-‘make-test’-继续安装"><a href="#五、第四步正常会显示-It’s-a-good-idea-to-run-‘make-test’-继续安装" class="headerlink" title="五、第四步正常会显示 It’s a good idea to run ‘make test’ . 继续安装"></a>五、第四步正常会显示 It’s a good idea to run ‘make test’ . 继续安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># make install prefix=/usr/local/redis</span></span><br></pre></td></tr></table></figure>
+<h3 id="六、成功后启动redis"><a href="#六、成功后启动redis" class="headerlink" title="六、成功后启动redis"></a>六、成功后启动redis</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /usr/local/redis/bin/redis-server</span></span><br></pre></td></tr></table></figure>
+<h3 id="七、修改redis配置文件"><a href="#七、修改redis配置文件" class="headerlink" title="七、修改redis配置文件"></a>七、修改redis配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /usr/local/redis/redis.conf</span></span><br></pre></td></tr></table></figure>
+<h4 id="找到配置文件中-bind-127-0-0-1-注掉或更改为0-0-0-0"><a href="#找到配置文件中-bind-127-0-0-1-注掉或更改为0-0-0-0" class="headerlink" title="找到配置文件中 bind 127.0.0.1 注掉或更改为0.0.0.0"></a>找到配置文件中 bind 127.0.0.1 注掉或更改为0.0.0.0</h4><h4 id="找到配置文件中-protected-mode-更改为-yes"><a href="#找到配置文件中-protected-mode-更改为-yes" class="headerlink" title="找到配置文件中 protected-mode 更改为 yes"></a>找到配置文件中 protected-mode 更改为 yes</h4><h4 id="找到配置文件中-daemonize-更改为-yes"><a href="#找到配置文件中-daemonize-更改为-yes" class="headerlink" title="找到配置文件中 daemonize 更改为 yes"></a>找到配置文件中 daemonize 更改为 yes</h4><h4 id="保存退出-重启后测试远程访问-记得打开防火墙端口"><a href="#保存退出-重启后测试远程访问-记得打开防火墙端口" class="headerlink" title="保存退出. 重启后测试远程访问(记得打开防火墙端口)"></a>保存退出. 重启后测试远程访问(记得打开防火墙端口)</h4><h3 id="八、设置开机自启动-redis5-0-5自带添加服务的脚本-进入redis目录下的utils目录"><a href="#八、设置开机自启动-redis5-0-5自带添加服务的脚本-进入redis目录下的utils目录" class="headerlink" title="八、设置开机自启动. redis5.0.5自带添加服务的脚本,进入redis目录下的utils目录"></a>八、设置开机自启动. redis5.0.5自带添加服务的脚本,进入redis目录下的utils目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cd /usr/local/redis/utils/</span></span><br><span class="line"><span class="comment"># ./install_server.sh</span></span><br></pre></td></tr></table></figure>
+<h4 id="选择默认配置，按回车键"><a href="#选择默认配置，按回车键" class="headerlink" title="选择默认配置，按回车键"></a>选择默认配置，按回车键</h4><h3 id="九、重启系统测试是否开机自启动"><a href="#九、重启系统测试是否开机自启动" class="headerlink" title="九、重启系统测试是否开机自启动"></a>九、重启系统测试是否开机自启动</h3>
       
     </div>
 
@@ -341,7 +344,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共75字</span>
+  <span class="post-count">博客全站共280字</span>
 </div>
 
 
