@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-10-27 10:16:35 / 修改时间：10:17:24" itemprop="dateCreated datePublished" datetime="2021-10-27T10:16:35+08:00">2021-10-27</time>
+              <time title="创建时间：2021-10-27 10:16:35 / 修改时间：11:02:13" itemprop="dateCreated datePublished" datetime="2021-10-27T10:16:35+08:00">2021-10-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -215,22 +215,14 @@
           <h3 id="一、因为rabbitmq是使用erlang语言编写的-所以需要先安装erlang"><a href="#一、因为rabbitmq是使用erlang语言编写的-所以需要先安装erlang" class="headerlink" title="一、因为rabbitmq是使用erlang语言编写的,所以需要先安装erlang"></a>一、因为rabbitmq是使用erlang语言编写的,所以需要先安装erlang</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://www.erlang.org/downloads">https://www.erlang.org/downloads</a> </br><br>选择 OTP 24.0+ Source File 下载</p>
 <h3 id="二、将文件拷贝至服务器-usr-local-目录下并解压"><a href="#二、将文件拷贝至服务器-usr-local-目录下并解压" class="headerlink" title="二、将文件拷贝至服务器/usr/local 目录下并解压"></a>二、将文件拷贝至服务器/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf otp_src_24.0.tar.gz</span></span><br></pre></td></tr></table></figure>
-<h3 id="三、创建erlang目录"><a href="#三、创建erlang目录" class="headerlink" title="三、创建erlang目录"></a>三、创建erlang目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir /usr/local/erlang</span></span><br></pre></td></tr></table></figure>
-<h3 id="四、安装openssl-编译erlang并安装-有warning不用管-只要没有error就可以"><a href="#四、安装openssl-编译erlang并安装-有warning不用管-只要没有error就可以" class="headerlink" title="四、安装openssl;编译erlang并安装(有warning不用管,只要没有error就可以)"></a>四、安装openssl;编译erlang并安装(有warning不用管,只要没有error就可以)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum -y install openssl </span></span><br><span class="line"><span class="comment"># yum -y install openssl-devel</span></span><br><span class="line"><span class="comment"># /usr/local/otp_src_24.0/configure --prefix=/usr/local/erlang --without-javac --with-ssl</span></span><br><span class="line"><span class="comment"># cd /usr/local/otp_src_24.0 &amp;&amp; make &amp;&amp; make install</span></span><br></pre></td></tr></table></figure>
-<h3 id="五、创建软连接"><a href="#五、创建软连接" class="headerlink" title="五、创建软连接"></a>五、创建软连接</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ln -s /usr/local/erlang/bin/erl /usr/bin/erl</span></span><br></pre></td></tr></table></figure>
-<h3 id="六、使用erl命令查看erlang版本-此时可以看到erlang版本为OTP-24-看完后使用halt-退出"><a href="#六、使用erl命令查看erlang版本-此时可以看到erlang版本为OTP-24-看完后使用halt-退出" class="headerlink" title="六、使用erl命令查看erlang版本,此时可以看到erlang版本为OTP 24,看完后使用halt().退出"></a>六、使用erl命令查看erlang版本,此时可以看到erlang版本为OTP 24,看完后使用halt().退出</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># erl</span></span><br><span class="line"><span class="comment"># halt().</span></span><br></pre></td></tr></table></figure>
-<h3 id="七、下载rabbitmq安装包"><a href="#七、下载rabbitmq安装包" class="headerlink" title="七、下载rabbitmq安装包"></a>七、下载rabbitmq安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://www.rabbitmq.com/download.html">https://www.rabbitmq.com/download.html</a> </br><br>选择Centos并找到rabbitmq-server-generic-unix-3.9.7.tar.xz 下载</p>
-<h3 id="八、上传文件至-usr-local-目录下并解压"><a href="#八、上传文件至-usr-local-目录下并解压" class="headerlink" title="八、上传文件至/usr/local 目录下并解压"></a>八、上传文件至/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -xvf rabbitmq-server-generic-unix-3.9.7.tar.xz</span></span><br></pre></td></tr></table></figure>
-<h3 id="九、安装rabbitmq服务"><a href="#九、安装rabbitmq服务" class="headerlink" title="九、安装rabbitmq服务"></a>九、安装rabbitmq服务</h3><p>(在/usr/local 目录下执行)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cd rabbitmq_server-3.9.7/</span></span><br><span class="line"><span class="comment"># echo &#x27;export PATH=$PATH:/usr/local/rabbitmq_server-3.9.7/sbin&#x27; &gt;&gt; /etc/profile</span></span><br><span class="line"><span class="comment"># source /etc/profile</span></span><br></pre></td></tr></table></figure>
-<h3 id="十、开启rabbitmq-management并启动服务"><a href="#十、开启rabbitmq-management并启动服务" class="headerlink" title="十、开启rabbitmq management并启动服务"></a>十、开启rabbitmq management并启动服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rabbitmq-plugins enable rabbitmq_management</span></span><br><span class="line"><span class="comment"># rabbitmq-server -detached</span></span><br></pre></td></tr></table></figure>
-<h3 id="十一、此时通过IP-15672访问rabbitmq管理页面-需要开放端口或关闭防火墙-但不能登录"><a href="#十一、此时通过IP-15672访问rabbitmq管理页面-需要开放端口或关闭防火墙-但不能登录" class="headerlink" title="十一、此时通过IP:15672访问rabbitmq管理页面(需要开放端口或关闭防火墙),但不能登录"></a>十一、此时通过IP:15672访问rabbitmq管理页面(需要开放端口或关闭防火墙),但不能登录</h3><p>rabbitmq 默认账号和密码为guest,但只能本机登录,禁用了远程登录,如果需要远程登录,我们需要添加新的账号</p>
-<h3 id="十一、添加可以远程登录的账号"><a href="#十一、添加可以远程登录的账号" class="headerlink" title="十一、添加可以远程登录的账号"></a>十一、添加可以远程登录的账号</h3><p>以账号密码admin为例,根据实际情况更改</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rabbitmqctl add_user admin admin</span></span><br><span class="line"><span class="comment"># rabbitmqctl set_permissions -p &#x27;/&#x27; admin &#x27;.*&#x27; &#x27;.*&#x27; &#x27;.*&#x27;</span></span><br><span class="line"><span class="comment"># rabbitmqctl list_user_permissions admin</span></span><br><span class="line"><span class="comment"># rabbitmqctl set_user_tags admin administrator</span></span><br></pre></td></tr></table></figure>
-<p>完成后可以使用账号密码admin登录</p>
-<h3 id="十二、添加延时消息插件-有用到延时消息队列时可以加入此插件-插件版本一定要和rabbitmq版本匹配否则可能会出现其他问题"><a href="#十二、添加延时消息插件-有用到延时消息队列时可以加入此插件-插件版本一定要和rabbitmq版本匹配否则可能会出现其他问题" class="headerlink" title="十二、添加延时消息插件(有用到延时消息队列时可以加入此插件,插件版本一定要和rabbitmq版本匹配否则可能会出现其他问题)"></a>十二、添加延时消息插件(有用到延时消息队列时可以加入此插件,插件版本一定要和rabbitmq版本匹配否则可能会出现其他问题)</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://www.rabbitmq.com/community-plugins.html">https://www.rabbitmq.com/community-plugins.html</a> </br><br>找到 rabbitmq_delayed_message_exchange 插件下载并上传至/usr/local/rabbitmq_server-3.9.7/plugins 目录下</p>
-<h3 id="十三、启用延时消息插件"><a href="#十三、启用延时消息插件" class="headerlink" title="十三、启用延时消息插件"></a>十三、启用延时消息插件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rabbitmq-plugins enable rabbitmq_delayed_message_exchange</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/27/rabbitmq3.9.7/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -274,10 +266,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-10-26 21:07:29 / 修改时间：21:05:54" itemprop="dateCreated datePublished" datetime="2021-10-26T21:07:29+08:00">2021-10-26</time>
+              <time title="创建时间：2021-10-26 21:07:29" itemprop="dateCreated datePublished" datetime="2021-10-26T21:07:29+08:00">2021-10-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-27 11:02:42" itemprop="dateModified" datetime="2021-10-27T11:02:42+08:00">2021-10-27</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -302,48 +300,14 @@
           <h3 id="准备工作："><a href="#准备工作：" class="headerlink" title="准备工作："></a>准备工作：</h3><h4 id="1-2台服务器IP分别为192-168-1-100-192-168-1-101-IP地址为示例-根据实际情况更改即可-单台伪集群也适用"><a href="#1-2台服务器IP分别为192-168-1-100-192-168-1-101-IP地址为示例-根据实际情况更改即可-单台伪集群也适用" class="headerlink" title="1. 2台服务器IP分别为192.168.1.100;192.168.1.101 (IP地址为示例,根据实际情况更改即可;单台伪集群也适用)"></a>1. 2台服务器IP分别为192.168.1.100;192.168.1.101 (IP地址为示例,根据实际情况更改即可;单台伪集群也适用)</h4><h4 id="2-分别在两台服务器上传redis-5-0-5-tar-gz包-gt-解压-gt-make-gt-make-install-至-usr-local-redis"><a href="#2-分别在两台服务器上传redis-5-0-5-tar-gz包-gt-解压-gt-make-gt-make-install-至-usr-local-redis" class="headerlink" title="2. 分别在两台服务器上传redis-5.0.5.tar.gz包-&gt;解压-&gt;make-&gt;make install 至/usr/local/redis"></a>2. 分别在两台服务器上传redis-5.0.5.tar.gz包-&gt;解压-&gt;make-&gt;make install 至/usr/local/redis</h4><p>安装好后开始配置集群</p>
 <h3 id="一、分别在两台服务器-usr-local-redis-目录下创建conf目录用于放集群文件"><a href="#一、分别在两台服务器-usr-local-redis-目录下创建conf目录用于放集群文件" class="headerlink" title="一、分别在两台服务器/usr/local/redis/ 目录下创建conf目录用于放集群文件"></a>一、分别在两台服务器/usr/local/redis/ 目录下创建conf目录用于放集群文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir /usr/local/redis/conf</span></span><br></pre></td></tr></table></figure>
 <h3 id="二、拷贝目录下的redis-conf至conf目录并指定名称为redis-6379-conf"><a href="#二、拷贝目录下的redis-conf至conf目录并指定名称为redis-6379-conf" class="headerlink" title="二、拷贝目录下的redis.conf至conf目录并指定名称为redis-6379.conf"></a>二、拷贝目录下的redis.conf至conf目录并指定名称为redis-6379.conf</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># copy /usr/local/redis/redis.conf /usr/local/redis/conf/redis-6379.conf</span></span><br></pre></td></tr></table></figure>
-<h3 id="三、修改redis-6379-conf配置文件内容"><a href="#三、修改redis-6379-conf配置文件内容" class="headerlink" title="三、修改redis-6379.conf配置文件内容"></a>三、修改redis-6379.conf配置文件内容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /usr/local/redis/conf/redis-6379.conf</span></span><br></pre></td></tr></table></figure>
-<p>修改内容如下:</br></p>
-<table>
-    <tr>
-        <th>更改前</th>
-        <th>更改后</th>
-    </tr>
-    <tr>
-        <td>bind 127.0.0.1</td>
-        <td>bind 192.168.1.100(101服务器为192.168.1.101)</td>
-    </tr>
-    <tr>
-        <td>pidfile /var/run/redis_6379.pid</td>
-        <td>pidfile /usr/local/redis/conf/redis_6379.pid</td>
-    </tr>
-    <tr>
-        <td>logfile ""</td>
-        <td>logfile "/usr/local/redis/logs/redis-6379.log"</td>
-    </tr>
-    <tr>
-        <td>appendonly no</td>
-        <td>appendonly yes</td>
-    </tr>
-    <tr>
-        <td># cluster-enabled yes</td>
-        <td>cluster-enabled yes</td>
-    </tr>
-    <tr>
-        <td># cluster-config-file nodes-6379.conf</td>
-        <td>cluster-config-file /usr/local/redis/conf/nodes-6379.conf</td>
-    </tr>
-    <tr>
-        <td># cluster-node-timeout 15000</td>
-        <td>cluster-node-timeout 15000</td>
-    </tr>
-</table>
-
-<h3 id="四、拷贝redis-6379-conf至3份-分别为redis-6379-conf、redis-6380-conf、redis-6381-conf"><a href="#四、拷贝redis-6379-conf至3份-分别为redis-6379-conf、redis-6380-conf、redis-6381-conf" class="headerlink" title="四、拷贝redis-6379.conf至3份,分别为redis-6379.conf、redis-6380.conf、redis-6381.conf"></a>四、拷贝redis-6379.conf至3份,分别为redis-6379.conf、redis-6380.conf、redis-6381.conf</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cp /usr/local/redis/conf/redis-6379.conf /usr/local/redis/conf/redis-6380.conf</span></span><br><span class="line"><span class="comment"># cp /usr/local/redis/conf/redis-6379.conf /usr/local/redis/conf/redis-6381.conf</span></span><br></pre></td></tr></table></figure>
-<h3 id="五、修改redis-6380-conf、redis-6381-conf配置文件-全局搜索6379分别更改为6380和6381"><a href="#五、修改redis-6380-conf、redis-6381-conf配置文件-全局搜索6379分别更改为6380和6381" class="headerlink" title="五、修改redis-6380.conf、redis-6381.conf配置文件,全局搜索6379分别更改为6380和6381"></a>五、修改redis-6380.conf、redis-6381.conf配置文件,全局搜索6379分别更改为6380和6381</h3><h3 id="六、分别启动两台服务器下的redis-各启动3个"><a href="#六、分别启动两台服务器下的redis-各启动3个" class="headerlink" title="六、分别启动两台服务器下的redis,各启动3个"></a>六、分别启动两台服务器下的redis,各启动3个</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /usr/local/redis/src/redis-server /usr/local/redis/conf/redis-6379.conf &amp;</span></span><br><span class="line"><span class="comment"># /usr/local/redis/src/redis-server /usr/local/redis/conf/redis-6380.conf &amp;</span></span><br><span class="line"><span class="comment"># /usr/local/redis/src/redis-server /usr/local/redis/conf/redis-6381.conf &amp;</span></span><br></pre></td></tr></table></figure>
-<h3 id="七、查看两台服务器redis启动情况-两台服务器6379、6380、6381端口都是redis表示启动成功"><a href="#七、查看两台服务器redis启动情况-两台服务器6379、6380、6381端口都是redis表示启动成功" class="headerlink" title="七、查看两台服务器redis启动情况,两台服务器6379、6380、6381端口都是redis表示启动成功"></a>七、查看两台服务器redis启动情况,两台服务器6379、6380、6381端口都是redis表示启动成功</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ps -ef | grep redis</span></span><br></pre></td></tr></table></figure>
-<h3 id="八、防火墙开启对应的端口或关闭防火墙-开启端口时除了两台服务器的6379、6380、6381端口外-还需要开启16379、16380、16381端口作为集群总线端口"><a href="#八、防火墙开启对应的端口或关闭防火墙-开启端口时除了两台服务器的6379、6380、6381端口外-还需要开启16379、16380、16381端口作为集群总线端口" class="headerlink" title="八、防火墙开启对应的端口或关闭防火墙(开启端口时除了两台服务器的6379、6380、6381端口外,还需要开启16379、16380、16381端口作为集群总线端口)"></a>八、防火墙开启对应的端口或关闭防火墙(开启端口时除了两台服务器的6379、6380、6381端口外,还需要开启16379、16380、16381端口作为集群总线端口)</h3><h3 id="九、使用redis-cli命令启动集群-此命令只在一台服务器执行"><a href="#九、使用redis-cli命令启动集群-此命令只在一台服务器执行" class="headerlink" title="九、使用redis-cli命令启动集群(此命令只在一台服务器执行)"></a>九、使用redis-cli命令启动集群(此命令只在一台服务器执行)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /usr/local/redis/src/redis-cli --cluster create 192.168.1.100:6379 192.168.1.100:6380 192.168.1.100:6381 192.168.1.101:6379 192.168.1.101:6380 192.168.1.101:6381 --cluster-replicas 1</span></span><br></pre></td></tr></table></figure>
-<h3 id="十、创建集群命令键入后可能会有提示type-‘yes’-to-accept-输入yes-最终显示OK就完成了"><a href="#十、创建集群命令键入后可能会有提示type-‘yes’-to-accept-输入yes-最终显示OK就完成了" class="headerlink" title="十、创建集群命令键入后可能会有提示type ‘yes’ to accept,输入yes,最终显示OK就完成了"></a>十、创建集群命令键入后可能会有提示type ‘yes’ to accept,输入yes,最终显示OK就完成了</h3><h3 id="十一、springboot连接集群时properties或yaml配置文件不再是spring-redis-host-xxx-yyy-而是spring-redis-cluster-nodes-xxx-yyy"><a href="#十一、springboot连接集群时properties或yaml配置文件不再是spring-redis-host-xxx-yyy-而是spring-redis-cluster-nodes-xxx-yyy" class="headerlink" title="十一、springboot连接集群时properties或yaml配置文件不再是spring.redis.host=xxx,yyy 而是spring.redis.cluster.nodes=xxx,yyy"></a>十一、springboot连接集群时properties或yaml配置文件不再是spring.redis.host=xxx,yyy 而是spring.redis.cluster.nodes=xxx,yyy</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/26/redis5.0.5-cluster/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -395,7 +359,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-25 23:06:59" itemprop="dateModified" datetime="2021-10-25T23:06:59+08:00">2021-10-25</time>
+                <time title="修改时间：2021-10-27 11:03:14" itemprop="dateModified" datetime="2021-10-27T11:03:14+08:00">2021-10-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -421,13 +385,14 @@
           <p>每次增加新的环境或服务器时需要安装一大堆基础服务,记录一下redis安装步骤,以后不用百度啦~</p>
 <h3 id="一、安装gcc"><a href="#一、安装gcc" class="headerlink" title="一、安装gcc"></a>一、安装gcc</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install gcc</span></span><br></pre></td></tr></table></figure>
 <h3 id="二、下载redis"><a href="#二、下载redis" class="headerlink" title="二、下载redis"></a>二、下载redis</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wget http://download.redis.io/releases/redis-5.0.5.tar.gz</span></span><br></pre></td></tr></table></figure>
-<h3 id="三、解压"><a href="#三、解压" class="headerlink" title="三、解压"></a>三、解压</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf redis-5.0.5.tar.gz</span></span><br></pre></td></tr></table></figure>
-<h3 id="四、进入解压后的文件夹并编译"><a href="#四、进入解压后的文件夹并编译" class="headerlink" title="四、进入解压后的文件夹并编译"></a>四、进入解压后的文件夹并编译</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cd redis-5.0.5</span></span><br><span class="line"><span class="comment"># make</span></span><br></pre></td></tr></table></figure>
-<h3 id="五、第四步正常会显示-It’s-a-good-idea-to-run-‘make-test’-继续安装"><a href="#五、第四步正常会显示-It’s-a-good-idea-to-run-‘make-test’-继续安装" class="headerlink" title="五、第四步正常会显示 It’s a good idea to run ‘make test’ . 继续安装"></a>五、第四步正常会显示 It’s a good idea to run ‘make test’ . 继续安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># make install prefix=/usr/local/redis</span></span><br></pre></td></tr></table></figure>
-<h3 id="六、成功后启动redis"><a href="#六、成功后启动redis" class="headerlink" title="六、成功后启动redis"></a>六、成功后启动redis</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /usr/local/redis/bin/redis-server</span></span><br></pre></td></tr></table></figure>
-<h3 id="七、修改redis配置文件"><a href="#七、修改redis配置文件" class="headerlink" title="七、修改redis配置文件"></a>七、修改redis配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /usr/local/redis/redis.conf</span></span><br></pre></td></tr></table></figure>
-<h4 id="找到配置文件中-bind-127-0-0-1-注掉或更改为0-0-0-0"><a href="#找到配置文件中-bind-127-0-0-1-注掉或更改为0-0-0-0" class="headerlink" title="找到配置文件中 bind 127.0.0.1 注掉或更改为0.0.0.0"></a>找到配置文件中 bind 127.0.0.1 注掉或更改为0.0.0.0</h4><h4 id="找到配置文件中-protected-mode-更改为-yes"><a href="#找到配置文件中-protected-mode-更改为-yes" class="headerlink" title="找到配置文件中 protected-mode 更改为 yes"></a>找到配置文件中 protected-mode 更改为 yes</h4><h4 id="找到配置文件中-daemonize-更改为-yes"><a href="#找到配置文件中-daemonize-更改为-yes" class="headerlink" title="找到配置文件中 daemonize 更改为 yes"></a>找到配置文件中 daemonize 更改为 yes</h4><h4 id="保存退出-重启后测试远程访问-记得打开防火墙端口"><a href="#保存退出-重启后测试远程访问-记得打开防火墙端口" class="headerlink" title="保存退出. 重启后测试远程访问(记得打开防火墙端口)"></a>保存退出. 重启后测试远程访问(记得打开防火墙端口)</h4><h3 id="八、设置开机自启动-redis5-0-5自带添加服务的脚本-进入redis目录下的utils目录"><a href="#八、设置开机自启动-redis5-0-5自带添加服务的脚本-进入redis目录下的utils目录" class="headerlink" title="八、设置开机自启动. redis5.0.5自带添加服务的脚本,进入redis目录下的utils目录"></a>八、设置开机自启动. redis5.0.5自带添加服务的脚本,进入redis目录下的utils目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cd /usr/local/redis/utils/</span></span><br><span class="line"><span class="comment"># ./install_server.sh</span></span><br></pre></td></tr></table></figure>
-<h4 id="选择默认配置，按回车键"><a href="#选择默认配置，按回车键" class="headerlink" title="选择默认配置，按回车键"></a>选择默认配置，按回车键</h4><h3 id="九、重启系统测试是否开机自启动"><a href="#九、重启系统测试是否开机自启动" class="headerlink" title="九、重启系统测试是否开机自启动"></a>九、重启系统测试是否开机自启动</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/24/redis5.0.5/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
