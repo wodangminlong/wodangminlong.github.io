@@ -164,6 +164,93 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/27/rabbitmq3.9.7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/27/rabbitmq3.9.7/" class="post-title-link" itemprop="url">Centos7安装rabbitmq3.9.7</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-27 10:16:35 / 修改时间：10:17:24" itemprop="dateCreated datePublished" datetime="2021-10-27T10:16:35+08:00">2021-10-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/rabbitmq/" itemprop="url" rel="index"><span itemprop="name">rabbitmq</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="一、因为rabbitmq是使用erlang语言编写的-所以需要先安装erlang"><a href="#一、因为rabbitmq是使用erlang语言编写的-所以需要先安装erlang" class="headerlink" title="一、因为rabbitmq是使用erlang语言编写的,所以需要先安装erlang"></a>一、因为rabbitmq是使用erlang语言编写的,所以需要先安装erlang</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://www.erlang.org/downloads">https://www.erlang.org/downloads</a> </br><br>选择 OTP 24.0+ Source File 下载</p>
+<h3 id="二、将文件拷贝至服务器-usr-local-目录下并解压"><a href="#二、将文件拷贝至服务器-usr-local-目录下并解压" class="headerlink" title="二、将文件拷贝至服务器/usr/local 目录下并解压"></a>二、将文件拷贝至服务器/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf otp_src_24.0.tar.gz</span></span><br></pre></td></tr></table></figure>
+<h3 id="三、创建erlang目录"><a href="#三、创建erlang目录" class="headerlink" title="三、创建erlang目录"></a>三、创建erlang目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir /usr/local/erlang</span></span><br></pre></td></tr></table></figure>
+<h3 id="四、安装openssl-编译erlang并安装-有warning不用管-只要没有error就可以"><a href="#四、安装openssl-编译erlang并安装-有warning不用管-只要没有error就可以" class="headerlink" title="四、安装openssl;编译erlang并安装(有warning不用管,只要没有error就可以)"></a>四、安装openssl;编译erlang并安装(有warning不用管,只要没有error就可以)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum -y install openssl </span></span><br><span class="line"><span class="comment"># yum -y install openssl-devel</span></span><br><span class="line"><span class="comment"># /usr/local/otp_src_24.0/configure --prefix=/usr/local/erlang --without-javac --with-ssl</span></span><br><span class="line"><span class="comment"># cd /usr/local/otp_src_24.0 &amp;&amp; make &amp;&amp; make install</span></span><br></pre></td></tr></table></figure>
+<h3 id="五、创建软连接"><a href="#五、创建软连接" class="headerlink" title="五、创建软连接"></a>五、创建软连接</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ln -s /usr/local/erlang/bin/erl /usr/bin/erl</span></span><br></pre></td></tr></table></figure>
+<h3 id="六、使用erl命令查看erlang版本-此时可以看到erlang版本为OTP-24-看完后使用halt-退出"><a href="#六、使用erl命令查看erlang版本-此时可以看到erlang版本为OTP-24-看完后使用halt-退出" class="headerlink" title="六、使用erl命令查看erlang版本,此时可以看到erlang版本为OTP 24,看完后使用halt().退出"></a>六、使用erl命令查看erlang版本,此时可以看到erlang版本为OTP 24,看完后使用halt().退出</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># erl</span></span><br><span class="line"><span class="comment"># halt().</span></span><br></pre></td></tr></table></figure>
+<h3 id="七、下载rabbitmq安装包"><a href="#七、下载rabbitmq安装包" class="headerlink" title="七、下载rabbitmq安装包"></a>七、下载rabbitmq安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://www.rabbitmq.com/download.html">https://www.rabbitmq.com/download.html</a> </br><br>选择Centos并找到rabbitmq-server-generic-unix-3.9.7.tar.xz 下载</p>
+<h3 id="八、上传文件至-usr-local-目录下并解压"><a href="#八、上传文件至-usr-local-目录下并解压" class="headerlink" title="八、上传文件至/usr/local 目录下并解压"></a>八、上传文件至/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -xvf rabbitmq-server-generic-unix-3.9.7.tar.xz</span></span><br></pre></td></tr></table></figure>
+<h3 id="九、安装rabbitmq服务"><a href="#九、安装rabbitmq服务" class="headerlink" title="九、安装rabbitmq服务"></a>九、安装rabbitmq服务</h3><p>(在/usr/local 目录下执行)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cd rabbitmq_server-3.9.7/</span></span><br><span class="line"><span class="comment"># echo &#x27;export PATH=$PATH:/usr/local/rabbitmq_server-3.9.7/sbin&#x27; &gt;&gt; /etc/profile</span></span><br><span class="line"><span class="comment"># source /etc/profile</span></span><br></pre></td></tr></table></figure>
+<h3 id="十、开启rabbitmq-management并启动服务"><a href="#十、开启rabbitmq-management并启动服务" class="headerlink" title="十、开启rabbitmq management并启动服务"></a>十、开启rabbitmq management并启动服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rabbitmq-plugins enable rabbitmq_management</span></span><br><span class="line"><span class="comment"># rabbitmq-server -detached</span></span><br></pre></td></tr></table></figure>
+<h3 id="十一、此时通过IP-15672访问rabbitmq管理页面-需要开放端口或关闭防火墙-但不能登录"><a href="#十一、此时通过IP-15672访问rabbitmq管理页面-需要开放端口或关闭防火墙-但不能登录" class="headerlink" title="十一、此时通过IP:15672访问rabbitmq管理页面(需要开放端口或关闭防火墙),但不能登录"></a>十一、此时通过IP:15672访问rabbitmq管理页面(需要开放端口或关闭防火墙),但不能登录</h3><p>rabbitmq 默认账号和密码为guest,但只能本机登录,禁用了远程登录,如果需要远程登录,我们需要添加新的账号</p>
+<h3 id="十一、添加可以远程登录的账号"><a href="#十一、添加可以远程登录的账号" class="headerlink" title="十一、添加可以远程登录的账号"></a>十一、添加可以远程登录的账号</h3><p>以账号密码admin为例,根据实际情况更改</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rabbitmqctl add_user admin admin</span></span><br><span class="line"><span class="comment"># rabbitmqctl set_permissions -p &#x27;/&#x27; admin &#x27;.*&#x27; &#x27;.*&#x27; &#x27;.*&#x27;</span></span><br><span class="line"><span class="comment"># rabbitmqctl list_user_permissions admin</span></span><br><span class="line"><span class="comment"># rabbitmqctl set_user_tags admin administrator</span></span><br></pre></td></tr></table></figure>
+<p>完成后可以使用账号密码admin登录</p>
+<h3 id="十二、添加延时消息插件-有用到延时消息队列时可以加入此插件-插件版本一定要和rabbitmq版本匹配否则可能会出现其他问题"><a href="#十二、添加延时消息插件-有用到延时消息队列时可以加入此插件-插件版本一定要和rabbitmq版本匹配否则可能会出现其他问题" class="headerlink" title="十二、添加延时消息插件(有用到延时消息队列时可以加入此插件,插件版本一定要和rabbitmq版本匹配否则可能会出现其他问题)"></a>十二、添加延时消息插件(有用到延时消息队列时可以加入此插件,插件版本一定要和rabbitmq版本匹配否则可能会出现其他问题)</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://www.rabbitmq.com/community-plugins.html">https://www.rabbitmq.com/community-plugins.html</a> </br><br>找到 rabbitmq_delayed_message_exchange 插件下载并上传至/usr/local/rabbitmq_server-3.9.7/plugins 目录下</p>
+<h3 id="十三、启用延时消息插件"><a href="#十三、启用延时消息插件" class="headerlink" title="十三、启用延时消息插件"></a>十三、启用延时消息插件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rabbitmq-plugins enable rabbitmq_delayed_message_exchange</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/26/redis5.0.5-cluster/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -425,20 +512,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -478,7 +565,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共882字</span>
+  <span class="post-count">博客全站共1.4k字</span>
 </div>
 
 
