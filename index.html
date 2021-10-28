@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-10-28 08:46:22 / 修改时间：08:57:16" itemprop="dateCreated datePublished" datetime="2021-10-28T08:46:22+08:00">2021-10-28</time>
+              <time title="创建时间：2021-10-28 08:46:22 / 修改时间：09:03:34" itemprop="dateCreated datePublished" datetime="2021-10-28T08:46:22+08:00">2021-10-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -215,30 +215,14 @@
           <h3 id="一、下载nacos-server-2-0-3-tar-gz安装包"><a href="#一、下载nacos-server-2-0-3-tar-gz安装包" class="headerlink" title="一、下载nacos-server-2.0.3.tar.gz安装包"></a>一、下载nacos-server-2.0.3.tar.gz安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://github.com/alibaba/nacos/tags">https://github.com/alibaba/nacos/tags</a></p>
 <h3 id="二、将文件拷贝至服务器-usr-local-目录下并解压"><a href="#二、将文件拷贝至服务器-usr-local-目录下并解压" class="headerlink" title="二、将文件拷贝至服务器/usr/local 目录下并解压"></a>二、将文件拷贝至服务器/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf nacos-server-2.0.3.tar.gz</span></span><br></pre></td></tr></table></figure>
-<h3 id="三、nacos默认以集群方式启动-单机启动需要修改启动脚本"><a href="#三、nacos默认以集群方式启动-单机启动需要修改启动脚本" class="headerlink" title="三、nacos默认以集群方式启动,单机启动需要修改启动脚本"></a>三、nacos默认以集群方式启动,单机启动需要修改启动脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /usr/local/nacos/bin/startup.sh</span></span><br></pre></td></tr></table></figure>
-<p>修改内容如下: (/root/jdk1.8.0_181 为jdk目录) </br></p>
-<table>
-    <tr>
-        <th>更改前</th>
-        <th>更改后</th>
-    </tr>
-    <tr>
-        <td>[ ! -e "$JAVA_HOME/bin/java" ] && JAVA_HOME=/usr/java</td>
-        <td>[ ! -e "$JAVA_HOME/bin/java" ] && JAVA_HOME=/root/jdk1.8.0_181</td>
-    </tr>
-    <tr>
-        <td>export MODE="cluster"</td>
-        <td>export MODE="standalone"</td>
-    </tr>
-</table>
-
-<h3 id="四、启动"><a href="#四、启动" class="headerlink" title="四、启动"></a>四、启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /usr/local/nacos/bin/startup.sh</span></span><br></pre></td></tr></table></figure>
-<p>启动完成后通过IP:8848/nacos 访问nacos管理页面(开放端口)</p>
-<h3 id="五、设置开机启动"><a href="#五、设置开机启动" class="headerlink" title="五、设置开机启动"></a>五、设置开机启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim vim /lib/systemd/system/nacos.service</span></span><br></pre></td></tr></table></figure>
-<p>键入以下内容:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=nacos</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">ExecStart=/usr/<span class="built_in">local</span>/nacos/bin/startup.sh</span><br><span class="line">ExecReload=/usr/<span class="built_in">local</span>/nacos/bin/shutdown.sh</span><br><span class="line">ExecStop=/usr/<span class="built_in">local</span>/nacos/bin/shutdown.sh</span><br><span class="line">PrivateTmp=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
-<h3 id="六、加入nacos服务并设置开机自启"><a href="#六、加入nacos服务并设置开机自启" class="headerlink" title="六、加入nacos服务并设置开机自启"></a>六、加入nacos服务并设置开机自启</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl daemon-reload</span></span><br><span class="line"><span class="comment"># systemctl enable nacos.service</span></span><br></pre></td></tr></table></figure>
-<h3 id="七、重启服务器测试"><a href="#七、重启服务器测试" class="headerlink" title="七、重启服务器测试"></a>七、重启服务器测试</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/28/nacos2.0.3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
