@@ -22,20 +22,20 @@
     var CONFIG = {"hostname":"wodangminlong.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="每次增加新的环境或服务器时需要安装一大堆基础服务,记录一下redis安装步骤,以后不用百度啦~ 一、安装gcc1# yum install gcc 二、下载redis1# wget http:&#x2F;&#x2F;download.redis.io&#x2F;releases&#x2F;redis-5.0.5.tar.gz">
+  <meta name="description" content="一、下载nacos-server-2.0.3.tar.gz安装包下载地址: https:&#x2F;&#x2F;github.com&#x2F;alibaba&#x2F;nacos&#x2F;tags 二、将文件拷贝至服务器&#x2F;usr&#x2F;local 目录下并解压解压命令(在&#x2F;usr&#x2F;local 目录下执行) 1# tar -zxvf nacos-server-2.0.3.tar.gz 三、nacos默认以集群方式启动,单机启动需要修改启动脚本1# v">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Centos7安装redis5.0.5单机版设置远程访问和开机启动">
-<meta property="og:url" content="https://wodangminlong.github.io/2021/10/24/redis5.0.5/index.html">
+<meta property="og:title" content="Centos7安装nacos2.0.3单机版并设置开机启动">
+<meta property="og:url" content="https://wodangminlong.github.io/2021/10/28/nacos2.0.3/index.html">
 <meta property="og:site_name" content="知足常乐">
-<meta property="og:description" content="每次增加新的环境或服务器时需要安装一大堆基础服务,记录一下redis安装步骤,以后不用百度啦~ 一、安装gcc1# yum install gcc 二、下载redis1# wget http:&#x2F;&#x2F;download.redis.io&#x2F;releases&#x2F;redis-5.0.5.tar.gz">
+<meta property="og:description" content="一、下载nacos-server-2.0.3.tar.gz安装包下载地址: https:&#x2F;&#x2F;github.com&#x2F;alibaba&#x2F;nacos&#x2F;tags 二、将文件拷贝至服务器&#x2F;usr&#x2F;local 目录下并解压解压命令(在&#x2F;usr&#x2F;local 目录下执行) 1# tar -zxvf nacos-server-2.0.3.tar.gz 三、nacos默认以集群方式启动,单机启动需要修改启动脚本1# v">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-10-24T13:46:43.973Z">
-<meta property="article:modified_time" content="2021-10-27T03:03:14.261Z">
+<meta property="article:published_time" content="2021-10-28T00:46:22.336Z">
+<meta property="article:modified_time" content="2021-10-28T00:48:04.039Z">
 <meta property="article:author" content="dml">
-<meta property="article:tag" content="redis">
+<meta property="article:tag" content="nacos">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://wodangminlong.github.io/2021/10/24/redis5.0.5/">
+<link rel="canonical" href="https://wodangminlong.github.io/2021/10/28/nacos2.0.3/">
 
 
 <script id="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>Centos7安装redis5.0.5单机版设置远程访问和开机启动 | 知足常乐</title>
+  <title>Centos7安装nacos2.0.3单机版并设置开机启动 | 知足常乐</title>
   
 
 
@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/24/redis5.0.5/">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/28/nacos2.0.3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -181,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Centos7安装redis5.0.5单机版设置远程访问和开机启动
+          Centos7安装nacos2.0.3单机版并设置开机启动
         </h1>
 
         <div class="post-meta">
@@ -190,23 +190,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-10-24 21:46:43" itemprop="dateCreated datePublished" datetime="2021-10-24T21:46:43+08:00">2021-10-24</time>
+              <time title="创建时间：2021-10-28 08:46:22 / 修改时间：08:48:04" itemprop="dateCreated datePublished" datetime="2021-10-28T08:46:22+08:00">2021-10-28</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-27 11:03:14" itemprop="dateModified" datetime="2021-10-27T11:03:14+08:00">2021-10-27</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a>
+                  <a href="/categories/nacos/" itemprop="url" rel="index"><span itemprop="name">nacos</span></a>
                 </span>
             </span>
 
@@ -228,17 +222,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>每次增加新的环境或服务器时需要安装一大堆基础服务,记录一下redis安装步骤,以后不用百度啦~</p>
-<h3 id="一、安装gcc"><a href="#一、安装gcc" class="headerlink" title="一、安装gcc"></a>一、安装gcc</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install gcc</span></span><br></pre></td></tr></table></figure>
-<h3 id="二、下载redis"><a href="#二、下载redis" class="headerlink" title="二、下载redis"></a>二、下载redis</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wget http://download.redis.io/releases/redis-5.0.5.tar.gz</span></span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<h3 id="三、解压"><a href="#三、解压" class="headerlink" title="三、解压"></a>三、解压</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf redis-5.0.5.tar.gz</span></span><br></pre></td></tr></table></figure>
-<h3 id="四、进入解压后的文件夹并编译"><a href="#四、进入解压后的文件夹并编译" class="headerlink" title="四、进入解压后的文件夹并编译"></a>四、进入解压后的文件夹并编译</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cd redis-5.0.5</span></span><br><span class="line"><span class="comment"># make</span></span><br></pre></td></tr></table></figure>
-<h3 id="五、第四步正常会显示-It’s-a-good-idea-to-run-‘make-test’-继续安装"><a href="#五、第四步正常会显示-It’s-a-good-idea-to-run-‘make-test’-继续安装" class="headerlink" title="五、第四步正常会显示 It’s a good idea to run ‘make test’ . 继续安装"></a>五、第四步正常会显示 It’s a good idea to run ‘make test’ . 继续安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># make install prefix=/usr/local/redis</span></span><br></pre></td></tr></table></figure>
-<h3 id="六、成功后启动redis"><a href="#六、成功后启动redis" class="headerlink" title="六、成功后启动redis"></a>六、成功后启动redis</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /usr/local/redis/bin/redis-server</span></span><br></pre></td></tr></table></figure>
-<h3 id="七、修改redis配置文件"><a href="#七、修改redis配置文件" class="headerlink" title="七、修改redis配置文件"></a>七、修改redis配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /usr/local/redis/redis.conf</span></span><br></pre></td></tr></table></figure>
-<h4 id="找到配置文件中-bind-127-0-0-1-注掉或更改为0-0-0-0"><a href="#找到配置文件中-bind-127-0-0-1-注掉或更改为0-0-0-0" class="headerlink" title="找到配置文件中 bind 127.0.0.1 注掉或更改为0.0.0.0"></a>找到配置文件中 bind 127.0.0.1 注掉或更改为0.0.0.0</h4><h4 id="找到配置文件中-protected-mode-更改为-yes"><a href="#找到配置文件中-protected-mode-更改为-yes" class="headerlink" title="找到配置文件中 protected-mode 更改为 yes"></a>找到配置文件中 protected-mode 更改为 yes</h4><h4 id="找到配置文件中-daemonize-更改为-yes"><a href="#找到配置文件中-daemonize-更改为-yes" class="headerlink" title="找到配置文件中 daemonize 更改为 yes"></a>找到配置文件中 daemonize 更改为 yes</h4><h4 id="保存退出-重启后测试远程访问-记得打开防火墙端口"><a href="#保存退出-重启后测试远程访问-记得打开防火墙端口" class="headerlink" title="保存退出. 重启后测试远程访问(记得打开防火墙端口)"></a>保存退出. 重启后测试远程访问(记得打开防火墙端口)</h4><h3 id="八、设置开机自启动-redis5-0-5自带添加服务的脚本-进入redis目录下的utils目录"><a href="#八、设置开机自启动-redis5-0-5自带添加服务的脚本-进入redis目录下的utils目录" class="headerlink" title="八、设置开机自启动. redis5.0.5自带添加服务的脚本,进入redis目录下的utils目录"></a>八、设置开机自启动. redis5.0.5自带添加服务的脚本,进入redis目录下的utils目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cd /usr/local/redis/utils/</span></span><br><span class="line"><span class="comment"># ./install_server.sh</span></span><br></pre></td></tr></table></figure>
-<h4 id="选择默认配置，按回车键"><a href="#选择默认配置，按回车键" class="headerlink" title="选择默认配置，按回车键"></a>选择默认配置，按回车键</h4><h3 id="九、重启系统测试是否开机自启动"><a href="#九、重启系统测试是否开机自启动" class="headerlink" title="九、重启系统测试是否开机自启动"></a>九、重启系统测试是否开机自启动</h3>
+        <h3 id="一、下载nacos-server-2-0-3-tar-gz安装包"><a href="#一、下载nacos-server-2-0-3-tar-gz安装包" class="headerlink" title="一、下载nacos-server-2.0.3.tar.gz安装包"></a>一、下载nacos-server-2.0.3.tar.gz安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://github.com/alibaba/nacos/tags">https://github.com/alibaba/nacos/tags</a></p>
+<h3 id="二、将文件拷贝至服务器-usr-local-目录下并解压"><a href="#二、将文件拷贝至服务器-usr-local-目录下并解压" class="headerlink" title="二、将文件拷贝至服务器/usr/local 目录下并解压"></a>二、将文件拷贝至服务器/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf nacos-server-2.0.3.tar.gz</span></span><br></pre></td></tr></table></figure>
+<h3 id="三、nacos默认以集群方式启动-单机启动需要修改启动脚本"><a href="#三、nacos默认以集群方式启动-单机启动需要修改启动脚本" class="headerlink" title="三、nacos默认以集群方式启动,单机启动需要修改启动脚本"></a>三、nacos默认以集群方式启动,单机启动需要修改启动脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /usr/local/nacos/bin/startup.sh</span></span><br></pre></td></tr></table></figure>
+<p>修改内容如下: (/root/jdk1.8.0_181 为jdk目录) </br></p>
+<table>
+    <tr>
+        <th>更改前</th>
+        <th>更改后</th>
+    </tr>
+    <tr>
+        <td>[ ! -e "$JAVA_HOME/bin/java" ] && JAVA_HOME=/usr/java</td>
+        <td>[ ! -e "$JAVA_HOME/bin/java" ] && JAVA_HOME=/root/jdk1.8.0_181 ()</td>
+    </tr>
+    <tr>
+        <td>export MODE="cluster"</td>
+        <td>export MODE="standalone"</td>
+    </tr>
+</table>
+
+<h3 id="四、启动"><a href="#四、启动" class="headerlink" title="四、启动"></a>四、启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /usr/local/nacos/bin/startup.sh</span></span><br></pre></td></tr></table></figure>
+<p>启动完成后通过IP:8848/nacos 访问nacos管理页面(开放端口)</p>
+<h3 id="五、设置开机启动"><a href="#五、设置开机启动" class="headerlink" title="五、设置开机启动"></a>五、设置开机启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim vim /lib/systemd/system/nacos.service</span></span><br></pre></td></tr></table></figure>
+<p>键入以下内容:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=nacos</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">ExecStart=/usr/<span class="built_in">local</span>/nacos/bin/startup.sh</span><br><span class="line">ExecReload=/usr/<span class="built_in">local</span>/nacos/bin/shutdown.sh</span><br><span class="line">ExecStop=/usr/<span class="built_in">local</span>/nacos/bin/shutdown.sh</span><br><span class="line">PrivateTmp=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<h3 id="六、加入nacos服务并设置开机自启"><a href="#六、加入nacos服务并设置开机自启" class="headerlink" title="六、加入nacos服务并设置开机自启"></a>六、加入nacos服务并设置开机自启</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl daemon-reload</span></span><br><span class="line"><span class="comment"># systemctl enable nacos.service</span></span><br></pre></td></tr></table></figure>
+<h3 id="七、重启服务器测试"><a href="#七、重启服务器测试" class="headerlink" title="七、重启服务器测试"></a>七、重启服务器测试</h3>
     </div>
 
     
@@ -263,7 +273,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://wodangminlong.github.io/2021/10/24/redis5.0.5/" title="Centos7安装redis5.0.5单机版设置远程访问和开机启动">https://wodangminlong.github.io/2021/10/24/redis5.0.5/</a>
+    <a href="https://wodangminlong.github.io/2021/10/28/nacos2.0.3/" title="Centos7安装nacos2.0.3单机版并设置开机启动">https://wodangminlong.github.io/2021/10/28/nacos2.0.3/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -274,7 +284,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/redis/" rel="tag"># redis</a>
+              <a href="/tags/nacos/" rel="tag"># nacos</a>
           </div>
 
         
@@ -282,11 +292,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2021/10/26/redis5.0.5-cluster/" rel="next" title="Centos7redis5.0.5集群搭建">
-      Centos7redis5.0.5集群搭建 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/10/27/rabbitmq3.9.7/" rel="prev" title="Centos7安装rabbitmq3.9.7">
+      <i class="fa fa-chevron-left"></i> Centos7安装rabbitmq3.9.7
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -350,7 +360,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85gcc"><span class="nav-number">1.</span> <span class="nav-text">一、安装gcc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%B8%8B%E8%BD%BDredis"><span class="nav-number">2.</span> <span class="nav-text">二、下载redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%A7%A3%E5%8E%8B"><span class="nav-number">3.</span> <span class="nav-text">三、解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%BF%9B%E5%85%A5%E8%A7%A3%E5%8E%8B%E5%90%8E%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9%E5%B9%B6%E7%BC%96%E8%AF%91"><span class="nav-number">4.</span> <span class="nav-text">四、进入解压后的文件夹并编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E7%AC%AC%E5%9B%9B%E6%AD%A5%E6%AD%A3%E5%B8%B8%E4%BC%9A%E6%98%BE%E7%A4%BA-It%E2%80%99s-a-good-idea-to-run-%E2%80%98make-test%E2%80%99-%E7%BB%A7%E7%BB%AD%E5%AE%89%E8%A3%85"><span class="nav-number">5.</span> <span class="nav-text">五、第四步正常会显示 It’s a good idea to run ‘make test’ . 继续安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%88%90%E5%8A%9F%E5%90%8E%E5%90%AF%E5%8A%A8redis"><span class="nav-number">6.</span> <span class="nav-text">六、成功后启动redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E4%BF%AE%E6%94%B9redis%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text">七、修改redis配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%BE%E5%88%B0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD-bind-127-0-0-1-%E6%B3%A8%E6%8E%89%E6%88%96%E6%9B%B4%E6%94%B9%E4%B8%BA0-0-0-0"><span class="nav-number">7.1.</span> <span class="nav-text">找到配置文件中 bind 127.0.0.1 注掉或更改为0.0.0.0</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%BE%E5%88%B0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD-protected-mode-%E6%9B%B4%E6%94%B9%E4%B8%BA-yes"><span class="nav-number">7.2.</span> <span class="nav-text">找到配置文件中 protected-mode 更改为 yes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%BE%E5%88%B0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD-daemonize-%E6%9B%B4%E6%94%B9%E4%B8%BA-yes"><span class="nav-number">7.3.</span> <span class="nav-text">找到配置文件中 daemonize 更改为 yes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E9%80%80%E5%87%BA-%E9%87%8D%E5%90%AF%E5%90%8E%E6%B5%8B%E8%AF%95%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE-%E8%AE%B0%E5%BE%97%E6%89%93%E5%BC%80%E9%98%B2%E7%81%AB%E5%A2%99%E7%AB%AF%E5%8F%A3"><span class="nav-number">7.4.</span> <span class="nav-text">保存退出. 重启后测试远程访问(记得打开防火墙端口)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8-redis5-0-5%E8%87%AA%E5%B8%A6%E6%B7%BB%E5%8A%A0%E6%9C%8D%E5%8A%A1%E7%9A%84%E8%84%9A%E6%9C%AC-%E8%BF%9B%E5%85%A5redis%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84utils%E7%9B%AE%E5%BD%95"><span class="nav-number">8.</span> <span class="nav-text">八、设置开机自启动. redis5.0.5自带添加服务的脚本,进入redis目录下的utils目录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE%EF%BC%8C%E6%8C%89%E5%9B%9E%E8%BD%A6%E9%94%AE"><span class="nav-number">8.1.</span> <span class="nav-text">选择默认配置，按回车键</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E9%87%8D%E5%90%AF%E7%B3%BB%E7%BB%9F%E6%B5%8B%E8%AF%95%E6%98%AF%E5%90%A6%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="nav-number">9.</span> <span class="nav-text">九、重启系统测试是否开机自启动</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%8B%E8%BD%BDnacos-server-2-0-3-tar-gz%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">一、下载nacos-server-2.0.3.tar.gz安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B0%86%E6%96%87%E4%BB%B6%E6%8B%B7%E8%B4%9D%E8%87%B3%E6%9C%8D%E5%8A%A1%E5%99%A8-usr-local-%E7%9B%AE%E5%BD%95%E4%B8%8B%E5%B9%B6%E8%A7%A3%E5%8E%8B"><span class="nav-number">2.</span> <span class="nav-text">二、将文件拷贝至服务器&#x2F;usr&#x2F;local 目录下并解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81nacos%E9%BB%98%E8%AE%A4%E4%BB%A5%E9%9B%86%E7%BE%A4%E6%96%B9%E5%BC%8F%E5%90%AF%E5%8A%A8-%E5%8D%95%E6%9C%BA%E5%90%AF%E5%8A%A8%E9%9C%80%E8%A6%81%E4%BF%AE%E6%94%B9%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="nav-number">3.</span> <span class="nav-text">三、nacos默认以集群方式启动,单机启动需要修改启动脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%90%AF%E5%8A%A8"><span class="nav-number">4.</span> <span class="nav-text">四、启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="nav-number">5.</span> <span class="nav-text">五、设置开机启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%8A%A0%E5%85%A5nacos%E6%9C%8D%E5%8A%A1%E5%B9%B6%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="nav-number">6.</span> <span class="nav-text">六、加入nacos服务并设置开机自启</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E9%87%8D%E5%90%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B5%8B%E8%AF%95"><span class="nav-number">7.</span> <span class="nav-text">七、重启服务器测试</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
