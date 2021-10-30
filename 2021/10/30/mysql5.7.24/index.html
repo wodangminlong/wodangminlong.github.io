@@ -22,20 +22,20 @@
     var CONFIG = {"hostname":"wodangminlong.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="一、下载nginx-1.20.1.tar.gz安装包下载地址: http:&#x2F;&#x2F;nginx.org&#x2F;en&#x2F;download.html 二、将文件拷贝至服务器&#x2F;usr&#x2F;local 目录下并解压解压命令(在&#x2F;usr&#x2F;local 目录下执行) 1# tar -zxvf nginx-1.20.1.tar.gz">
+  <meta name="description" content="一、下载mysql-5.7.36-1.el7.x86_64.rpm-bundle.tar安装包下载地址: https:&#x2F;&#x2F;dev.mysql.com&#x2F;downloads&#x2F;mysql&#x2F;5.7.html#download 选择 Red Hat Enterprise Linux &#x2F; Oracle Linux | Red Hat Enterprise Linux 7&#x2F;Oracle Linux7(x86,6">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Centos7安装nginx1.20.1并设置开机启动">
-<meta property="og:url" content="https://wodangminlong.github.io/2021/10/29/nginx1.20.1/index.html">
+<meta property="og:title" content="Centos7安装mysql5.7.36">
+<meta property="og:url" content="https://wodangminlong.github.io/2021/10/30/mysql5.7.24/index.html">
 <meta property="og:site_name" content="知足常乐">
-<meta property="og:description" content="一、下载nginx-1.20.1.tar.gz安装包下载地址: http:&#x2F;&#x2F;nginx.org&#x2F;en&#x2F;download.html 二、将文件拷贝至服务器&#x2F;usr&#x2F;local 目录下并解压解压命令(在&#x2F;usr&#x2F;local 目录下执行) 1# tar -zxvf nginx-1.20.1.tar.gz">
+<meta property="og:description" content="一、下载mysql-5.7.36-1.el7.x86_64.rpm-bundle.tar安装包下载地址: https:&#x2F;&#x2F;dev.mysql.com&#x2F;downloads&#x2F;mysql&#x2F;5.7.html#download 选择 Red Hat Enterprise Linux &#x2F; Oracle Linux | Red Hat Enterprise Linux 7&#x2F;Oracle Linux7(x86,6">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-10-29T00:41:22.355Z">
-<meta property="article:modified_time" content="2021-10-29T00:45:09.063Z">
+<meta property="article:published_time" content="2021-10-30T00:22:16.974Z">
+<meta property="article:modified_time" content="2021-10-30T00:22:02.268Z">
 <meta property="article:author" content="dml">
-<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://wodangminlong.github.io/2021/10/29/nginx1.20.1/">
+<link rel="canonical" href="https://wodangminlong.github.io/2021/10/30/mysql5.7.24/">
 
 
 <script id="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>Centos7安装nginx1.20.1并设置开机启动 | 知足常乐</title>
+  <title>Centos7安装mysql5.7.36 | 知足常乐</title>
   
 
 
@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/29/nginx1.20.1/">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/30/mysql5.7.24/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -181,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Centos7安装nginx1.20.1并设置开机启动
+          Centos7安装mysql5.7.36
         </h1>
 
         <div class="post-meta">
@@ -192,7 +192,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-10-29 08:41:22 / 修改时间：08:45:09" itemprop="dateCreated datePublished" datetime="2021-10-29T08:41:22+08:00">2021-10-29</time>
+              <time title="创建时间：2021-10-30 08:22:16 / 修改时间：08:22:02" itemprop="dateCreated datePublished" datetime="2021-10-30T08:22:16+08:00">2021-10-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -200,7 +200,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/nginx/" itemprop="url" rel="index"><span itemprop="name">nginx</span></a>
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
                 </span>
             </span>
 
@@ -222,17 +222,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="一、下载nginx-1-20-1-tar-gz安装包"><a href="#一、下载nginx-1-20-1-tar-gz安装包" class="headerlink" title="一、下载nginx-1.20.1.tar.gz安装包"></a>一、下载nginx-1.20.1.tar.gz安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">http://nginx.org/en/download.html</a></p>
+        <h3 id="一、下载mysql-5-7-36-1-el7-x86-64-rpm-bundle-tar安装包"><a href="#一、下载mysql-5-7-36-1-el7-x86-64-rpm-bundle-tar安装包" class="headerlink" title="一、下载mysql-5.7.36-1.el7.x86_64.rpm-bundle.tar安装包"></a>一、下载mysql-5.7.36-1.el7.x86_64.rpm-bundle.tar安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/5.7.html#download">https://dev.mysql.com/downloads/mysql/5.7.html#download</a> </br><br>选择 Red Hat Enterprise Linux / Oracle Linux | Red Hat Enterprise Linux 7/Oracle Linux7(x86,64-bit) </br><br>选择 RPM Bundle 文件下载</p>
 <h3 id="二、将文件拷贝至服务器-usr-local-目录下并解压"><a href="#二、将文件拷贝至服务器-usr-local-目录下并解压" class="headerlink" title="二、将文件拷贝至服务器/usr/local 目录下并解压"></a>二、将文件拷贝至服务器/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf nginx-1.20.1.tar.gz</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -xvf mysql-5.7.36-1.el7.x86_64.rpm-bundle.tar</span></span><br></pre></td></tr></table></figure>
 <span id="more"></span>
-<h3 id="三、安装必要的依赖包"><a href="#三、安装必要的依赖包" class="headerlink" title="三、安装必要的依赖包"></a>三、安装必要的依赖包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install -y gcc-c++</span></span><br><span class="line"><span class="comment"># yum install -y pcre pcre-devel</span></span><br><span class="line"><span class="comment"># yum install -y zlib zlib-devel</span></span><br><span class="line"><span class="comment"># yum install -y openssl openssl-devel</span></span><br></pre></td></tr></table></figure>
-<h3 id="四、编译并安装"><a href="#四、编译并安装" class="headerlink" title="四、编译并安装"></a>四、编译并安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir /usr/local/nginx</span></span><br><span class="line"><span class="comment"># cd /usr/local/nginx-1.20.1/</span></span><br><span class="line"><span class="comment"># ./configure --prefix=/usr/local/nginx --with-http_ssl_module</span></span><br><span class="line"><span class="comment"># make </span></span><br><span class="line"><span class="comment"># make install</span></span><br></pre></td></tr></table></figure>
-<p>启动完成后通过IP访问nginx welcome页面(开放80端口)</p>
-<h3 id="五、设置开机启动"><a href="#五、设置开机启动" class="headerlink" title="五、设置开机启动"></a>五、设置开机启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /etc/rc.local</span></span><br></pre></td></tr></table></figure>
-<p>在最后一行添加以下内容:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
-<h3 id="六、重启服务器测试"><a href="#六、重启服务器测试" class="headerlink" title="六、重启服务器测试"></a>六、重启服务器测试</h3>
+<h3 id="三、安装前查看mariadb是否安装-如果有安装先卸载"><a href="#三、安装前查看mariadb是否安装-如果有安装先卸载" class="headerlink" title="三、安装前查看mariadb是否安装,如果有安装先卸载"></a>三、安装前查看mariadb是否安装,如果有安装先卸载</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rpm -qa | grep -i mariadb</span></span><br></pre></td></tr></table></figure>
+<p>查到 mariadb有安装 名称为: mariadb-libs-5.5.68-1.el7.x86_64(名称以实际为准)</p>
+<h3 id="四、卸载mariadb"><a href="#四、卸载mariadb" class="headerlink" title="四、卸载mariadb"></a>四、卸载mariadb</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rpm -e --nodeps mariadb-libs-5.5.68-1.el7.x86_64</span></span><br></pre></td></tr></table></figure>
+<p>卸载完成后再查询一次,没有显示表示卸载完成</p>
+<h3 id="五、安装mysql依赖perl"><a href="#五、安装mysql依赖perl" class="headerlink" title="五、安装mysql依赖perl"></a>五、安装mysql依赖perl</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install -y perl</span></span><br></pre></td></tr></table></figure>
+<h3 id="六、依次安装解压后的rpm包"><a href="#六、依次安装解压后的rpm包" class="headerlink" title="六、依次安装解压后的rpm包"></a>六、依次安装解压后的rpm包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rpm -ivh mysql-community-common-5.7.36-1.el7.x86_64.rpm</span></span><br><span class="line"><span class="comment"># rpm -ivh mysql-community-libs-5.7.36-1.el7.x86_64.rpm</span></span><br><span class="line"><span class="comment"># rpm -ivh mysql-community-client-5.7.36-1.el7.x86_64.rpm</span></span><br><span class="line"><span class="comment"># rpm -ivh mysql-community-server-5.7.36-1.el7.x86_64.rpm</span></span><br></pre></td></tr></table></figure>
+<h3 id="七、启动"><a href="#七、启动" class="headerlink" title="七、启动"></a>七、启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl start mysqld.service</span></span><br></pre></td></tr></table></figure>
+<h3 id="八、查看登录密码并登录"><a href="#八、查看登录密码并登录" class="headerlink" title="八、查看登录密码并登录"></a>八、查看登录密码并登录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat /var/log/mysqld.log |grep password</span></span><br><span class="line"><span class="comment"># mysql -uroot -p</span></span><br></pre></td></tr></table></figure>
+<p>键入查到的密码</p>
+<h3 id="九、修改密码并开启远程访问"><a href="#九、修改密码并开启远程访问" class="headerlink" title="九、修改密码并开启远程访问"></a>九、修改密码并开启远程访问</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="built_in">set</span> password = password(<span class="string">&#x27;@123456#Aa&#x27;</span>);</span><br><span class="line">mysql&gt; grant all privileges on *.* to <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span> identified by <span class="string">&#x27;@123456#Aa&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>到这里就完成了mysql5.7.36的安装.mysql5.7.36验证密码强度,开发或本地环境如果想设置简单密码,使用如下设置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="built_in">set</span> global validate_password_policy = LOW;</span><br><span class="line">mysql&gt; <span class="built_in">set</span> global validate_password_length=4;</span><br><span class="line">mysql&gt; alter user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> identified by <span class="string">&#x27;root&#x27;</span>;</span><br><span class="line">mysql&gt; alter user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span> identified by <span class="string">&#x27;root&#x27;</span>;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -257,7 +262,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://wodangminlong.github.io/2021/10/29/nginx1.20.1/" title="Centos7安装nginx1.20.1并设置开机启动">https://wodangminlong.github.io/2021/10/29/nginx1.20.1/</a>
+    <a href="https://wodangminlong.github.io/2021/10/30/mysql5.7.24/" title="Centos7安装mysql5.7.36">https://wodangminlong.github.io/2021/10/30/mysql5.7.24/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -268,7 +273,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/nginx/" rel="tag"># nginx</a>
+              <a href="/tags/mysql/" rel="tag"># mysql</a>
           </div>
 
         
@@ -277,13 +282,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/10/28/nacos2.0.3/" rel="prev" title="Centos7安装nacos2.0.3单机版并设置开机启动">
-      <i class="fa fa-chevron-left"></i> Centos7安装nacos2.0.3单机版并设置开机启动
+    <a href="/2021/10/29/nginx1.20.1/" rel="prev" title="Centos7安装nginx1.20.1并设置开机启动">
+      <i class="fa fa-chevron-left"></i> Centos7安装nginx1.20.1并设置开机启动
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/10/30/mysql5.7.24/" rel="next" title="Centos7安装mysql5.7.36">
-      Centos7安装mysql5.7.36 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -347,7 +349,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%8B%E8%BD%BDnginx-1-20-1-tar-gz%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">一、下载nginx-1.20.1.tar.gz安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B0%86%E6%96%87%E4%BB%B6%E6%8B%B7%E8%B4%9D%E8%87%B3%E6%9C%8D%E5%8A%A1%E5%99%A8-usr-local-%E7%9B%AE%E5%BD%95%E4%B8%8B%E5%B9%B6%E8%A7%A3%E5%8E%8B"><span class="nav-number">2.</span> <span class="nav-text">二、将文件拷贝至服务器&#x2F;usr&#x2F;local 目录下并解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%89%E8%A3%85%E5%BF%85%E8%A6%81%E7%9A%84%E4%BE%9D%E8%B5%96%E5%8C%85"><span class="nav-number">3.</span> <span class="nav-text">三、安装必要的依赖包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E5%AE%89%E8%A3%85"><span class="nav-number">4.</span> <span class="nav-text">四、编译并安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="nav-number">5.</span> <span class="nav-text">五、设置开机启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E9%87%8D%E5%90%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B5%8B%E8%AF%95"><span class="nav-number">6.</span> <span class="nav-text">六、重启服务器测试</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%8B%E8%BD%BDmysql-5-7-36-1-el7-x86-64-rpm-bundle-tar%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">一、下载mysql-5.7.36-1.el7.x86_64.rpm-bundle.tar安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B0%86%E6%96%87%E4%BB%B6%E6%8B%B7%E8%B4%9D%E8%87%B3%E6%9C%8D%E5%8A%A1%E5%99%A8-usr-local-%E7%9B%AE%E5%BD%95%E4%B8%8B%E5%B9%B6%E8%A7%A3%E5%8E%8B"><span class="nav-number">2.</span> <span class="nav-text">二、将文件拷贝至服务器&#x2F;usr&#x2F;local 目录下并解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%89%E8%A3%85%E5%89%8D%E6%9F%A5%E7%9C%8Bmariadb%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85-%E5%A6%82%E6%9E%9C%E6%9C%89%E5%AE%89%E8%A3%85%E5%85%88%E5%8D%B8%E8%BD%BD"><span class="nav-number">3.</span> <span class="nav-text">三、安装前查看mariadb是否安装,如果有安装先卸载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%8D%B8%E8%BD%BDmariadb"><span class="nav-number">4.</span> <span class="nav-text">四、卸载mariadb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%AE%89%E8%A3%85mysql%E4%BE%9D%E8%B5%96perl"><span class="nav-number">5.</span> <span class="nav-text">五、安装mysql依赖perl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E4%BE%9D%E6%AC%A1%E5%AE%89%E8%A3%85%E8%A7%A3%E5%8E%8B%E5%90%8E%E7%9A%84rpm%E5%8C%85"><span class="nav-number">6.</span> <span class="nav-text">六、依次安装解压后的rpm包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%90%AF%E5%8A%A8"><span class="nav-number">7.</span> <span class="nav-text">七、启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%9F%A5%E7%9C%8B%E7%99%BB%E5%BD%95%E5%AF%86%E7%A0%81%E5%B9%B6%E7%99%BB%E5%BD%95"><span class="nav-number">8.</span> <span class="nav-text">八、查看登录密码并登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%E5%B9%B6%E5%BC%80%E5%90%AF%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE"><span class="nav-number">9.</span> <span class="nav-text">九、修改密码并开启远程访问</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
