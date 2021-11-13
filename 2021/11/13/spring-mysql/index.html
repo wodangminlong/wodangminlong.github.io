@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/long.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/long.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/long.png">
+  <link rel="mask-icon" href="/images/long.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"wodangminlong.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="##jdbc连接方式 导入maven配置根据实际情况选择合适的匹配版本 12345678910111213&lt;dependency&gt;  &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;  &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;&lt;&#x2F;dependency&gt;&lt;dependenc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Springboot配置使用mysql">
+<meta property="og:url" content="https://wodangminlong.github.io/2021/11/13/spring-mysql/index.html">
+<meta property="og:site_name" content="知足常乐">
+<meta property="og:description" content="##jdbc连接方式 导入maven配置根据实际情况选择合适的匹配版本 12345678910111213&lt;dependency&gt;  &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;  &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;&lt;&#x2F;dependency&gt;&lt;dependenc">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-13T02:00:22.110Z">
+<meta property="article:modified_time" content="2021-11-13T01:59:40.385Z">
+<meta property="article:author" content="dml">
+<meta property="article:tag" content="mysql">
+<meta property="article:tag" content="springboot mysql">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://wodangminlong.github.io/2021/11/13/spring-mysql/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Springboot配置使用mysql | 知足常乐</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">知足常乐</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/13/spring-mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Springboot配置使用mysql
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-13 10:00:22 / 修改时间：09:59:40" itemprop="dateCreated datePublished" datetime="2021-11-13T10:00:22+08:00">2021-11-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/springboot-mysql/" itemprop="url" rel="index"><span itemprop="name">springboot mysql</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>##jdbc连接方式</p>
+<h3 id="导入maven配置"><a href="#导入maven配置" class="headerlink" title="导入maven配置"></a>导入maven配置</h3><p>根据实际情况选择合适的匹配版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;druid&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.2.8&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="新增配置文件内容"><a href="#新增配置文件内容" class="headerlink" title="新增配置文件内容"></a>新增配置文件内容</h3><p>properties文件内容如下(根据实际情况更改)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spring.datasource.url= jdbc:mysql://127.0.0.1:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=true&amp;serverTimezone=CTT&amp;useOldAliasMetadataBehavior=true</span><br><span class="line">spring.datasource.username= test</span><br><span class="line">spring.datasource.password= test</span><br></pre></td></tr></table></figure>
+<p>yml文件内容如下(根据实际情况更改)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  datasource:</span><br><span class="line">    url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=true&amp;serverTimezone=CTT&amp;useOldAliasMetadataBehavior=true</span><br><span class="line">    username: test</span><br><span class="line">    password: test</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h3 id="新增DruidUtils-java文件"><a href="#新增DruidUtils-java文件" class="headerlink" title="新增DruidUtils java文件"></a>新增DruidUtils java文件</h3><p>内容如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">@Slf4j</span><br><span class="line">@Component</span><br><span class="line">public class DruidUtils &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * data source</span><br><span class="line">     */</span><br><span class="line">    private DataSource dataSource = null;</span><br><span class="line"></span><br><span class="line">    @Value(&quot;$&#123;spring.datasource.username&#125;&quot;)</span><br><span class="line">    private String username;</span><br><span class="line">    @Value(&quot;$&#123;spring.datasource.password&#125;&quot;)</span><br><span class="line">    private String password;</span><br><span class="line">    @Value(&quot;$&#123;spring.datasource.url&#125;&quot;)</span><br><span class="line">    private String url;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * init pool</span><br><span class="line">     *</span><br><span class="line">     * @return dataSource</span><br><span class="line">     * @throws Exception exception</span><br><span class="line">     */</span><br><span class="line">    public synchronized DataSource initPool() throws Exception &#123;</span><br><span class="line">        if (dataSource != null) &#123;</span><br><span class="line">            return dataSource;</span><br><span class="line">        &#125;</span><br><span class="line">        Map&lt;String, String&gt; druidMap = new HashMap&lt;&gt;(22);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_USERNAME, username);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_PASSWORD, password);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_URL, url);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_DRIVERCLASSNAME, &quot;com.mysql.cj.jdbc.Driver&quot;);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_INITIALSIZE, &quot;10&quot;);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_MINIDLE, &quot;5&quot;);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_MAXACTIVE, &quot;300&quot;);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_MAXWAIT, &quot;60000&quot;);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_TIMEBETWEENEVICTIONRUNSMILLIS, &quot;60000&quot;);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_MINEVICTABLEIDLETIMEMILLIS, &quot;30000&quot;);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_VALIDATIONQUERY, &quot;SELECT &#x27;x&#x27;&quot;);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_TESTWHILEIDLE, &quot;true&quot;);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_TESTONBORROW, &quot;false&quot;);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_TESTONRETURN, &quot;false&quot;);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_POOLPREPAREDSTATEMENTS, &quot;true&quot;);</span><br><span class="line">        druidMap.put(DruidDataSourceFactory.PROP_FILTERS, &quot;stat&quot;);</span><br><span class="line">        dataSource = DruidDataSourceFactory.createDataSource(druidMap);</span><br><span class="line">        return dataSource;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * get connection</span><br><span class="line">     *</span><br><span class="line">     * @return  connection</span><br><span class="line">     */</span><br><span class="line">    Connection getConnection() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            return initPool().getConnection();</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            log.error(&quot;DruidUtils getConnection has error: &quot;, e);</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;        </span><br></pre></td></tr></table></figure>
+<h3 id="新增MysqlBaseUtils-java文件"><a href="#新增MysqlBaseUtils-java文件" class="headerlink" title="新增MysqlBaseUtils java文件"></a>新增MysqlBaseUtils java文件</h3><p>内容如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br></pre></td><td class="code"><pre><span class="line">@Slf4j</span><br><span class="line">@Component</span><br><span class="line">public class MysqlBaseUtils &#123;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private DruidUtils druidUtils;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * get list</span><br><span class="line">     *</span><br><span class="line">     * @param sql        sql</span><br><span class="line">     * @param params     paramsList</span><br><span class="line">     * @return list</span><br><span class="line">     * @throws SQLException SQLException</span><br><span class="line">     */</span><br><span class="line">    public List&lt;Map&lt;String, Object&gt;&gt; getList(String sql, List&lt;Object&gt; params) throws SQLException &#123;</span><br><span class="line">        getPreparedSql(sql, params);</span><br><span class="line">        Connection conn = null;</span><br><span class="line">        PreparedStatement ps = null;</span><br><span class="line">        ResultSet rs = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            conn = druidUtils.getConnection();</span><br><span class="line">            if (null != conn) &#123;</span><br><span class="line">                ps = conn.prepareStatement(sql);</span><br><span class="line">                params2ps(params, ps);</span><br><span class="line">                rs = ps.executeQuery();</span><br><span class="line">                return getRows(rs);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            safeCloseResultSet(rs);</span><br><span class="line">            safeCloseStat(ps);</span><br><span class="line">            closeConnection(conn);</span><br><span class="line">        &#125;</span><br><span class="line">        return new ArrayList&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * get one column by row</span><br><span class="line">     *</span><br><span class="line">     * @param sql        sql</span><br><span class="line">     * @param params     paramsList</span><br><span class="line">     * @return string</span><br><span class="line">     * @throws SQLException SQLException</span><br><span class="line">     */</span><br><span class="line">    public String getOneColumnByRow(String sql, List&lt;Object&gt; params) throws SQLException &#123;</span><br><span class="line">        getPreparedSql(sql, params);</span><br><span class="line">        Connection conn = null;</span><br><span class="line">        PreparedStatement ps = null;</span><br><span class="line">        ResultSet rs = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            conn = druidUtils.getConnection();</span><br><span class="line">            if (null != conn) &#123;</span><br><span class="line">                ps = conn.prepareStatement(sql);</span><br><span class="line">                params2ps(params, ps);</span><br><span class="line">                rs = ps.executeQuery();</span><br><span class="line">                if (rs.next()) &#123;</span><br><span class="line">                    return rs.getString(1);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            return null;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            safeCloseResultSet(rs);</span><br><span class="line">            safeCloseStat(ps);</span><br><span class="line">            closeConnection(conn);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * execute insert、update、delete and return the number of rows affected</span><br><span class="line">     * insert、update、delete must be used by master db</span><br><span class="line">     *</span><br><span class="line">     * @param sql        sql</span><br><span class="line">     * @param params     paramsList</span><br><span class="line">     * @return int</span><br><span class="line">     * @throws SQLException SQLException</span><br><span class="line">     */</span><br><span class="line">    public int updateSql(String sql, List&lt;Object&gt; params) throws SQLException &#123;</span><br><span class="line">        getPreparedSql(sql, params);</span><br><span class="line">        Connection conn = null;</span><br><span class="line">        PreparedStatement ps = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            conn = druidUtils.getConnection();</span><br><span class="line">            if (null != conn) &#123;</span><br><span class="line">                ps = conn.prepareStatement(sql);</span><br><span class="line">                params2ps(params, ps);</span><br><span class="line">                return ps.executeUpdate();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            safeCloseStat(ps);</span><br><span class="line">            closeConnection(conn);</span><br><span class="line">        &#125;</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * batch execute insert、update、delete and return true or false</span><br><span class="line">     *</span><br><span class="line">     * @param sqlList    sqlList</span><br><span class="line">     * @param paramsList paramsList</span><br><span class="line">     * @return boolean</span><br><span class="line">     */</span><br><span class="line">    public boolean batchUpdateSql(List&lt;String&gt; sqlList, List&lt;List&lt;Object&gt;&gt; paramsList) &#123;</span><br><span class="line">        Connection conn = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            conn = druidUtils.getConnection();</span><br><span class="line">            if (null != conn) &#123;</span><br><span class="line">                conn.setAutoCommit(false);</span><br><span class="line">                for (int j = 0; j &lt; sqlList.size(); j++) &#123;</span><br><span class="line">                    PreparedStatement ps = null;</span><br><span class="line">                    try &#123;</span><br><span class="line">                        ps = conn.prepareStatement(sqlList.get(j));</span><br><span class="line">                        List&lt;Object&gt; params = paramsList.get(j);</span><br><span class="line">                        getPreparedSql(sqlList.get(j), params);</span><br><span class="line">                        params2ps(params, ps);</span><br><span class="line">                        ps.execute();</span><br><span class="line">                    &#125; finally &#123;</span><br><span class="line">                        safeCloseStat(ps);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                conn.commit();</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception se) &#123;</span><br><span class="line">            log.error(&quot;batchUpdateSql has error&quot;, se);</span><br><span class="line">            try &#123;</span><br><span class="line">                if (conn != null) &#123;</span><br><span class="line">                    conn.rollback();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; catch (SQLException e) &#123;</span><br><span class="line">                log.error(&quot;batchUpdateSql conn rollback has error&quot;, e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            closeConnection(conn);</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * get sql</span><br><span class="line">     *</span><br><span class="line">     * @param sql    sql</span><br><span class="line">     * @param params paramsList</span><br><span class="line">     */</span><br><span class="line">    private static void getPreparedSql(String sql, List&lt;Object&gt; params) &#123;</span><br><span class="line">        if (CollectionUtils.isEmpty(params)) &#123;</span><br><span class="line">            if (log.isDebugEnabled()) &#123;</span><br><span class="line">                log.debug(sql);</span><br><span class="line">            &#125;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        StringBuilder returnSql = new StringBuilder();</span><br><span class="line">        String[] subSql = sql.split(&quot;\\?&quot;);</span><br><span class="line">        for (int i = 0; i &lt; params.size(); i++) &#123;</span><br><span class="line">            if (params.get(i) instanceof String) &#123;</span><br><span class="line">                returnSql.append(subSql[i]).append(&quot;&#x27;&quot;).append(params.get(i)).append(&quot;&#x27;&quot;);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                returnSql.append(subSql[i]).append(params.get(i));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if (subSql.length &gt; params.size()) &#123;</span><br><span class="line">            returnSql.append(subSql[subSql.length - 1]);</span><br><span class="line">        &#125;</span><br><span class="line">        if (log.isDebugEnabled()) &#123;</span><br><span class="line">            log.debug(returnSql.toString());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * get ps by params</span><br><span class="line">     *</span><br><span class="line">     * @param params paramsList</span><br><span class="line">     * @param ps     ps</span><br><span class="line">     * @throws SQLException SQLException</span><br><span class="line">     */</span><br><span class="line">    static void params2ps(List&lt;Object&gt; params, PreparedStatement ps) throws SQLException &#123;</span><br><span class="line">        for (int i = 0; i &lt; params.size(); i++) &#123;</span><br><span class="line">            Object paramsObject = params.get(i);</span><br><span class="line">            int parameterIndex = i + 1;</span><br><span class="line">            if (paramsObject instanceof String) &#123;</span><br><span class="line">                ps.setString(parameterIndex, paramsObject.toString());</span><br><span class="line">            &#125; else if (paramsObject instanceof Integer) &#123;</span><br><span class="line">                ps.setInt(parameterIndex, (int) paramsObject);</span><br><span class="line">            &#125; else if (paramsObject instanceof Long) &#123;</span><br><span class="line">                ps.setLong(parameterIndex, (long) paramsObject);</span><br><span class="line">            &#125; else if (paramsObject instanceof Double) &#123;</span><br><span class="line">                ps.setDouble(parameterIndex, (double) paramsObject);</span><br><span class="line">            &#125; else if (paramsObject instanceof Float) &#123;</span><br><span class="line">                ps.setFloat(parameterIndex, (float) paramsObject);</span><br><span class="line">            &#125; else if (paramsObject == null) &#123;</span><br><span class="line">                ps.setNull(parameterIndex, Types.NULL);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                ps.setString(parameterIndex, paramsObject.toString());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * get rows by resultSet</span><br><span class="line">     *</span><br><span class="line">     * @param rs rs</span><br><span class="line">     * @return list</span><br><span class="line">     * @throws SQLException SQLException</span><br><span class="line">     */</span><br><span class="line">    private static List&lt;Map&lt;String, Object&gt;&gt; getRows(ResultSet rs) throws SQLException &#123;</span><br><span class="line">        List&lt;Map&lt;String, Object&gt;&gt; rows = new ArrayList&lt;&gt;();</span><br><span class="line">        while (rs.next()) &#123;</span><br><span class="line">            rows.add(getRowMap(rs));</span><br><span class="line">        &#125;</span><br><span class="line">        return rows;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * get rowMap by resultSet</span><br><span class="line">     *</span><br><span class="line">     * @param rs rs</span><br><span class="line">     * @return map</span><br><span class="line">     * @throws SQLException SQLException</span><br><span class="line">     */</span><br><span class="line">    private static Map&lt;String, Object&gt; getRowMap(ResultSet rs) throws SQLException &#123;</span><br><span class="line">        ResultSetMetaData rSmd = rs.getMetaData();</span><br><span class="line">        Map&lt;String, Object&gt; row = new HashMap&lt;&gt;(16);</span><br><span class="line">        for (int i = 1; i &lt;= rSmd.getColumnCount(); i++) &#123;</span><br><span class="line">            String colName = rSmd.getColumnLabel(i);</span><br><span class="line">            Object colValue = rs.getObject(i);</span><br><span class="line">            row.put(colName, colValue);</span><br><span class="line">        &#125;</span><br><span class="line">        return row;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * safe close resultSet</span><br><span class="line">     *</span><br><span class="line">     * @param rs rs</span><br><span class="line">     */</span><br><span class="line">    private static void safeCloseResultSet(ResultSet rs) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            if (rs != null) &#123;</span><br><span class="line">                rs.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            log.error(&quot;Close ResultSet has error&quot;, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * safe close PreparedStatement</span><br><span class="line">     *</span><br><span class="line">     * @param stat stat</span><br><span class="line">     */</span><br><span class="line">    private static void safeCloseStat(PreparedStatement stat) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            if (stat != null) &#123;</span><br><span class="line">                stat.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            log.error(&quot;Close ResultSet has error&quot;, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * safe close connection</span><br><span class="line">     *</span><br><span class="line">     * @param connection connection</span><br><span class="line">     */</span><br><span class="line">    private static void closeConnection(Connection connection) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            if (connection != null) &#123;</span><br><span class="line">                connection.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (SQLException e) &#123;</span><br><span class="line">            log.error(&quot;closeConnection has error&quot;, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##mybatis plus连接方式</p>
+<h3 id="导入maven配置-1"><a href="#导入maven配置-1" class="headerlink" title="导入maven配置"></a>导入maven配置</h3><p>根据实际情况选择合适的匹配版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.baomidou&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;3.4.3.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.2.8&lt;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="新增配置文件内容-1"><a href="#新增配置文件内容-1" class="headerlink" title="新增配置文件内容"></a>新增配置文件内容</h3><p>properties文件内容如下(根据实际情况更改)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">spring.autoconfigure.exclude=com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure</span><br><span class="line">spring.datasource.type=com.alibaba.druid.pool.DruidDataSource</span><br><span class="line">spring.datasource.druid.driver-class-name=com.mysql.cj.jdbc.Driver</span><br><span class="line">spring.datasource.druid.url=jdbc:mysql://127.0.0.1:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=true&amp;serverTimezone=CTT&amp;useOldAliasMetadataBehavior=true</span><br><span class="line">spring.datasource.druid.username=test</span><br><span class="line">spring.datasource.druid.password=test</span><br><span class="line">spring.datasource.druid.initial-size=5</span><br><span class="line">spring.datasource.druid.min-idle=5</span><br><span class="line">spring.datasource.druid.max-active=5</span><br><span class="line">spring.datasource.druid.max-wait=5</span><br><span class="line">spring.datasource.druid.time-between-eviction-runs-millis=60000</span><br><span class="line">spring.datasource.druid.min-evictable-idle-time-millis=300000</span><br><span class="line">spring.datasource.druid.validation-query=SELECT &#x27;x&#x27;</span><br><span class="line">spring.datasource.druid.test-while-idle=true</span><br><span class="line">spring.datasource.druid.test-on-borrow=false</span><br><span class="line">spring.datasource.druid.test-on-return=false</span><br><span class="line">spring.datasource.druid.pool-prepared-statements=true</span><br><span class="line">spring.datasource.druid.max-pool-prepared-statement-per-connection-size=20</span><br><span class="line">spring.datasource.druid.filters=stat,wall,slf4j,config</span><br><span class="line">spring.datasource.druid.use-global-data-source-stat=true</span><br><span class="line">spring.datasource.druid.filter.stat.log-slow-sql=true</span><br><span class="line">spring.datasource.druid.filter.stat.merge-sql=true</span><br><span class="line">spring.datasource.druid.filter.stat.slow-sql-millis=10000</span><br></pre></td></tr></table></figure>
+<p>yml文件内容如下(根据实际情况更改)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  autoconfigure:</span><br><span class="line">    exclued: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure</span><br><span class="line">  datasource:</span><br><span class="line">    type: com.alibaba.druid.pool.DruidDataSource</span><br><span class="line">    druid:</span><br><span class="line">      driver-class-name: com.mysql.cj.jdbc.Driver</span><br><span class="line">      url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=true&amp;serverTimezone=CTT&amp;useOldAliasMetadataBehavior=true</span><br><span class="line">      username: githubtest</span><br><span class="line">      password: githubTest2022&amp;</span><br><span class="line">      initialSize: 5</span><br><span class="line">      minIdle: 5</span><br><span class="line">      maxActive: 30</span><br><span class="line">      maxWait: 60000</span><br><span class="line">      timeBetweenEvictionRunsMillis: 60000</span><br><span class="line">      minEvictableIdleTimeMillis: 300000</span><br><span class="line">      validationQuery: SELECT &#x27;x&#x27;</span><br><span class="line">      testWhileIdle: true</span><br><span class="line">      testOnBorrow: false</span><br><span class="line">      testOnReturn: false</span><br><span class="line">      poolPreparedStatements: true</span><br><span class="line">      maxPoolPreparedStatementPerConnectionSize: 20</span><br><span class="line">      filters: stat,wall,slf4j,config</span><br><span class="line">      useGlobalDataSourceStat: true</span><br><span class="line">      stat:</span><br><span class="line">        log-slow-sql: true</span><br><span class="line">        merge-sql: true</span><br><span class="line">        slow-sql-millis: 10000</span><br></pre></td></tr></table></figure>
+<h3 id="application启动类增加-MapperScan注解"><a href="#application启动类增加-MapperScan注解" class="headerlink" title="application启动类增加@MapperScan注解"></a>application启动类增加@MapperScan注解</h3><p>com.ml.mapper为mapper文件夹,根据实际情况更改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">@MapperScan(&quot;com.ml.mapper&quot;)</span><br><span class="line">public class TestApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(TestApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+   
+   <div>
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+   </div>
+  
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>dml
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://wodangminlong.github.io/2021/11/13/spring-mysql/" title="Springboot配置使用mysql">https://wodangminlong.github.io/2021/11/13/spring-mysql/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mysql/" rel="tag"># mysql</a>
+              <a href="/tags/springboot-mysql/" rel="tag"># springboot mysql</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/12/spring-rabbitmq/" rel="prev" title="Springboot配置使用rabbitmq">
+      <i class="fa fa-chevron-left"></i> Springboot配置使用rabbitmq
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81NDU1MS8zMTAyMg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5maven%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">导入maven配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">新增配置文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%A2%9EDruidUtils-java%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">新增DruidUtils java文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%A2%9EMysqlBaseUtils-java%E6%96%87%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">新增MysqlBaseUtils java文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5maven%E9%85%8D%E7%BD%AE-1"><span class="nav-number">5.</span> <span class="nav-text">导入maven配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9-1"><span class="nav-number">6.</span> <span class="nav-text">新增配置文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#application%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%A2%9E%E5%8A%A0-MapperScan%E6%B3%A8%E8%A7%A3"><span class="nav-number">7.</span> <span class="nav-text">application启动类增加@MapperScan注解</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="dml"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">dml</p>
+  <div class="site-description" itemprop="description">胜利垂青于有准备的人</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dml</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共9.3k字</span>
+</div>
+<a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

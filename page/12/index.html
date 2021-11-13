@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/01/zookeeper3.7.0/">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/02/kafka2.12-3.0.0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/01/zookeeper3.7.0/" class="post-title-link" itemprop="url">Centos7安装zookeeper3.7.0并设置开机启动</a>
+            <a href="/2021/11/02/kafka2.12-3.0.0/" class="post-title-link" itemprop="url">Centos7安装kafka_2.12-3.0.0并设置开机启动</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-01 08:45:18 / 修改时间：08:44:49" itemprop="dateCreated datePublished" datetime="2021-11-01T08:45:18+08:00">2021-11-01</time>
+              <time title="创建时间：2021-11-02 11:37:04 / 修改时间：11:36:53" itemprop="dateCreated datePublished" datetime="2021-11-02T11:37:04+08:00">2021-11-02</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -197,7 +197,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a>
+                  <a href="/categories/kafka/" itemprop="url" rel="index"><span itemprop="name">kafka</span></a>
                 </span>
             </span>
 
@@ -212,12 +212,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="一、下载apache-zookeeper-3-7-0-bin-tar安装包"><a href="#一、下载apache-zookeeper-3-7-0-bin-tar安装包" class="headerlink" title="一、下载apache-zookeeper-3.7.0-bin.tar安装包"></a>一、下载apache-zookeeper-3.7.0-bin.tar安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://zookeeper.apache.org/">https://zookeeper.apache.org/</a></p>
+          <h3 id="一、下载kafka-2-12-3-0-0-tgz安装包"><a href="#一、下载kafka-2-12-3-0-0-tgz安装包" class="headerlink" title="一、下载kafka_2.12-3.0.0.tgz安装包"></a>一、下载kafka_2.12-3.0.0.tgz安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="http://kafka.apache.org/">http://kafka.apache.org</a></p>
 <h3 id="二、将文件拷贝至服务器-usr-local-目录下并解压"><a href="#二、将文件拷贝至服务器-usr-local-目录下并解压" class="headerlink" title="二、将文件拷贝至服务器/usr/local 目录下并解压"></a>二、将文件拷贝至服务器/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -xvf apache-zookeeper-3.7.0-bin.tar</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf kafka_2.12-3.0.0.tgz</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/11/01/zookeeper3.7.0/#more" rel="contents">
+              <a class="btn" href="/2021/11/02/kafka2.12-3.0.0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -242,7 +242,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -310,20 +310,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -363,7 +363,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共7.4k字</span>
+  <span class="post-count">博客全站共9.3k字</span>
 </div>
 <a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
 
