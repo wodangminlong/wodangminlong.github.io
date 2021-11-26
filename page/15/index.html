@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/10/spring-nacos/">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/11/nginx-config/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/10/spring-nacos/" class="post-title-link" itemprop="url">Springboot配置及使用nacos</a>
+            <a href="/2021/11/11/nginx-config/" class="post-title-link" itemprop="url">nginx配置反向代理和负载均衡</a>
         </h2>
 
         <div class="post-meta">
@@ -187,27 +187,25 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-11-10 11:34:49" itemprop="dateCreated datePublished" datetime="2021-11-10T11:34:49+08:00">2021-11-10</time>
+              <time title="创建时间：2021-11-11 11:10:17 / 修改时间：11:09:41" itemprop="dateCreated datePublished" datetime="2021-11-11T11:10:17+08:00">2021-11-11</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-12 15:05:40" itemprop="dateModified" datetime="2021-11-12T15:05:40+08:00">2021-11-12</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/springboot-nacos/" itemprop="url" rel="index"><span itemprop="name">springboot nacos</span></a>
+                  <a href="/categories/nginx/" itemprop="url" rel="index"><span itemprop="name">nginx</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/springboot-nacos/nacos/" itemprop="url" rel="index"><span itemprop="name">nacos</span></a>
+                  <a href="/categories/nginx/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">反向代理</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nginx/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" itemprop="url" rel="index"><span itemprop="name">负载均衡</span></a>
                 </span>
             </span>
 
@@ -222,14 +220,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="导入maven配置"><a href="#导入maven配置" class="headerlink" title="导入maven配置"></a>导入maven配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">根据实际情况选择合适的匹配版本</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line"> &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line"> &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;/artifactId&gt;</span><br><span class="line"> &lt;version&gt;&#123;spring-cloud-starter-alibaba-nacos-discovery.version&#125;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line"> &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line"> &lt;artifactId&gt;spring-cloud-alibaba-nacos-config&lt;/artifactId&gt;</span><br><span class="line"> &lt;version&gt;&#123;spring-cloud-alibaba-nacos-config.version&#125;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="properties文件配置"><a href="#properties文件配置" class="headerlink" title="properties文件配置"></a>properties文件配置</h3><p>这里以服务器IP地址192.168.17.133示例,根据实际情况更改</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spring.profiles.active=dev</span><br><span class="line">spring.application.name=test-server</span><br><span class="line">spring.cloud.nacos.discovery.server-addr=192.168.17.133:8848</span><br><span class="line">spring.cloud.nacos.config.server-addr=192.168.17.133:8848</span><br><span class="line">spring.cloud.nacos.config.file-extension=properties</span><br><span class="line">spring.cloud.nacos.config.prefix=test-server</span><br></pre></td></tr></table></figure>
-<h3 id="yml文件配置"><a href="#yml文件配置" class="headerlink" title="yml文件配置"></a>yml文件配置</h3><p>这里以服务器IP地址192.168.17.133示例,根据实际情况更改</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  profiles:</span><br><span class="line">    active: dev</span><br><span class="line">  application:</span><br><span class="line">    name: test-server</span><br><span class="line">  cloud:</span><br><span class="line">    nacos:</span><br><span class="line">      discovery:</span><br><span class="line">        server-addr: 192.168.17.133:8848</span><br><span class="line">      config:</span><br><span class="line">        server-addr: 192.168.17.133:8848</span><br><span class="line">        file-extension: yaml</span><br><span class="line">        prefix: test-server</span><br></pre></td></tr></table></figure>
+          <h3 id="http反向代理配置-无https"><a href="#http反向代理配置-无https" class="headerlink" title="http反向代理配置(无https)"></a>http反向代理配置(无https)</h3><p>这里以服务器IP地址192.168.17.133示例,根据实际情况更改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  192.168.17.133;</span><br><span class="line">        location /test/ &#123;</span><br><span class="line">	        proxy_pass http://127.0.0.1:8080/;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置完成后重启nginx,通过IP/test/***  访问对应资源接口</p>
+<h3 id="nginx重启命令"><a href="#nginx重启命令" class="headerlink" title="nginx重启命令"></a>nginx重启命令</h3><p>这里以服务器nginx安装目录/usr/local/nginx 为例,根据实际情况更改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/nginx/sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
+<h3 id="http反向代理配置-有https"><a href="#http反向代理配置-有https" class="headerlink" title="http反向代理配置(有https)"></a>http反向代理配置(有https)</h3><p>这里以服务器IP地址192.168.17.133且ssl有配置示例,根据实际情况更改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  192.168.17.133;</span><br><span class="line">        return 301 https://$host$request_uri;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">        listen       443 ssl;</span><br><span class="line">        server_name  192.168.17.133;</span><br><span class="line">        root html;</span><br><span class="line">        index index.html index.htm;</span><br><span class="line">        ssl_certificate         cert/5026264_192.168.17.133.pem;</span><br><span class="line">        ssl_certificate_key     cert/5026264_192.168.17.133.key;</span><br><span class="line">        ssl_session_timeout 5m;</span><br><span class="line">        ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;</span><br><span class="line">        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</span><br><span class="line">        ssl_prefer_server_ciphers on;</span><br><span class="line">        location /test/ &#123;</span><br><span class="line">	        proxy_pass http://127.0.0.1:8080/;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;        </span><br></pre></td></tr></table></figure>
+<p>配置完成后重启nginx,通过IP/test/***  访问对应资源接口,此时发现浏览器中原有的http变更为https,表示配置转发成功</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/11/10/spring-nacos/#more" rel="contents">
+              <a class="btn" href="/2021/11/11/nginx-config/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -254,7 +255,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -322,20 +323,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -375,7 +376,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共15.2k字</span>
+  <span class="post-count">博客全站共15.3k字</span>
 </div>
 <a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
 
