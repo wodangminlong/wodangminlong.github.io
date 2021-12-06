@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/23/centos-chinese/">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/24/spring-redis-close-error/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/23/centos-chinese/" class="post-title-link" itemprop="url">Centos中文小方格解决方案</a>
+            <a href="/2021/11/24/spring-redis-close-error/" class="post-title-link" itemprop="url">SpringBoot2.x+ Redis频繁出现 **远程主机强迫关闭了一个现有的连接。** 问题</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-23 17:11:33 / 修改时间：17:10:51" itemprop="dateCreated datePublished" datetime="2021-11-23T17:11:33+08:00">2021-11-23</time>
+              <time title="创建时间：2021-11-24 12:06:23 / 修改时间：12:06:09" itemprop="dateCreated datePublished" datetime="2021-11-24T12:06:23+08:00">2021-11-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -197,11 +197,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/centos-chinese/" itemprop="url" rel="index"><span itemprop="name">centos chinese</span></a>
+                  <a href="/categories/springboot/" itemprop="url" rel="index"><span itemprop="name">springboot</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/centos-chinese/centos-zh-CN/" itemprop="url" rel="index"><span itemprop="name">centos zh_CN</span></a>
+                  <a href="/categories/springboot/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a>
                 </span>
             </span>
 
@@ -216,12 +216,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="查看当前Locale信息"><a href="#查看当前Locale信息" class="headerlink" title="查看当前Locale信息"></a>查看当前Locale信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># localectl status</span><br></pre></td></tr></table></figure>
-<h3 id="列出系统中的Locale信息"><a href="#列出系统中的Locale信息" class="headerlink" title="列出系统中的Locale信息"></a>列出系统中的Locale信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># localectl list-locales</span><br></pre></td></tr></table></figure>
-<h3 id="查找中文语言包"><a href="#查找中文语言包" class="headerlink" title="查找中文语言包"></a>查找中文语言包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum search Chinese</span><br></pre></td></tr></table></figure>
-<p>查找到的结果</p>
-<h3 id="安装搜索到的中文包"><a href="#安装搜索到的中文包" class="headerlink" title="安装搜索到的中文包"></a>安装搜索到的中文包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install langpacks-zh_CN</span><br></pre></td></tr></table></figure>
-<h3 id="修改Locale配置"><a href="#修改Locale配置" class="headerlink" title="修改Locale配置"></a>修改Locale配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># localectl set-locale LANG=zh_CN.utf8</span><br></pre></td></tr></table></figure>
+          <h3 id="最近服务器经常出现redis连接错误"><a href="#最近服务器经常出现redis连接错误" class="headerlink" title="最近服务器经常出现redis连接错误"></a>最近服务器经常出现redis连接错误</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># org.springframework.data.redis.RedisSystemException: Redis exception; nested exception is io.lettuce.core.RedisException: java.io.IOException: 远程主机强迫关闭了一个现有的连接。</span><br><span class="line"># ...</span><br><span class="line"># Caused by: io.lettuce.core.RedisException: java.io.IOException: 远程主机强迫关闭了一个现有的连接。</span><br><span class="line"># ...</span><br><span class="line"># Caused by: java.io.IOException: 远程主机强迫关闭了一个现有的连接。</span><br><span class="line"># ...</span><br></pre></td></tr></table></figure>
+<h3 id="将配置文件中的lettuce更改为jedis"><a href="#将配置文件中的lettuce更改为jedis" class="headerlink" title="将配置文件中的lettuce更改为jedis"></a>将配置文件中的lettuce更改为jedis</h3><table>
+    <tr>
+        <th>更改前</th>
+        <th>更改后</th>
+    </tr>
+    <tr>
+        <td>
+            spring: <br>
+            &nbsp;&nbsp;  redis: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;    lettuce: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      pool: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        ... <br>
+        </td>
+        <td>
+            spring: <br>
+            &nbsp;&nbsp;  redis: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;    jedis: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      pool: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        ... <br>
+        </td>
+    </tr>
+</table>
+
+<h3 id="更改pom文件"><a href="#更改pom文件" class="headerlink" title="更改pom文件"></a>更改pom文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">  &lt;exclusions&gt;</span><br><span class="line">    &lt;exclusion&gt;</span><br><span class="line">      &lt;groupId&gt;redis.clients&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;jedis&lt;/artifactId&gt;</span><br><span class="line">    &lt;/exclusion&gt;</span><br><span class="line">    &lt;exclusion&gt;</span><br><span class="line">      &lt;groupId&gt;io.lettuce&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;lettuce-core&lt;/artifactId&gt;</span><br><span class="line">    &lt;/exclusion&gt;</span><br><span class="line">  &lt;/exclusions&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line"> &lt;groupId&gt;redis.clients&lt;/groupId&gt;</span><br><span class="line"> &lt;artifactId&gt;jedis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="观察两天"><a href="#观察两天" class="headerlink" title="观察两天"></a>观察两天</h3>
       
     </div>
 
@@ -241,7 +261,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -309,20 +329,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">51</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">47</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -362,7 +382,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共18.2k字</span>
+  <span class="post-count">博客全站共18.5k字</span>
 </div>
 <a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
 
