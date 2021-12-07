@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/02/kafka2.12-3.0.0/">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/02/mysql-execute-sql-file/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/02/kafka2.12-3.0.0/" class="post-title-link" itemprop="url">Centos7安装kafka_2.12-3.0.0并设置开机启动</a>
+            <a href="/2021/11/02/mysql-execute-sql-file/" class="post-title-link" itemprop="url">mysql执行sql文件</a>
         </h2>
 
         <div class="post-meta">
@@ -187,17 +187,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-11-02 11:37:04 / 修改时间：11:36:53" itemprop="dateCreated datePublished" datetime="2021-11-02T11:37:04+08:00">2021-11-02</time>
+              <time title="创建时间：2021-11-02 11:46:35" itemprop="dateCreated datePublished" datetime="2021-11-02T11:46:35+08:00">2021-11-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-23 09:36:42" itemprop="dateModified" datetime="2021-11-23T09:36:42+08:00">2021-11-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/kafka/" itemprop="url" rel="index"><span itemprop="name">kafka</span></a>
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
                 </span>
             </span>
 
@@ -212,17 +218,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="一、下载kafka-2-12-3-0-0-tgz安装包"><a href="#一、下载kafka-2-12-3-0-0-tgz安装包" class="headerlink" title="一、下载kafka_2.12-3.0.0.tgz安装包"></a>一、下载kafka_2.12-3.0.0.tgz安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="http://kafka.apache.org/">http://kafka.apache.org</a></p>
-<h3 id="二、将文件拷贝至服务器-usr-local-目录下并解压"><a href="#二、将文件拷贝至服务器-usr-local-目录下并解压" class="headerlink" title="二、将文件拷贝至服务器/usr/local 目录下并解压"></a>二、将文件拷贝至服务器/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf kafka_2.12-3.0.0.tgz</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/02/kafka2.12-3.0.0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h3 id="登入mysql-选中需要执行的数据库-如果没有就创建一个"><a href="#登入mysql-选中需要执行的数据库-如果没有就创建一个" class="headerlink" title="登入mysql,选中需要执行的数据库(如果没有就创建一个)"></a>登入mysql,选中需要执行的数据库(如果没有就创建一个)</h3><p>这里以test数据库为例,根据实际情况更改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># mysql -uroot -p</span><br><span class="line">mysql&gt; use test;</span><br></pre></td></tr></table></figure>
+<h3 id="使用source命令执行sql文件-使用绝对路径"><a href="#使用source命令执行sql文件-使用绝对路径" class="headerlink" title="使用source命令执行sql文件(使用绝对路径)"></a>使用source命令执行sql文件(使用绝对路径)</h3><p>这里以test.sql文件在root目录下为例,根据实际情况更改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; source /root/test.sql;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -242,7 +241,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/34/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><span class="page-number current">35</span><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="extend next" rel="next" href="/page/36/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/34/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><span class="page-number current">35</span><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/36/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -310,20 +309,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">54</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-count">50</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -363,7 +362,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共19.1k字</span>
+  <span class="post-count">博客全站共20.1k字</span>
 </div>
 <a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
 

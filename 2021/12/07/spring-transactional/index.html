@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/long.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/long.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/long.png">
+  <link rel="mask-icon" href="/images/long.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"wodangminlong.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Spring的事务管理方式有两种,1.编程式2.声明式。1.编程式事务是通过编码方式实现事务2.声明式事务基于AOP,可以使业务代码和事务处理解耦,在实际使用中声明式事务用的比较多在Springboot中使用Transactional直接在需要增加的事务方法上加@Transactional注解 12345@Transactionalpublic int testAdd() &amp;#123;    &#x2F;&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring中的Transactional">
+<meta property="og:url" content="https://wodangminlong.github.io/2021/12/07/spring-transactional/index.html">
+<meta property="og:site_name" content="知足常乐">
+<meta property="og:description" content="Spring的事务管理方式有两种,1.编程式2.声明式。1.编程式事务是通过编码方式实现事务2.声明式事务基于AOP,可以使业务代码和事务处理解耦,在实际使用中声明式事务用的比较多在Springboot中使用Transactional直接在需要增加的事务方法上加@Transactional注解 12345@Transactionalpublic int testAdd() &amp;#123;    &#x2F;&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-07T08:49:53.218Z">
+<meta property="article:modified_time" content="2021-12-07T08:49:40.186Z">
+<meta property="article:author" content="dml">
+<meta property="article:tag" content="spring">
+<meta property="article:tag" content="spring transactional">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://wodangminlong.github.io/2021/12/07/spring-transactional/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Spring中的Transactional | 知足常乐</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">知足常乐</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/12/07/spring-transactional/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring中的Transactional
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-12-07 16:49:53 / 修改时间：16:49:40" itemprop="dateCreated datePublished" datetime="2021-12-07T16:49:53+08:00">2021-12-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring/" itemprop="url" rel="index"><span itemprop="name">spring</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring/spring-transactional/" itemprop="url" rel="index"><span itemprop="name">spring transactional</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="Spring的事务管理方式有两种-1-编程式2-声明式。"><a href="#Spring的事务管理方式有两种-1-编程式2-声明式。" class="headerlink" title="Spring的事务管理方式有两种,1.编程式2.声明式。"></a>Spring的事务管理方式有两种,1.编程式2.声明式。</h3><h3 id="1-编程式事务是通过编码方式实现事务"><a href="#1-编程式事务是通过编码方式实现事务" class="headerlink" title="1.编程式事务是通过编码方式实现事务"></a>1.编程式事务是通过编码方式实现事务</h3><h3 id="2-声明式事务基于AOP-可以使业务代码和事务处理解耦-在实际使用中声明式事务用的比较多"><a href="#2-声明式事务基于AOP-可以使业务代码和事务处理解耦-在实际使用中声明式事务用的比较多" class="headerlink" title="2.声明式事务基于AOP,可以使业务代码和事务处理解耦,在实际使用中声明式事务用的比较多"></a>2.声明式事务基于AOP,可以使业务代码和事务处理解耦,在实际使用中声明式事务用的比较多</h3><h3 id="在Springboot中使用Transactional"><a href="#在Springboot中使用Transactional" class="headerlink" title="在Springboot中使用Transactional"></a>在Springboot中使用Transactional</h3><p>直接在需要增加的事务方法上加@Transactional注解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Transactional</span><br><span class="line">public int testAdd() &#123;</span><br><span class="line">    // do smoething</span><br><span class="line">    return 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Springboot在启动时会使用DataSourceTransactionManagerAutoConfiguration配置一个事务管理器DataSourceTransactionManager"><a href="#Springboot在启动时会使用DataSourceTransactionManagerAutoConfiguration配置一个事务管理器DataSourceTransactionManager" class="headerlink" title="Springboot在启动时会使用DataSourceTransactionManagerAutoConfiguration配置一个事务管理器DataSourceTransactionManager"></a>Springboot在启动时会使用DataSourceTransactionManagerAutoConfiguration配置一个事务管理器DataSourceTransactionManager</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@ConditionalOnSingleCandidate(DataSource.class)</span><br><span class="line">static class JdbcTransactionManagerConfiguration &#123;</span><br><span class="line">    JdbcTransactionManagerConfiguration() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    @ConditionalOnMissingBean(&#123;TransactionManager.class&#125;)</span><br><span class="line">    DataSourceTransactionManager transactionManager(Environment environment, DataSource dataSource, ObjectProvider&lt;TransactionManagerCustomizers&gt; transactionManagerCustomizers) &#123;</span><br><span class="line">        DataSourceTransactionManager transactionManager = this.createTransactionManager(environment, dataSource);</span><br><span class="line">        transactionManagerCustomizers.ifAvailable((customizers) -&gt; &#123;</span><br><span class="line">            customizers.customize(transactionManager);</span><br><span class="line">        &#125;);</span><br><span class="line">        return transactionManager;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private DataSourceTransactionManager createTransactionManager(Environment environment, DataSource dataSource) &#123;</span><br><span class="line">        return (DataSourceTransactionManager)((Boolean)environment.getProperty(&quot;spring.dao.exceptiontranslation.enabled&quot;, Boolean.class, Boolean.TRUE) ? new JdbcTransactionManager(dataSource) : new DataSourceTransactionManager(dataSource));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h3 id="而DataSourceTransactionManager继承至AbstractPlatformTransactionManager-AbstractPlatformTransactionManager又实现了PlatformTransactionManager-PlatformTransactionManager有继承了TransactionManager"><a href="#而DataSourceTransactionManager继承至AbstractPlatformTransactionManager-AbstractPlatformTransactionManager又实现了PlatformTransactionManager-PlatformTransactionManager有继承了TransactionManager" class="headerlink" title="而DataSourceTransactionManager继承至AbstractPlatformTransactionManager,AbstractPlatformTransactionManager又实现了PlatformTransactionManager,PlatformTransactionManager有继承了TransactionManager"></a>而DataSourceTransactionManager继承至AbstractPlatformTransactionManager,AbstractPlatformTransactionManager又实现了PlatformTransactionManager,PlatformTransactionManager有继承了TransactionManager</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class DataSourceTransactionManager extends AbstractPlatformTransactionManager implements ResourceTransactionManager, InitializingBean &#123;</span><br><span class="line"> ....</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public abstract class AbstractPlatformTransactionManager implements PlatformTransactionManager, Serializable &#123;</span><br><span class="line"> ....</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public interface PlatformTransactionManager extends TransactionManager &#123;</span><br><span class="line"> ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以我们才可以只加@Transactional注解就可以控制事务</p>
+<h3 id="看看-Transactional"><a href="#看看-Transactional" class="headerlink" title="看看@Transactional"></a>看看@Transactional</h3><p>内容如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">@Target(&#123;ElementType.TYPE, ElementType.METHOD&#125;)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Inherited</span><br><span class="line">@Documented</span><br><span class="line">public @interface Transactional &#123;</span><br><span class="line">    @AliasFor(&quot;transactionManager&quot;)</span><br><span class="line">    String value() default &quot;&quot;;</span><br><span class="line"></span><br><span class="line">    @AliasFor(&quot;value&quot;)</span><br><span class="line">    String transactionManager() default &quot;&quot;;</span><br><span class="line"></span><br><span class="line">    String[] label() default &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    Propagation propagation() default Propagation.REQUIRED;</span><br><span class="line"></span><br><span class="line">    Isolation isolation() default Isolation.DEFAULT;</span><br><span class="line"></span><br><span class="line">    int timeout() default -1;</span><br><span class="line"></span><br><span class="line">    String timeoutString() default &quot;&quot;;</span><br><span class="line"></span><br><span class="line">    boolean readOnly() default false;</span><br><span class="line"></span><br><span class="line">    Class&lt;? extends Throwable&gt;[] rollbackFor() default &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] rollbackForClassName() default &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    Class&lt;? extends Throwable&gt;[] noRollbackFor() default &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] noRollbackForClassName() default &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="value属性为指定的事务管理器-如果项目中有多个事务管理器时需要指定"><a href="#value属性为指定的事务管理器-如果项目中有多个事务管理器时需要指定" class="headerlink" title="value属性为指定的事务管理器,如果项目中有多个事务管理器时需要指定"></a>value属性为指定的事务管理器,如果项目中有多个事务管理器时需要指定</h3><h3 id="首先看propagation属性-propagation为事务的传播行为-默认为Propagation-REQUIRED"><a href="#首先看propagation属性-propagation为事务的传播行为-默认为Propagation-REQUIRED" class="headerlink" title="首先看propagation属性,propagation为事务的传播行为,默认为Propagation.REQUIRED"></a>首先看propagation属性,propagation为事务的传播行为,默认为Propagation.REQUIRED</h3><h3 id="Propagation枚举类的内容"><a href="#Propagation枚举类的内容" class="headerlink" title="Propagation枚举类的内容"></a>Propagation枚举类的内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public enum Propagation &#123;</span><br><span class="line">    REQUIRED(0),</span><br><span class="line">    SUPPORTS(1),</span><br><span class="line">    MANDATORY(2),</span><br><span class="line">    REQUIRES_NEW(3),</span><br><span class="line">    NOT_SUPPORTED(4),</span><br><span class="line">    NEVER(5),</span><br><span class="line">    NESTED(6);</span><br><span class="line"></span><br><span class="line">    private final int value;</span><br><span class="line"></span><br><span class="line">    private Propagation(int value) &#123;</span><br><span class="line">        this.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int value() &#123;</span><br><span class="line">        return this.value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Propagation枚举类属性含义"><a href="#Propagation枚举类属性含义" class="headerlink" title="Propagation枚举类属性含义"></a>Propagation枚举类属性含义</h3><table>
+    <tr>
+        <th>属性</th>
+        <th>描述</th>
+    </tr>
+    <tr>
+        <td>REQUIRED(0)</td>
+        <td>如果当前事务存在就加入该事务,如果当前事务不存在就创建一个新的事务</td>
+    </tr>
+    <tr>
+        <td>SUPPORTS(1)</td>
+        <td>如果当前事务存在就加入该事务,如果当前事务不存在就以非事务的方式运行</td>
+    </tr>
+    <tr>
+        <td>MANDATORY(2)</td>
+        <td>如果当前事务存在就加入该事务,如果当前事务不存在就抛出异常</td>
+    </tr>
+    <tr>
+        <td>REQUIRES_NEW(3)</td>
+        <td>重新创建一个事务,如果当前存在事务,暂停当前事务</td>
+    </tr>
+    <tr>
+        <td>NOT_SUPPORTED(4)</td>
+        <td>以非事务的方式运行,如果当前存在事务,暂停当前事务</td>
+    </tr>
+    <tr>
+        <td>NEVER(5)</td>
+        <td>以非事务的方式运行,如果当前存在事务就抛出异常</td>
+    </tr>
+    <tr>
+        <td>NESTED(6)</td>
+        <td>如果当前事务存在就在嵌套事务内执行。如果当前事务不存在就执行和REQUIRED(0)类似的操作</td>
+    </tr>
+</table>
+
+<h3 id="接着看isolation属性-isolation为事务的隔离级别-默认为Isolation-DEFAULT"><a href="#接着看isolation属性-isolation为事务的隔离级别-默认为Isolation-DEFAULT" class="headerlink" title="接着看isolation属性,isolation为事务的隔离级别,默认为Isolation.DEFAULT"></a>接着看isolation属性,isolation为事务的隔离级别,默认为Isolation.DEFAULT</h3><h3 id="Isolation枚举类的内容"><a href="#Isolation枚举类的内容" class="headerlink" title="Isolation枚举类的内容"></a>Isolation枚举类的内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public enum Isolation &#123;</span><br><span class="line">    DEFAULT(-1),</span><br><span class="line">    READ_UNCOMMITTED(1),</span><br><span class="line">    READ_COMMITTED(2),</span><br><span class="line">    REPEATABLE_READ(4),</span><br><span class="line">    SERIALIZABLE(8);</span><br><span class="line"></span><br><span class="line">    private final int value;</span><br><span class="line"></span><br><span class="line">    private Isolation(int value) &#123;</span><br><span class="line">        this.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int value() &#123;</span><br><span class="line">        return this.value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Isolation枚举类属性含义"><a href="#Isolation枚举类属性含义" class="headerlink" title="Isolation枚举类属性含义"></a>Isolation枚举类属性含义</h3><table>
+    <tr>
+        <th>属性</th>
+        <th>描述</th>
+    </tr>
+    <tr>
+        <td>DEFAULT(-1)</td>
+        <td>使用数据库默认的隔离级别</td>
+    </tr>
+    <tr>
+        <td>READ_UNCOMMITTED(1)</td>
+        <td>事务未修改完成之前,其他事务可以看到该事务所修改的数据</td>
+    </tr>
+    <tr>
+        <td>READ_COMMITTED(2)</td>
+        <td>事务完成前,其他事务无法看到该事务所修改的数据</td>
+    </tr>
+    <tr>
+        <td>REPEATABLE_READ(4)</td>
+        <td>如果在事务中查询了某个数据集,还能再次查询到相同的数据集,即使其他事务修改了所查询的数据。如果其他事务插入了新数据,就可以查询到该新插入的数据</td>
+    </tr>
+    <tr>
+        <td>SERIALIZABLE(8)</td>
+        <td>序列化事务,所有事务都按照顺序一个接一个执行</td>
+    </tr>
+</table>
+
+<h3 id="继续看timeout属性-timeout为事务的超时时间-默认为-1秒永不超时"><a href="#继续看timeout属性-timeout为事务的超时时间-默认为-1秒永不超时" class="headerlink" title="继续看timeout属性,timeout为事务的超时时间,默认为-1秒永不超时"></a>继续看timeout属性,timeout为事务的超时时间,默认为-1秒永不超时</h3><h3 id="readOnly属性为事务的读写性-默认为false"><a href="#readOnly属性为事务的读写性-默认为false" class="headerlink" title="readOnly属性为事务的读写性,默认为false"></a>readOnly属性为事务的读写性,默认为false</h3><h3 id="rollbackFor属性为事务回滚的依据-即遇到哪些异常情况时回滚-注意方法内需要抛出异常-如果try-catch了异常-会导致无法回滚"><a href="#rollbackFor属性为事务回滚的依据-即遇到哪些异常情况时回滚-注意方法内需要抛出异常-如果try-catch了异常-会导致无法回滚" class="headerlink" title="rollbackFor属性为事务回滚的依据,即遇到哪些异常情况时回滚,注意方法内需要抛出异常,如果try catch了异常,会导致无法回滚"></a>rollbackFor属性为事务回滚的依据,即遇到哪些异常情况时回滚,注意方法内需要抛出异常,如果try catch了异常,会导致无法回滚</h3><h3 id="noRollbackFor属性为事务不回滚的依据"><a href="#noRollbackFor属性为事务不回滚的依据" class="headerlink" title="noRollbackFor属性为事务不回滚的依据"></a>noRollbackFor属性为事务不回滚的依据</h3>
+    </div>
+
+    
+    
+    
+
+   
+   <div>
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+   </div>
+  
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>dml
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://wodangminlong.github.io/2021/12/07/spring-transactional/" title="Spring中的Transactional">https://wodangminlong.github.io/2021/12/07/spring-transactional/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/spring/" rel="tag"># spring</a>
+              <a href="/tags/spring-transactional/" rel="tag"># spring transactional</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/07/spring-aspect_log/" rel="prev" title="Spring使用aspect进行切面编程之log">
+      <i class="fa fa-chevron-left"></i> Spring使用aspect进行切面编程之log
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81NDU1MS8zMTAyMg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring%E7%9A%84%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F%E6%9C%89%E4%B8%A4%E7%A7%8D-1-%E7%BC%96%E7%A8%8B%E5%BC%8F2-%E5%A3%B0%E6%98%8E%E5%BC%8F%E3%80%82"><span class="nav-number">1.</span> <span class="nav-text">Spring的事务管理方式有两种,1.编程式2.声明式。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%BC%96%E7%A8%8B%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%98%AF%E9%80%9A%E8%BF%87%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E5%AE%9E%E7%8E%B0%E4%BA%8B%E5%8A%A1"><span class="nav-number">2.</span> <span class="nav-text">1.编程式事务是通过编码方式实现事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E5%9F%BA%E4%BA%8EAOP-%E5%8F%AF%E4%BB%A5%E4%BD%BF%E4%B8%9A%E5%8A%A1%E4%BB%A3%E7%A0%81%E5%92%8C%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86%E8%A7%A3%E8%80%A6-%E5%9C%A8%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8%E4%B8%AD%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%94%A8%E7%9A%84%E6%AF%94%E8%BE%83%E5%A4%9A"><span class="nav-number">3.</span> <span class="nav-text">2.声明式事务基于AOP,可以使业务代码和事务处理解耦,在实际使用中声明式事务用的比较多</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8Springboot%E4%B8%AD%E4%BD%BF%E7%94%A8Transactional"><span class="nav-number">4.</span> <span class="nav-text">在Springboot中使用Transactional</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Springboot%E5%9C%A8%E5%90%AF%E5%8A%A8%E6%97%B6%E4%BC%9A%E4%BD%BF%E7%94%A8DataSourceTransactionManagerAutoConfiguration%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E5%99%A8DataSourceTransactionManager"><span class="nav-number">5.</span> <span class="nav-text">Springboot在启动时会使用DataSourceTransactionManagerAutoConfiguration配置一个事务管理器DataSourceTransactionManager</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%8CDataSourceTransactionManager%E7%BB%A7%E6%89%BF%E8%87%B3AbstractPlatformTransactionManager-AbstractPlatformTransactionManager%E5%8F%88%E5%AE%9E%E7%8E%B0%E4%BA%86PlatformTransactionManager-PlatformTransactionManager%E6%9C%89%E7%BB%A7%E6%89%BF%E4%BA%86TransactionManager"><span class="nav-number">6.</span> <span class="nav-text">而DataSourceTransactionManager继承至AbstractPlatformTransactionManager,AbstractPlatformTransactionManager又实现了PlatformTransactionManager,PlatformTransactionManager有继承了TransactionManager</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9C%8B%E7%9C%8B-Transactional"><span class="nav-number">7.</span> <span class="nav-text">看看@Transactional</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#value%E5%B1%9E%E6%80%A7%E4%B8%BA%E6%8C%87%E5%AE%9A%E7%9A%84%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E5%99%A8-%E5%A6%82%E6%9E%9C%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%9C%89%E5%A4%9A%E4%B8%AA%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E5%99%A8%E6%97%B6%E9%9C%80%E8%A6%81%E6%8C%87%E5%AE%9A"><span class="nav-number">8.</span> <span class="nav-text">value属性为指定的事务管理器,如果项目中有多个事务管理器时需要指定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A6%96%E5%85%88%E7%9C%8Bpropagation%E5%B1%9E%E6%80%A7-propagation%E4%B8%BA%E4%BA%8B%E5%8A%A1%E7%9A%84%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA-%E9%BB%98%E8%AE%A4%E4%B8%BAPropagation-REQUIRED"><span class="nav-number">9.</span> <span class="nav-text">首先看propagation属性,propagation为事务的传播行为,默认为Propagation.REQUIRED</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Propagation%E6%9E%9A%E4%B8%BE%E7%B1%BB%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">10.</span> <span class="nav-text">Propagation枚举类的内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Propagation%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%B1%9E%E6%80%A7%E5%90%AB%E4%B9%89"><span class="nav-number">11.</span> <span class="nav-text">Propagation枚举类属性含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E7%9D%80%E7%9C%8Bisolation%E5%B1%9E%E6%80%A7-isolation%E4%B8%BA%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB-%E9%BB%98%E8%AE%A4%E4%B8%BAIsolation-DEFAULT"><span class="nav-number">12.</span> <span class="nav-text">接着看isolation属性,isolation为事务的隔离级别,默认为Isolation.DEFAULT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Isolation%E6%9E%9A%E4%B8%BE%E7%B1%BB%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">13.</span> <span class="nav-text">Isolation枚举类的内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Isolation%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%B1%9E%E6%80%A7%E5%90%AB%E4%B9%89"><span class="nav-number">14.</span> <span class="nav-text">Isolation枚举类属性含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%A7%E7%BB%AD%E7%9C%8Btimeout%E5%B1%9E%E6%80%A7-timeout%E4%B8%BA%E4%BA%8B%E5%8A%A1%E7%9A%84%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4-%E9%BB%98%E8%AE%A4%E4%B8%BA-1%E7%A7%92%E6%B0%B8%E4%B8%8D%E8%B6%85%E6%97%B6"><span class="nav-number">15.</span> <span class="nav-text">继续看timeout属性,timeout为事务的超时时间,默认为-1秒永不超时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#readOnly%E5%B1%9E%E6%80%A7%E4%B8%BA%E4%BA%8B%E5%8A%A1%E7%9A%84%E8%AF%BB%E5%86%99%E6%80%A7-%E9%BB%98%E8%AE%A4%E4%B8%BAfalse"><span class="nav-number">16.</span> <span class="nav-text">readOnly属性为事务的读写性,默认为false</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rollbackFor%E5%B1%9E%E6%80%A7%E4%B8%BA%E4%BA%8B%E5%8A%A1%E5%9B%9E%E6%BB%9A%E7%9A%84%E4%BE%9D%E6%8D%AE-%E5%8D%B3%E9%81%87%E5%88%B0%E5%93%AA%E4%BA%9B%E5%BC%82%E5%B8%B8%E6%83%85%E5%86%B5%E6%97%B6%E5%9B%9E%E6%BB%9A-%E6%B3%A8%E6%84%8F%E6%96%B9%E6%B3%95%E5%86%85%E9%9C%80%E8%A6%81%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8-%E5%A6%82%E6%9E%9Ctry-catch%E4%BA%86%E5%BC%82%E5%B8%B8-%E4%BC%9A%E5%AF%BC%E8%87%B4%E6%97%A0%E6%B3%95%E5%9B%9E%E6%BB%9A"><span class="nav-number">17.</span> <span class="nav-text">rollbackFor属性为事务回滚的依据,即遇到哪些异常情况时回滚,注意方法内需要抛出异常,如果try catch了异常,会导致无法回滚</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#noRollbackFor%E5%B1%9E%E6%80%A7%E4%B8%BA%E4%BA%8B%E5%8A%A1%E4%B8%8D%E5%9B%9E%E6%BB%9A%E7%9A%84%E4%BE%9D%E6%8D%AE"><span class="nav-number">18.</span> <span class="nav-text">noRollbackFor属性为事务不回滚的依据</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="dml"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">dml</p>
+  <div class="site-description" itemprop="description">胜利垂青于有准备的人</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dml</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共20.1k字</span>
+</div>
+<a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
