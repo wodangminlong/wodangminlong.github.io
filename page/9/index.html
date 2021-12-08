@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/29/zookeeper-working-principle/">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/30/java-displacement/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/29/zookeeper-working-principle/" class="post-title-link" itemprop="url">Zookeeper工作原理</a>
+            <a href="/2021/11/30/java-displacement/" class="post-title-link" itemprop="url">Java中的位移运算</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-29 18:32:40 / 修改时间：18:33:01" itemprop="dateCreated datePublished" datetime="2021-11-29T18:32:40+08:00">2021-11-29</time>
+              <time title="创建时间：2021-11-30 15:06:52 / 修改时间：15:06:22" itemprop="dateCreated datePublished" datetime="2021-11-30T15:06:52+08:00">2021-11-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -197,11 +197,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a>
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/zookeeper/zookeeper%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">zookeeper工作原理</span></a>
+                  <a href="/categories/java/java-%E4%BD%8D%E7%A7%BB%E8%BF%90%E7%AE%97/" itemprop="url" rel="index"><span itemprop="name">java 位移运算</span></a>
                 </span>
             </span>
 
@@ -216,33 +216,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="1-Zookeeper的角色"><a href="#1-Zookeeper的角色" class="headerlink" title="1.Zookeeper的角色"></a>1.Zookeeper的角色</h3><table>
-    <tr>
-        <th colspan="2">角色</th>
-        <th>描述</th>
-    </tr>
-    <tr>
-        <td colspan="2">领导者(Leader)</td>
-        <td>负责进行投票的发起和决议、更新系统状态</td>
-    </tr>
-    <tr>
-        <td rowspan="2">学习者(Learner)</td>
-        <td>跟随者(Follower)</td>
-        <td>用于接收客户端请求并向客户端返回结果、在选举过程中参与投票</td>
-    </tr>
-    <tr>
-        <td>观察者(ObServer)</td>
-        <td>可以接收客户端请求转发给Leader节点,但不参加投票过程,只同步Leader的状态。ObServer的目的是为了扩展系统,提高读取速度</td>
-    </tr>
-    <tr>
-        <td colspan="2">客户端(Client)</td>
-        <td>发起请求</td>
-    </tr>
-</table>
-
-<h3 id="Zookeeper的核心"><a href="#Zookeeper的核心" class="headerlink" title="Zookeeper的核心"></a>Zookeeper的核心</h3><h3 id="1-原子广播"><a href="#1-原子广播" class="headerlink" title="1.原子广播"></a>1.原子广播</h3><p>原子广播保证了各个服务之间的同步。实现原子广播的协议叫Zab协议。Zab协议有两种模式:1.恢复模式2.广播模式 <br><br>恢复模式: 服务启动或Leader宕机后,Zab进入恢复模式,当Leader被选举出来且大部分服务完成了和Leader的状态同步后,恢复模式结束,进入广播模式 <br><br>为了保证事务的顺序和一致性,Zookeeper采用了递增的事务id(zxid)来标识事务。所有的提议(proposal)都在被提出的时候加上了zxid。<br><br>每个服务在工作过程中有三种状态: <br><br>LOOKING: 搜寻Leader中<br>LEADING: 当前服务已被选举为Leader<br>FOLLOWING: 跟随者</p>
-<h3 id="Zookeeper的读写机制"><a href="#Zookeeper的读写机制" class="headerlink" title="Zookeeper的读写机制"></a>Zookeeper的读写机制</h3><p>Zookeeper是一个由多个服务组成的集群 <br><br>一个Leader,多个Follower <br><br>每个服务保存一份数据副本 <br><br>全局数据一致 <br><br>分布式读写 <br><br>更新请求转发,由Leader实施</p>
-
+          <h3 id="位移运算就是在二进制的基础上对数字进行平移"><a href="#位移运算就是在二进制的基础上对数字进行平移" class="headerlink" title="位移运算就是在二进制的基础上对数字进行平移"></a>位移运算就是在二进制的基础上对数字进行平移</h3><p>Java中byte、short、char类型的计算都是先将其转换为int类型,位移也一样。 <br><br>int类型为32位,所以byte、short、char和int值位移时最多可以位移31位,位移32位时为0,位移33位时和位移1位时得到的结果一样,以此类推。<br></p>
+<h3 id="运算规则"><a href="#运算规则" class="headerlink" title="运算规则"></a>运算规则</h3><p>将int值转换为二进制,对转换后的二进制移动对应的位数,高位移除,低位有空位时用0(负数用1)补上。</p>
+<h3 id="例"><a href="#例" class="headerlink" title="例:"></a>例:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int startNum = 10;</span><br><span class="line">System.out.println(startNum &lt;&lt; 3);</span><br></pre></td></tr></table></figure>
+<p>表示将10向左位移3位,按照步骤表示:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 将int值转换位二进制字符串</span><br><span class="line">System.out.println(Integer.toBinaryString(startNum));</span><br></pre></td></tr></table></figure>
+<p>结果为1010(Integer.toBinaryString方法省略了前边的0)<br>补齐32位中缺省的0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0000 0000 0000 0000 0000 0000 0000 1010</span><br></pre></td></tr></table></figure>
+<p>然后向左位移3位,将最左边的三位0去掉,最右边低位补上3个0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0000 0000 0000 0000 0000 0000 0101 0000</span><br></pre></td></tr></table></figure>
+<p>得到的二进制字符串转换为int</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String binaryStr = &quot;00000000000000000000000001010000&quot;;</span><br><span class="line">System.out.println(Integer.parseInt(binaryStr, 2));</span><br></pre></td></tr></table></figure>
+<p>得到最终的结果值为80</p>
+<h3 id="可以看出-左位移相当于需要位移的数字乘以2的位移数次方-10-lt-lt-3-相当于10乘以2的3次方等于10-8等于80"><a href="#可以看出-左位移相当于需要位移的数字乘以2的位移数次方-10-lt-lt-3-相当于10乘以2的3次方等于10-8等于80" class="headerlink" title="可以看出,左位移相当于需要位移的数字乘以2的位移数次方,10 &lt;&lt; 3 相当于10乘以2的3次方等于10*8等于80"></a>可以看出,左位移相当于需要位移的数字乘以2的位移数次方,10 &lt;&lt; 3 相当于10乘以2的3次方等于10*8等于80</h3><h3 id="同样的-右位移相当于需要位移的数字除以2的位移数次方-10-gt-gt-3-相当于10除以2的3次方等于10-8-转换为int值后结果为1"><a href="#同样的-右位移相当于需要位移的数字除以2的位移数次方-10-gt-gt-3-相当于10除以2的3次方等于10-8-转换为int值后结果为1" class="headerlink" title="同样的,右位移相当于需要位移的数字除以2的位移数次方,10 &gt;&gt; 3 相当于10除以2的3次方等于10/8 转换为int值后结果为1"></a>同样的,右位移相当于需要位移的数字除以2的位移数次方,10 &gt;&gt; 3 相当于10除以2的3次方等于10/8 转换为int值后结果为1</h3><h3 id="负数二进制字符串转换为十进制时需要注意步骤"><a href="#负数二进制字符串转换为十进制时需要注意步骤" class="headerlink" title="负数二进制字符串转换为十进制时需要注意步骤"></a>负数二进制字符串转换为十进制时需要注意步骤</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">startNum = -10;</span><br><span class="line">System.out.println(Integer.toBinaryString(startNum));</span><br></pre></td></tr></table></figure>
+<p>上边代码执行后-10的二进制字符串为11111111111111111111111111110110</p>
+<h4 id="1-先对负数二进制字符串各位进行取反-1变0-0变1"><a href="#1-先对负数二进制字符串各位进行取反-1变0-0变1" class="headerlink" title="1.先对负数二进制字符串各位进行取反(1变0,0变1)"></a>1.先对负数二进制字符串各位进行取反(1变0,0变1)</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0000 0000 0000 0000 0000 0000 0000 1001</span><br></pre></td></tr></table></figure>
+<h4 id="2将取反后的字符串转换为十进制数字"><a href="#2将取反后的字符串转换为十进制数字" class="headerlink" title="2将取反后的字符串转换为十进制数字"></a>2将取反后的字符串转换为十进制数字</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">binaryStr = &quot;00000000000000000000000000001001&quot;;</span><br><span class="line">System.out.println(Integer.parseInt(binaryStr, 2));</span><br></pre></td></tr></table></figure>
+<p>上边代码执行后结果为9 <br></p>
+<h4 id="3-加上负号-再减1"><a href="#3-加上负号-再减1" class="headerlink" title="3.加上负号,再减1"></a>3.加上负号,再减1</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(-result - 1);</span><br></pre></td></tr></table></figure>
+<p>最终结果为-10</p>
+<h3 id="Long类型除了是64位外-其他运算情况和int一致"><a href="#Long类型除了是64位外-其他运算情况和int一致" class="headerlink" title="Long类型除了是64位外,其他运算情况和int一致"></a>Long类型除了是64位外,其他运算情况和int一致</h3>
       
     </div>
 
@@ -262,7 +255,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/45/">45</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -330,20 +323,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">51</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -383,7 +376,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共20.1k字</span>
+  <span class="post-count">博客全站共20.4k字</span>
 </div>
 <a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
 
