@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/28/spring-cloud-seata/">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/28/string-to-binary/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/28/spring-cloud-seata/" class="post-title-link" itemprop="url">Springcloud配置使用seata</a>
+            <a href="/2021/11/28/string-to-binary/" class="post-title-link" itemprop="url">java String转二进制</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-28 00:03:54 / 修改时间：00:08:54" itemprop="dateCreated datePublished" datetime="2021-11-28T00:03:54+08:00">2021-11-28</time>
+              <time title="创建时间：2021-11-28 22:49:36 / 修改时间：22:49:17" itemprop="dateCreated datePublished" datetime="2021-11-28T22:49:36+08:00">2021-11-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -197,11 +197,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/seata/" itemprop="url" rel="index"><span itemprop="name">seata</span></a>
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/seata/springcloud-seata/" itemprop="url" rel="index"><span itemprop="name">springcloud seata</span></a>
+                  <a href="/categories/java/string-to-binary/" itemprop="url" rel="index"><span itemprop="name">string to binary</span></a>
                 </span>
             </span>
 
@@ -216,16 +216,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="导入maven配置"><a href="#导入maven配置" class="headerlink" title="导入maven配置"></a>导入maven配置</h3><p>根据实际情况选择合适的匹配版本</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-cloud-starter-alibaba-seata&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;2021.1&lt;/version&gt;</span><br><span class="line">  &lt;exclusions&gt;</span><br><span class="line">    &lt;exclusion&gt;</span><br><span class="line">      &lt;groupId&gt;io.seata&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;seata-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;/exclusion&gt;</span><br><span class="line">  &lt;/exclusions&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;io.seata&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;seata-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.4.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/28/spring-cloud-seata/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h3 id="转为char数组后使用Integer-toBinaryString方法"><a href="#转为char数组后使用Integer-toBinaryString方法" class="headerlink" title="转为char数组后使用Integer.toBinaryString方法"></a>转为char数组后使用Integer.toBinaryString方法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String str = &quot;Hello World!&quot;;</span><br><span class="line">char[] chars = str.toCharArray();</span><br><span class="line">for (char aChar : chars) &#123;</span><br><span class="line">   System.out.print(Integer.toBinaryString(aChar));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -245,7 +236,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/45/">45</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -313,20 +304,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -366,7 +357,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共20.4k字</span>
+  <span class="post-count">博客全站共20.6k字</span>
 </div>
 <a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
 
