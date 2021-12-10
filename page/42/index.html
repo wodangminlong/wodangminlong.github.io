@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/29/nginx1.20.1/">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/30/mysql5.7.24/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/10/29/nginx1.20.1/" class="post-title-link" itemprop="url">Centos7安装nginx1.20.1并设置开机启动</a>
+            <a href="/2021/10/30/mysql5.7.24/" class="post-title-link" itemprop="url">Centos7安装mysql5.7.36</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-10-29 08:41:22 / 修改时间：08:45:09" itemprop="dateCreated datePublished" datetime="2021-10-29T08:41:22+08:00">2021-10-29</time>
+              <time title="创建时间：2021-10-30 08:22:16 / 修改时间：08:22:02" itemprop="dateCreated datePublished" datetime="2021-10-30T08:22:16+08:00">2021-10-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -197,7 +197,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/nginx/" itemprop="url" rel="index"><span itemprop="name">nginx</span></a>
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
                 </span>
             </span>
 
@@ -212,12 +212,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="一、下载nginx-1-20-1-tar-gz安装包"><a href="#一、下载nginx-1-20-1-tar-gz安装包" class="headerlink" title="一、下载nginx-1.20.1.tar.gz安装包"></a>一、下载nginx-1.20.1.tar.gz安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">http://nginx.org/en/download.html</a></p>
+          <h3 id="一、下载mysql-5-7-36-1-el7-x86-64-rpm-bundle-tar安装包"><a href="#一、下载mysql-5-7-36-1-el7-x86-64-rpm-bundle-tar安装包" class="headerlink" title="一、下载mysql-5.7.36-1.el7.x86_64.rpm-bundle.tar安装包"></a>一、下载mysql-5.7.36-1.el7.x86_64.rpm-bundle.tar安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/5.7.html#download">https://dev.mysql.com/downloads/mysql/5.7.html#download</a> </br><br>选择 Red Hat Enterprise Linux / Oracle Linux | Red Hat Enterprise Linux 7/Oracle Linux7(x86,64-bit) </br><br>选择 RPM Bundle 文件下载</p>
 <h3 id="二、将文件拷贝至服务器-usr-local-目录下并解压"><a href="#二、将文件拷贝至服务器-usr-local-目录下并解压" class="headerlink" title="二、将文件拷贝至服务器/usr/local 目录下并解压"></a>二、将文件拷贝至服务器/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf nginx-1.20.1.tar.gz</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -xvf mysql-5.7.36-1.el7.x86_64.rpm-bundle.tar</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/10/29/nginx1.20.1/#more" rel="contents">
+              <a class="btn" href="/2021/10/30/mysql5.7.24/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -242,7 +242,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/41/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><span class="page-number current">42</span><a class="page-number" href="/page/43/">43</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/43/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/41/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><span class="page-number current">42</span><a class="page-number" href="/page/43/">43</a><span class="space">&hellip;</span><a class="page-number" href="/page/47/">47</a><a class="extend next" rel="next" href="/page/43/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -310,20 +310,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">54</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -363,7 +363,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共20.6k字</span>
+  <span class="post-count">博客全站共21.3k字</span>
 </div>
 <a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
 

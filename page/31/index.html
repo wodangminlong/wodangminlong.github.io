@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/08/spring-redis/">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/09/spring-redis-cluster/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/08/spring-redis/" class="post-title-link" itemprop="url">Springboot使用redis之StringRedisTemplate</a>
+            <a href="/2021/11/09/spring-redis-cluster/" class="post-title-link" itemprop="url">Springboot配置redis集群</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-08 10:03:18 / 修改时间：10:08:14" itemprop="dateCreated datePublished" datetime="2021-11-08T10:03:18+08:00">2021-11-08</time>
+              <time title="创建时间：2021-11-09 09:21:44 / 修改时间：09:21:26" itemprop="dateCreated datePublished" datetime="2021-11-09T09:21:44+08:00">2021-11-09</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -216,19 +216,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="导入redis-maven包"><a href="#导入redis-maven包" class="headerlink" title="导入redis maven包"></a>导入redis maven包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="properties文件配置"><a href="#properties文件配置" class="headerlink" title="properties文件配置"></a>properties文件配置</h3><p>这里以redis服务器IP地址192.168.17.133示例,根据实际情况更改</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">spring.redis.host=192.168.17.133</span><br><span class="line">spring.redis.port=6379</span><br><span class="line">spring.redis.password=</span><br><span class="line">spring.redis.jedis.pool.max-active=8</span><br><span class="line">spring.redis.jedis.pool.max-wait=-1</span><br><span class="line">spring.redis.jedis.pool.max-idle=8</span><br><span class="line">spring.redis.jedis.pool.min-idle=0</span><br><span class="line">spring.redis.timeout=30000</span><br></pre></td></tr></table></figure>
-<h3 id="yml文件配置"><a href="#yml文件配置" class="headerlink" title="yml文件配置"></a>yml文件配置</h3><p>这里以redis服务器IP地址192.168.17.133示例,根据实际情况更改</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  redis:</span><br><span class="line">    host: 192.168.17.133</span><br><span class="line">    port: 6379</span><br><span class="line">    password:</span><br><span class="line">    database: 0</span><br><span class="line">    pool:</span><br><span class="line">      max-active: 100</span><br><span class="line">      min-idle: 2</span><br><span class="line">      max-idle: 2</span><br><span class="line">      max-wait: 500</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/08/spring-redis/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h3 id="properties文件配置"><a href="#properties文件配置" class="headerlink" title="properties文件配置"></a>properties文件配置</h3><p>这里以redis服务器IP地址192.168.17.133、192.168.17.132示例,根据实际情况更改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spring.redis.cluster.nodes=192.168.17.133:6379,192.168.17.133:6380,192.168.17.133:6381,192.168.17.132:6379,192.168.17.132:6380,192.168.17.132:6381</span><br><span class="line">spring.redis.jedis.pool.max-active=8</span><br><span class="line">spring.redis.jedis.pool.max-wait=-1</span><br><span class="line">spring.redis.jedis.pool.max-idle=8</span><br><span class="line">spring.redis.jedis.pool.min-idle=0</span><br><span class="line">spring.redis.timeout=30000</span><br></pre></td></tr></table></figure>
+<h3 id="yml文件配置"><a href="#yml文件配置" class="headerlink" title="yml文件配置"></a>yml文件配置</h3><p>这里以redis服务器IP地址192.168.17.133、192.168.17.132示例,根据实际情况更改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  redis:</span><br><span class="line">    cluster:</span><br><span class="line">      nodes: 192.168.17.133:6379,192.168.17.133:6380,192.168.17.133:6381,192.168.17.132:6379,192.168.17.132:6380,192.168.17.132:6381</span><br><span class="line">    jedis:</span><br><span class="line">      pool:</span><br><span class="line">        max-active: 100</span><br><span class="line">        min-idle: 2</span><br><span class="line">        max-idle: 2</span><br><span class="line">        max-wait: 500</span><br><span class="line">    timeout: 30000    </span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -248,7 +239,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/47/">47</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -316,20 +307,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">54</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -369,7 +360,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共20.6k字</span>
+  <span class="post-count">博客全站共21.3k字</span>
 </div>
 <a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
 
