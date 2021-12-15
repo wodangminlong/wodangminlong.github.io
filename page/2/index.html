@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/12/10/binarytree/">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/12/01/windows-server2016-.net_framework4.6deleted_by_mistake/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/12/10/binarytree/" class="post-title-link" itemprop="url">BinaryTree二叉树</a>
+            <a href="/2021/12/01/windows-server2016-.net_framework4.6deleted_by_mistake/" class="post-title-link" itemprop="url">记录WindowsServer2016误删.net framework4.6解决方案</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-12-10 13:04:19 / 修改时间：13:03:57" itemprop="dateCreated datePublished" datetime="2021-12-10T13:04:19+08:00">2021-12-10</time>
+              <time title="创建时间：2021-12-01 18:34:42 / 修改时间：17:27:09" itemprop="dateCreated datePublished" datetime="2021-12-01T18:34:42+08:00">2021-12-01</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -197,11 +197,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/binary-tree/" itemprop="url" rel="index"><span itemprop="name">binary tree</span></a>
+                  <a href="/categories/net-framework4-6/" itemprop="url" rel="index"><span itemprop="name">.net framework4.6</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/binary-tree/%E4%BA%8C%E5%8F%89%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">二叉树</span></a>
+                  <a href="/categories/net-framework4-6/Windows-Server2016-net-framework4-6/" itemprop="url" rel="index"><span itemprop="name">Windows Server2016 .net framework4.6</span></a>
                 </span>
             </span>
 
@@ -216,16 +216,766 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="二叉树的定义"><a href="#二叉树的定义" class="headerlink" title="二叉树的定义"></a>二叉树的定义</h3><p>BinaryTree二叉树是树形结构的一个重要类型。许多实际问题抽象出来的数据往往是以二叉树形式,即使是一般的树也能简单的转换为二叉树,而且二叉树的存储结构和<br>算法都较为简单,因此二叉树显得特别重要。二叉树的特点是每个结点最多两个子结点,且有左右之分。 <br><br>二叉树是n个有限元素的集合,该集合或者为空,或者由一个成为根结点(root)及两个不相交的、被分别称为左子树和右子树的二叉树组成,是有序树。当集合为空时,称<br>该二叉树为空二叉树。在二叉树中,一个元素也称作一个结点。</p>
-<h3 id="二叉树遍历"><a href="#二叉树遍历" class="headerlink" title="二叉树遍历"></a>二叉树遍历</h3><p>遍历是对树的一种最基本的运算,所谓遍历二叉树,就是按照一定的规则和顺序走遍二叉树所有结点,使每个结点都被访问一次,而且只被访问一次。由于二叉树是非线性<br>结构,因此树的遍历实际上是将二叉树的各个结点转换成一个线性序列来表示。</p>
-<h3 id="JAVA递归方法遍历二叉树"><a href="#JAVA递归方法遍历二叉树" class="headerlink" title="JAVA递归方法遍历二叉树"></a>JAVA递归方法遍历二叉树</h3><p>创建TreeNode二叉树类</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class TreeNode &#123;</span><br><span class="line"></span><br><span class="line">    int value;</span><br><span class="line"></span><br><span class="line">    TreeNode leftNode;</span><br><span class="line">    TreeNode rightNode;</span><br><span class="line"></span><br><span class="line">    TreeNode(int value) &#123;</span><br><span class="line">        this.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>创建TreeNodeTest测试类</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">public class TreeNodeTest &#123;</span><br><span class="line"></span><br><span class="line">    List&lt;Integer&gt; preorderResultList = new ArrayList&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; mediumOrderResultList = new ArrayList&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; postorderResultList = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 前序递归</span><br><span class="line">     *</span><br><span class="line">     * @param treeNode  treeNode</span><br><span class="line">     */</span><br><span class="line">    private void preorderRecursion(TreeNode treeNode) &#123;</span><br><span class="line">        preorderResultList.add(treeNode.value);</span><br><span class="line">        if (treeNode.leftNode != null) &#123;</span><br><span class="line">            preorderRecursion(treeNode.leftNode);</span><br><span class="line">        &#125;</span><br><span class="line">        if (treeNode.rightNode != null) &#123;</span><br><span class="line">            preorderRecursion(treeNode.rightNode);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 中序递归</span><br><span class="line">     *</span><br><span class="line">     * @param treeNode  treeNode</span><br><span class="line">     */</span><br><span class="line">    private void mediumOrderRecursion(TreeNode treeNode) &#123;</span><br><span class="line">        if (treeNode.leftNode != null) &#123;</span><br><span class="line">            mediumOrderRecursion(treeNode.leftNode);</span><br><span class="line">        &#125;</span><br><span class="line">        mediumOrderResultList.add(treeNode.value);</span><br><span class="line">        if (treeNode.rightNode != null) &#123;</span><br><span class="line">            mediumOrderRecursion(treeNode.rightNode);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 后序递归</span><br><span class="line">     *</span><br><span class="line">     * @param treeNode  treeNode</span><br><span class="line">     */</span><br><span class="line">    private void postorderRecursion(TreeNode treeNode) &#123;</span><br><span class="line">        if (treeNode.leftNode != null) &#123;</span><br><span class="line">            postorderRecursion(treeNode.leftNode);</span><br><span class="line">        &#125;</span><br><span class="line">        if (treeNode.rightNode != null) &#123;</span><br><span class="line">            postorderRecursion(treeNode.rightNode);</span><br><span class="line">        &#125;</span><br><span class="line">        postorderResultList.add(treeNode.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void print(int type) &#123;</span><br><span class="line">        switch (type) &#123;</span><br><span class="line">            case 1:</span><br><span class="line">                preorderResultList.forEach(System.out::println);</span><br><span class="line">                break;</span><br><span class="line">            case 2:</span><br><span class="line">                mediumOrderResultList.forEach(System.out::println);</span><br><span class="line">                break;</span><br><span class="line">            default:</span><br><span class="line">                postorderResultList.forEach(System.out::println);</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        TreeNode rootNode = new TreeNode(1);</span><br><span class="line">        TreeNode aNode = new TreeNode(2);</span><br><span class="line">        TreeNode bNode = new TreeNode(3);</span><br><span class="line">        TreeNode cNode = new TreeNode(4);</span><br><span class="line">        TreeNode dNode = new TreeNode(5);</span><br><span class="line">        TreeNode eNode = new TreeNode(6);</span><br><span class="line">        TreeNode fNode = new TreeNode(7);</span><br><span class="line">        TreeNode gNode = new TreeNode(8);</span><br><span class="line"></span><br><span class="line">        rootNode.leftNode = aNode;</span><br><span class="line">        rootNode.rightNode = bNode;</span><br><span class="line"></span><br><span class="line">        aNode.leftNode = cNode;</span><br><span class="line"></span><br><span class="line">        cNode.rightNode = fNode;</span><br><span class="line"></span><br><span class="line">        bNode.leftNode = dNode;</span><br><span class="line">        bNode.rightNode = eNode;</span><br><span class="line"></span><br><span class="line">        eNode.leftNode = gNode;</span><br><span class="line"></span><br><span class="line">        TreeNodeTest test = new TreeNodeTest();</span><br><span class="line"></span><br><span class="line">        // 前序递归</span><br><span class="line">        test.preorderRecursion(rootNode);</span><br><span class="line">        test.print(1);</span><br><span class="line"></span><br><span class="line">        // 中序递归</span><br><span class="line">        test.mediumOrderRecursion(rootNode);</span><br><span class="line">        test.print(2);</span><br><span class="line"></span><br><span class="line">        // 后序递归</span><br><span class="line">        test.postorderRecursion(rootNode);</span><br><span class="line">        test.print(3);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="前序递归遍历"><a href="#前序递归遍历" class="headerlink" title="前序递归遍历"></a>前序递归遍历</h3><p>先访问根结点,再访问左子结点,最后访问右子结点。</p>
-<h3 id="中序递归遍历"><a href="#中序递归遍历" class="headerlink" title="中序递归遍历"></a>中序递归遍历</h3><p>先访问左子结点,再访问根结点,最后访问右子结点。</p>
-<h3 id="后序递归遍历"><a href="#后序递归遍历" class="headerlink" title="后序递归遍历"></a>后序递归遍历</h3><p>先访问左子结点,再访问右子结点,最后访问根结点。</p>
+          <h3 id="今天安装物理机金蝶系统时需要-net-framework4-5-结果安装时提示有更高版本-查看发现服务器安装了-net-framework4-6版本-于是悲惨开始了"><a href="#今天安装物理机金蝶系统时需要-net-framework4-5-结果安装时提示有更高版本-查看发现服务器安装了-net-framework4-6版本-于是悲惨开始了" class="headerlink" title="今天安装物理机金蝶系统时需要.net framework4.5,结果安装时提示有更高版本,查看发现服务器安装了.net framework4.6版本,于是悲惨开始了"></a>今天安装物理机金蝶系统时需要.net framework4.5,结果安装时提示有更高版本,查看发现服务器安装了.net framework4.6版本,于是悲惨开始了</h3><h3 id="卸载-net-framework4-6后再安装-net-framework4-5时直接提示系统有-net-framework但不是开启状态需要在控制面板中开启"><a href="#卸载-net-framework4-6后再安装-net-framework4-5时直接提示系统有-net-framework但不是开启状态需要在控制面板中开启" class="headerlink" title="卸载.net framework4.6后再安装.net framework4.5时直接提示系统有.net framework但不是开启状态需要在控制面板中开启"></a>卸载.net framework4.6后再安装.net framework4.5时直接提示系统有.net framework但不是开启状态需要在控制面板中开启</h3><h3 id="点击控制面板开启提示-net-framework-初始化错误"><a href="#点击控制面板开启提示-net-framework-初始化错误" class="headerlink" title="点击控制面板开启提示 .net framework 初始化错误"></a>点击控制面板开启提示 .net framework 初始化错误</h3><p>报错信息如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">若要运行此应用程序,您必须首先安装.NET Framework 的以下版本之一:</span><br><span class="line"> v4.0.30319</span><br><span class="line">有关如何获取 .NET Framework 的适当版本说明,请与应用程序发行者联系。 </span><br></pre></td></tr></table></figure>
+<h3 id="于此同时-服务器管理器打不开也提示这个错误"><a href="#于此同时-服务器管理器打不开也提示这个错误" class="headerlink" title="于此同时,服务器管理器打不开也提示这个错误"></a>于此同时,服务器管理器打不开也提示这个错误</h3><h3 id="然后在网上搜了半天-看到一个比较靠谱的恢复方案"><a href="#然后在网上搜了半天-看到一个比较靠谱的恢复方案" class="headerlink" title="然后在网上搜了半天,看到一个比较靠谱的恢复方案"></a>然后在网上搜了半天,看到一个比较靠谱的恢复方案</h3><p>1.首先运行如下命令查看当前的功能安装情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Dism /online /Get-Features</span><br></pre></td></tr></table></figure>
+<p>2.然后运行下面的命令安装功能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Dism /online /Enable-Feature /FeatureName:NetFx4 /All</span><br><span class="line">Dism /online /Enable-Feature /FeatureName:NetFx4ServerFeatures /All</span><br></pre></td></tr></table></figure>
+<h3 id="比较搞笑的是当时看到这几行命令时为了有个印象就在服务器上手动敲了-结果命令中的空格被忽略了-折腾了半天…"><a href="#比较搞笑的是当时看到这几行命令时为了有个印象就在服务器上手动敲了-结果命令中的空格被忽略了-折腾了半天…" class="headerlink" title="比较搞笑的是当时看到这几行命令时为了有个印象就在服务器上手动敲了,结果命令中的空格被忽略了,折腾了半天…"></a>比较搞笑的是当时看到这几行命令时为了有个印象就在服务器上手动敲了,结果命令中的空格被忽略了,折腾了半天…</h3><h3 id="最后使用-Dism-online-命令才发现这个问题-总算给恢复了"><a href="#最后使用-Dism-online-命令才发现这个问题-总算给恢复了" class="headerlink" title="最后使用 Dism /online /? 命令才发现这个问题,总算给恢复了"></a>最后使用 Dism /online /? 命令才发现这个问题,总算给恢复了</h3>
+      
+    </div>
 
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/12/01/java-deflater-inflater/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/01/java-deflater-inflater/" class="post-title-link" itemprop="url">Java中的Deflater压缩和Inflater解压缩</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-12-01 14:36:46 / 修改时间：14:36:26" itemprop="dateCreated datePublished" datetime="2021-12-01T14:36:46+08:00">2021-12-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/java-Deflater-Inflater/" itemprop="url" rel="index"><span itemprop="name">java Deflater Inflater</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="可以使用jdk自带的Deflater对后台返回的内容进行压缩-前端需要解压缩"><a href="#可以使用jdk自带的Deflater对后台返回的内容进行压缩-前端需要解压缩" class="headerlink" title="可以使用jdk自带的Deflater对后台返回的内容进行压缩(前端需要解压缩)"></a>可以使用jdk自带的Deflater对后台返回的内容进行压缩(前端需要解压缩)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">@Slf4j</span><br><span class="line">public class ZipUtils &#123;</span><br><span class="line"></span><br><span class="line">    private ZipUtils() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static String zipStr(String str) &#123;</span><br><span class="line">        Deflater deflater = new Deflater(Deflater.BEST_COMPRESSION);</span><br><span class="line">        deflater.setInput(str.getBytes());</span><br><span class="line">        deflater.finish();</span><br><span class="line">        final byte[] bytes = new byte[256];</span><br><span class="line">        try(ByteArrayOutputStream outputStream = new ByteArrayOutputStream(256)) &#123;</span><br><span class="line">            while (!deflater.finished()) &#123;</span><br><span class="line">                int length = deflater.deflate(bytes);</span><br><span class="line">                outputStream.write(bytes, 0, length);</span><br><span class="line">            &#125;</span><br><span class="line">            deflater.end();</span><br><span class="line">            return Base64.getEncoder().encodeToString(outputStream.toByteArray());</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            log.error(&quot;zipStr has error: &quot;, e);</span><br><span class="line">        &#125;</span><br><span class="line">        return &quot;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static String unzipStr(String str) &#123;</span><br><span class="line">        byte[] decodeBytes = Base64.getMimeDecoder().decode(str);</span><br><span class="line">        Inflater inflater = new Inflater();</span><br><span class="line">        inflater.setInput(decodeBytes);</span><br><span class="line">        final byte[] bytes = new byte[256];</span><br><span class="line">        try(ByteArrayOutputStream outputStream = new ByteArrayOutputStream(256)) &#123;</span><br><span class="line">            while (!inflater.finished()) &#123;</span><br><span class="line">                int length = inflater.inflate(bytes);</span><br><span class="line">                outputStream.write(bytes, 0, length);</span><br><span class="line">            &#125;</span><br><span class="line">            return outputStream.toString();</span><br><span class="line">        &#125;catch (DataFormatException | IOException e) &#123;</span><br><span class="line">            log.error(&quot;unzipStr has error: &quot;, e);</span><br><span class="line">            return &quot;&quot;;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            inflater.end();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="对返回内容进行压缩"><a href="#对返回内容进行压缩" class="headerlink" title="对返回内容进行压缩"></a>对返回内容进行压缩</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class ResponseFilter implements Filter &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException &#123;</span><br><span class="line">        HttpServletRequest request = (HttpServletRequest) servletRequest;</span><br><span class="line">        WrappedResponse wrapResponse = new WrappedResponse((HttpServletResponse) servletResponse);</span><br><span class="line">        filterChain.doFilter(request, wrapResponse);</span><br><span class="line">        HttpServletResponse response = (HttpServletResponse) servletResponse;</span><br><span class="line">        byte[] resData = wrapResponse.getResponseData();</span><br><span class="line">        String resultDataString = new String(resData, StandardCharsets.UTF_8);</span><br><span class="line">        log.info(&quot;resultDataString: &#123;&#125;&quot;, resultDataString);</span><br><span class="line">        resultDataString = ZipUtils.zipStr(resultDataString);</span><br><span class="line">        log.info(&quot;resultDataString1: &#123;&#125;&quot;, resultDataString);</span><br><span class="line">        writeResponse(response, resultDataString);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void writeResponse(ServletResponse response, String responseString) throws IOException &#123;</span><br><span class="line">        response.setContentLength(-1);</span><br><span class="line">        PrintWriter out = response.getWriter();</span><br><span class="line">        out.write(responseString);</span><br><span class="line">        out.flush();</span><br><span class="line">        out.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="WrappedResponse类代码"><a href="#WrappedResponse类代码" class="headerlink" title="WrappedResponse类代码"></a>WrappedResponse类代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">@Slf4j</span><br><span class="line">public class WrappedResponse extends HttpServletResponseWrapper &#123;</span><br><span class="line"></span><br><span class="line">    private final ByteArrayOutputStream buffer;</span><br><span class="line">    private final ServletOutputStream out;</span><br><span class="line">    private final PrintWriter writer;</span><br><span class="line"></span><br><span class="line">    public WrappedResponse(HttpServletResponse response) &#123;</span><br><span class="line">        super(response);</span><br><span class="line">        // 真正存储数据的流</span><br><span class="line">        buffer = new ByteArrayOutputStream();</span><br><span class="line">        out = new WapperedOutputStream(buffer);</span><br><span class="line">        writer = new PrintWriter(new OutputStreamWriter(buffer, StandardCharsets.UTF_8));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /** 重载父类获取outPutStream的方法 */</span><br><span class="line">    @Override</span><br><span class="line">    public ServletOutputStream getOutputStream() &#123;</span><br><span class="line">        return out;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /** 重载父类获取writer的方法 */</span><br><span class="line">    @Override</span><br><span class="line">    public PrintWriter getWriter() &#123;</span><br><span class="line">        return writer;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /** 重载父类获取flushBuffer的方法 */</span><br><span class="line">    @Override</span><br><span class="line">    public void flushBuffer() throws IOException &#123;</span><br><span class="line">        if (out != null) &#123;</span><br><span class="line">            out.flush();</span><br><span class="line">        &#125;</span><br><span class="line">        if (writer != null) &#123;</span><br><span class="line">            writer.flush();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void reset() &#123;</span><br><span class="line">        buffer.reset();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /** 将out、writer中的数据强制输出到WapperedResponse的buffer里面，否则取不到数据 */</span><br><span class="line">    public byte[] getResponseData() throws IOException &#123;</span><br><span class="line">        flushBuffer();</span><br><span class="line">        return buffer.toByteArray();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /** 内部类，对ServletOutputStream进行包装 */</span><br><span class="line">    private static class WapperedOutputStream extends ServletOutputStream &#123;</span><br><span class="line">        private final ByteArrayOutputStream bos;</span><br><span class="line"></span><br><span class="line">        public WapperedOutputStream(ByteArrayOutputStream stream) &#123;</span><br><span class="line">            bos = stream;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void write(int b) &#123;</span><br><span class="line">            bos.write(b);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public boolean isReady() &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void setWriteListener(WriteListener writeListener) &#123;</span><br><span class="line">            log.info(&quot;writeListener...&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/30/java-displacement/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/30/java-displacement/" class="post-title-link" itemprop="url">Java中的位移运算</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-30 15:06:52 / 修改时间：15:06:22" itemprop="dateCreated datePublished" datetime="2021-11-30T15:06:52+08:00">2021-11-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/java-%E4%BD%8D%E7%A7%BB%E8%BF%90%E7%AE%97/" itemprop="url" rel="index"><span itemprop="name">java 位移运算</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="位移运算就是在二进制的基础上对数字进行平移"><a href="#位移运算就是在二进制的基础上对数字进行平移" class="headerlink" title="位移运算就是在二进制的基础上对数字进行平移"></a>位移运算就是在二进制的基础上对数字进行平移</h3><p>Java中byte、short、char类型的计算都是先将其转换为int类型,位移也一样。 <br><br>int类型为32位,所以byte、short、char和int值位移时最多可以位移31位,位移32位时为0,位移33位时和位移1位时得到的结果一样,以此类推。<br></p>
+<h3 id="运算规则"><a href="#运算规则" class="headerlink" title="运算规则"></a>运算规则</h3><p>将int值转换为二进制,对转换后的二进制移动对应的位数,高位移除,低位有空位时用0(负数用1)补上。</p>
+<h3 id="例"><a href="#例" class="headerlink" title="例:"></a>例:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int startNum = 10;</span><br><span class="line">System.out.println(startNum &lt;&lt; 3);</span><br></pre></td></tr></table></figure>
+<p>表示将10向左位移3位,按照步骤表示:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 将int值转换位二进制字符串</span><br><span class="line">System.out.println(Integer.toBinaryString(startNum));</span><br></pre></td></tr></table></figure>
+<p>结果为1010(Integer.toBinaryString方法省略了前边的0)<br>补齐32位中缺省的0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0000 0000 0000 0000 0000 0000 0000 1010</span><br></pre></td></tr></table></figure>
+<p>然后向左位移3位,将最左边的三位0去掉,最右边低位补上3个0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0000 0000 0000 0000 0000 0000 0101 0000</span><br></pre></td></tr></table></figure>
+<p>得到的二进制字符串转换为int</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String binaryStr = &quot;00000000000000000000000001010000&quot;;</span><br><span class="line">System.out.println(Integer.parseInt(binaryStr, 2));</span><br></pre></td></tr></table></figure>
+<p>得到最终的结果值为80</p>
+<h3 id="可以看出-左位移相当于需要位移的数字乘以2的位移数次方-10-lt-lt-3-相当于10乘以2的3次方等于10-8等于80"><a href="#可以看出-左位移相当于需要位移的数字乘以2的位移数次方-10-lt-lt-3-相当于10乘以2的3次方等于10-8等于80" class="headerlink" title="可以看出,左位移相当于需要位移的数字乘以2的位移数次方,10 &lt;&lt; 3 相当于10乘以2的3次方等于10*8等于80"></a>可以看出,左位移相当于需要位移的数字乘以2的位移数次方,10 &lt;&lt; 3 相当于10乘以2的3次方等于10*8等于80</h3><h3 id="同样的-右位移相当于需要位移的数字除以2的位移数次方-10-gt-gt-3-相当于10除以2的3次方等于10-8-转换为int值后结果为1"><a href="#同样的-右位移相当于需要位移的数字除以2的位移数次方-10-gt-gt-3-相当于10除以2的3次方等于10-8-转换为int值后结果为1" class="headerlink" title="同样的,右位移相当于需要位移的数字除以2的位移数次方,10 &gt;&gt; 3 相当于10除以2的3次方等于10/8 转换为int值后结果为1"></a>同样的,右位移相当于需要位移的数字除以2的位移数次方,10 &gt;&gt; 3 相当于10除以2的3次方等于10/8 转换为int值后结果为1</h3><h3 id="负数二进制字符串转换为十进制时需要注意步骤"><a href="#负数二进制字符串转换为十进制时需要注意步骤" class="headerlink" title="负数二进制字符串转换为十进制时需要注意步骤"></a>负数二进制字符串转换为十进制时需要注意步骤</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">startNum = -10;</span><br><span class="line">System.out.println(Integer.toBinaryString(startNum));</span><br></pre></td></tr></table></figure>
+<p>上边代码执行后-10的二进制字符串为11111111111111111111111111110110</p>
+<h4 id="1-先对负数二进制字符串各位进行取反-1变0-0变1"><a href="#1-先对负数二进制字符串各位进行取反-1变0-0变1" class="headerlink" title="1.先对负数二进制字符串各位进行取反(1变0,0变1)"></a>1.先对负数二进制字符串各位进行取反(1变0,0变1)</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0000 0000 0000 0000 0000 0000 0000 1001</span><br></pre></td></tr></table></figure>
+<h4 id="2将取反后的字符串转换为十进制数字"><a href="#2将取反后的字符串转换为十进制数字" class="headerlink" title="2将取反后的字符串转换为十进制数字"></a>2将取反后的字符串转换为十进制数字</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">binaryStr = &quot;00000000000000000000000000001001&quot;;</span><br><span class="line">System.out.println(Integer.parseInt(binaryStr, 2));</span><br></pre></td></tr></table></figure>
+<p>上边代码执行后结果为9 <br></p>
+<h4 id="3-加上负号-再减1"><a href="#3-加上负号-再减1" class="headerlink" title="3.加上负号,再减1"></a>3.加上负号,再减1</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(-result - 1);</span><br></pre></td></tr></table></figure>
+<p>最终结果为-10</p>
+<h3 id="Long类型除了是64位外-其他运算情况和int一致"><a href="#Long类型除了是64位外-其他运算情况和int一致" class="headerlink" title="Long类型除了是64位外,其他运算情况和int一致"></a>Long类型除了是64位外,其他运算情况和int一致</h3>
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/29/zookeeper-working-principle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/29/zookeeper-working-principle/" class="post-title-link" itemprop="url">Zookeeper工作原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-29 18:32:40 / 修改时间：18:33:01" itemprop="dateCreated datePublished" datetime="2021-11-29T18:32:40+08:00">2021-11-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/zookeeper/zookeeper%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">zookeeper工作原理</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="1-Zookeeper的角色"><a href="#1-Zookeeper的角色" class="headerlink" title="1.Zookeeper的角色"></a>1.Zookeeper的角色</h3><table>
+    <tr>
+        <th colspan="2">角色</th>
+        <th>描述</th>
+    </tr>
+    <tr>
+        <td colspan="2">领导者(Leader)</td>
+        <td>负责进行投票的发起和决议、更新系统状态</td>
+    </tr>
+    <tr>
+        <td rowspan="2">学习者(Learner)</td>
+        <td>跟随者(Follower)</td>
+        <td>用于接收客户端请求并向客户端返回结果、在选举过程中参与投票</td>
+    </tr>
+    <tr>
+        <td>观察者(ObServer)</td>
+        <td>可以接收客户端请求转发给Leader节点,但不参加投票过程,只同步Leader的状态。ObServer的目的是为了扩展系统,提高读取速度</td>
+    </tr>
+    <tr>
+        <td colspan="2">客户端(Client)</td>
+        <td>发起请求</td>
+    </tr>
+</table>
+
+<h3 id="Zookeeper的核心"><a href="#Zookeeper的核心" class="headerlink" title="Zookeeper的核心"></a>Zookeeper的核心</h3><h3 id="1-原子广播"><a href="#1-原子广播" class="headerlink" title="1.原子广播"></a>1.原子广播</h3><p>原子广播保证了各个服务之间的同步。实现原子广播的协议叫Zab协议。Zab协议有两种模式:1.恢复模式2.广播模式 <br><br>恢复模式: 服务启动或Leader宕机后,Zab进入恢复模式,当Leader被选举出来且大部分服务完成了和Leader的状态同步后,恢复模式结束,进入广播模式 <br><br>为了保证事务的顺序和一致性,Zookeeper采用了递增的事务id(zxid)来标识事务。所有的提议(proposal)都在被提出的时候加上了zxid。<br><br>每个服务在工作过程中有三种状态: <br><br>LOOKING: 搜寻Leader中<br>LEADING: 当前服务已被选举为Leader<br>FOLLOWING: 跟随者</p>
+<h3 id="Zookeeper的读写机制"><a href="#Zookeeper的读写机制" class="headerlink" title="Zookeeper的读写机制"></a>Zookeeper的读写机制</h3><p>Zookeeper是一个由多个服务组成的集群 <br><br>一个Leader,多个Follower <br><br>每个服务保存一份数据副本 <br><br>全局数据一致 <br><br>分布式读写 <br><br>更新请求转发,由Leader实施</p>
+
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/28/string-to-binary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/28/string-to-binary/" class="post-title-link" itemprop="url">java String转二进制</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-28 22:49:36 / 修改时间：22:49:17" itemprop="dateCreated datePublished" datetime="2021-11-28T22:49:36+08:00">2021-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/string-to-binary/" itemprop="url" rel="index"><span itemprop="name">string to binary</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="转为char数组后使用Integer-toBinaryString方法"><a href="#转为char数组后使用Integer-toBinaryString方法" class="headerlink" title="转为char数组后使用Integer.toBinaryString方法"></a>转为char数组后使用Integer.toBinaryString方法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String str = &quot;Hello World!&quot;;</span><br><span class="line">char[] chars = str.toCharArray();</span><br><span class="line">for (char aChar : chars) &#123;</span><br><span class="line">   System.out.print(Integer.toBinaryString(aChar));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/28/spring-cloud-seata/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/28/spring-cloud-seata/" class="post-title-link" itemprop="url">Springcloud配置使用seata</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-28 00:03:54 / 修改时间：00:08:54" itemprop="dateCreated datePublished" datetime="2021-11-28T00:03:54+08:00">2021-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/seata/" itemprop="url" rel="index"><span itemprop="name">seata</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/seata/springcloud-seata/" itemprop="url" rel="index"><span itemprop="name">springcloud seata</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="导入maven配置"><a href="#导入maven配置" class="headerlink" title="导入maven配置"></a>导入maven配置</h3><p>根据实际情况选择合适的匹配版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-cloud-starter-alibaba-seata&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;2021.1&lt;/version&gt;</span><br><span class="line">  &lt;exclusions&gt;</span><br><span class="line">    &lt;exclusion&gt;</span><br><span class="line">      &lt;groupId&gt;io.seata&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;seata-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;/exclusion&gt;</span><br><span class="line">  &lt;/exclusions&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;io.seata&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;seata-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.4.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/28/spring-cloud-seata/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/26/dubbo-can_not_lock_the_registry_cache_file/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/26/dubbo-can_not_lock_the_registry_cache_file/" class="post-title-link" itemprop="url">记录Dubbo出现Can not lock the registry cache file异常解决方案</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-26 17:54:53 / 修改时间：17:56:28" itemprop="dateCreated datePublished" datetime="2021-11-26T17:54:53+08:00">2021-11-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dubbo/" itemprop="url" rel="index"><span itemprop="name">dubbo</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dubbo/can-not-lock-the-registry-cache-file/" itemprop="url" rel="index"><span itemprop="name">can not lock the registry cache file</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="单服务器启动多个dubbo项目时出现异常"><a href="#单服务器启动多个dubbo项目时出现异常" class="headerlink" title="单服务器启动多个dubbo项目时出现异常"></a>单服务器启动多个dubbo项目时出现异常</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># java.io.IOException: Can not lock the registry cache file</span><br><span class="line"># ...</span><br></pre></td></tr></table></figure>
+<h3 id="修改spring-dubbo-xml文件-增加内容"><a href="#修改spring-dubbo-xml文件-增加内容" class="headerlink" title="修改spring-dubbo.xml文件,增加内容"></a>修改spring-dubbo.xml文件,增加内容</h3><p>每个项目file文件名区分开就可以了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:registry protocol=&quot;zookeeper&quot; address=&quot;$&#123;zookeeper.url&#125;&quot; file=&quot;test.file&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/25/mysql-error-only_full_group_by/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/25/mysql-error-only_full_group_by/" class="post-title-link" itemprop="url">记录mysql出现this is incompatible with sql_mode=only_full_group_by问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-25 11:17:52 / 修改时间：11:17:37" itemprop="dateCreated datePublished" datetime="2021-11-25T11:17:52+08:00">2021-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/only-full-group-by/" itemprop="url" rel="index"><span itemprop="name">only_full_group_by</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="搭建mysql新环境时原有的业务sql出现sql异常"><a href="#搭建mysql新环境时原有的业务sql出现sql异常" class="headerlink" title="搭建mysql新环境时原有的业务sql出现sql异常"></a>搭建mysql新环境时原有的业务sql出现sql异常</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1055 (42000): Expression #3 of SELECT list is not in GROUP BY clause and </span><br><span class="line">contains nonaggregated column ‘***’ which is not functionally dependent on </span><br><span class="line">columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by</span><br></pre></td></tr></table></figure>
+<h3 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h3><p>ONLY_FUll_GROUP_BY的意思是：对于GROUP BY聚合操作，如果在SELECT中的列，没有在GROUP BY中出现，<br>那么这个SQL是不合法的，因为列不在GROUP BY语句中，也就是说查出来的列必须是GROUP BY之后的字段，<br>或者这个字段出现在聚合函数里面。</p>
+<h3 id="mysql5-7版本以后only-full-group-by是默认开启的-查看以下GLOBAL-sql-mode的值"><a href="#mysql5-7版本以后only-full-group-by是默认开启的-查看以下GLOBAL-sql-mode的值" class="headerlink" title="mysql5.7版本以后only_full_group_by是默认开启的,查看以下GLOBAL.sql_mode的值"></a>mysql5.7版本以后only_full_group_by是默认开启的,查看以下GLOBAL.sql_mode的值</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT @@GLOBAL.sql_mode</span><br></pre></td></tr></table></figure>
+<h3 id="直接在GLOBAL-sql-mode中去掉only-full-group-by-其他值保留"><a href="#直接在GLOBAL-sql-mode中去掉only-full-group-by-其他值保留" class="headerlink" title="直接在GLOBAL.sql_mode中去掉only_full_group_by(其他值保留)"></a>直接在GLOBAL.sql_mode中去掉only_full_group_by(其他值保留)</h3><p>x为查询到的GLOBAL.sql_mode值去掉only_full_group_by</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET @@GLOBAL.sql_mode=&#x27;x&#x27;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/24/spring-redis-close-error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/24/spring-redis-close-error/" class="post-title-link" itemprop="url">SpringBoot2.x+ Redis频繁出现 **远程主机强迫关闭了一个现有的连接。** 问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-24 12:06:23 / 修改时间：12:06:09" itemprop="dateCreated datePublished" datetime="2021-11-24T12:06:23+08:00">2021-11-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/springboot/" itemprop="url" rel="index"><span itemprop="name">springboot</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/springboot/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="最近服务器经常出现redis连接错误"><a href="#最近服务器经常出现redis连接错误" class="headerlink" title="最近服务器经常出现redis连接错误"></a>最近服务器经常出现redis连接错误</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># org.springframework.data.redis.RedisSystemException: Redis exception; nested exception is io.lettuce.core.RedisException: java.io.IOException: 远程主机强迫关闭了一个现有的连接。</span><br><span class="line"># ...</span><br><span class="line"># Caused by: io.lettuce.core.RedisException: java.io.IOException: 远程主机强迫关闭了一个现有的连接。</span><br><span class="line"># ...</span><br><span class="line"># Caused by: java.io.IOException: 远程主机强迫关闭了一个现有的连接。</span><br><span class="line"># ...</span><br></pre></td></tr></table></figure>
+<h3 id="将配置文件中的lettuce更改为jedis"><a href="#将配置文件中的lettuce更改为jedis" class="headerlink" title="将配置文件中的lettuce更改为jedis"></a>将配置文件中的lettuce更改为jedis</h3><table>
+    <tr>
+        <th>更改前</th>
+        <th>更改后</th>
+    </tr>
+    <tr>
+        <td>
+            spring: <br>
+            &nbsp;&nbsp;  redis: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;    lettuce: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      pool: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        ... <br>
+        </td>
+        <td>
+            spring: <br>
+            &nbsp;&nbsp;  redis: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;    jedis: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      pool: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        ... <br>
+        </td>
+    </tr>
+</table>
+
+<h3 id="更改pom文件"><a href="#更改pom文件" class="headerlink" title="更改pom文件"></a>更改pom文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">  &lt;exclusions&gt;</span><br><span class="line">    &lt;exclusion&gt;</span><br><span class="line">      &lt;groupId&gt;redis.clients&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;jedis&lt;/artifactId&gt;</span><br><span class="line">    &lt;/exclusion&gt;</span><br><span class="line">    &lt;exclusion&gt;</span><br><span class="line">      &lt;groupId&gt;io.lettuce&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;lettuce-core&lt;/artifactId&gt;</span><br><span class="line">    &lt;/exclusion&gt;</span><br><span class="line">  &lt;/exclusions&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line"> &lt;groupId&gt;redis.clients&lt;/groupId&gt;</span><br><span class="line"> &lt;artifactId&gt;jedis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="观察两天"><a href="#观察两天" class="headerlink" title="观察两天"></a>观察两天</h3>
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/23/centos-chinese/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/23/centos-chinese/" class="post-title-link" itemprop="url">Centos中文小方格解决方案</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-23 17:11:33 / 修改时间：17:10:51" itemprop="dateCreated datePublished" datetime="2021-11-23T17:11:33+08:00">2021-11-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/centos-chinese/" itemprop="url" rel="index"><span itemprop="name">centos chinese</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/centos-chinese/centos-zh-CN/" itemprop="url" rel="index"><span itemprop="name">centos zh_CN</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="查看当前Locale信息"><a href="#查看当前Locale信息" class="headerlink" title="查看当前Locale信息"></a>查看当前Locale信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># localectl status</span><br></pre></td></tr></table></figure>
+<h3 id="列出系统中的Locale信息"><a href="#列出系统中的Locale信息" class="headerlink" title="列出系统中的Locale信息"></a>列出系统中的Locale信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># localectl list-locales</span><br></pre></td></tr></table></figure>
+<h3 id="查找中文语言包"><a href="#查找中文语言包" class="headerlink" title="查找中文语言包"></a>查找中文语言包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum search Chinese</span><br></pre></td></tr></table></figure>
+<p>查找到的结果</p>
+<h3 id="安装搜索到的中文包"><a href="#安装搜索到的中文包" class="headerlink" title="安装搜索到的中文包"></a>安装搜索到的中文包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install langpacks-zh_CN</span><br></pre></td></tr></table></figure>
+<h3 id="修改Locale配置"><a href="#修改Locale配置" class="headerlink" title="修改Locale配置"></a>修改Locale配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># localectl set-locale LANG=zh_CN.utf8</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -245,7 +995,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -313,20 +1063,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-count">61</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -366,7 +1116,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共22.7k字</span>
+  <span class="post-count">博客全站共24.2k字</span>
 </div>
 <a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
 

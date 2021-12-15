@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/long.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/long.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/long.png">
+  <link rel="mask-icon" href="/images/long.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"wodangminlong.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="IOC容器的概念IOC容器就是具有依赖注入功能的容器,IOC容器负责实例化、定位、配置应用程序中的对象及建立这些对象之间的依赖。应用程序无需直接在代码中new相关的对象，应用程序由IOC容器进行组装。IOC容器管理对象之间的依赖关系,由IOC容器完成对象的注入,这样可以把复杂的对象依赖关系从应用中解放出来,简化了程序的开发过程。 模拟IOC容器创建、注入SpringIOCTest项目结构: 123">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringIOC基本原理">
+<meta property="og:url" content="https://wodangminlong.github.io/2021/12/14/spring-ioc/index.html">
+<meta property="og:site_name" content="知足常乐">
+<meta property="og:description" content="IOC容器的概念IOC容器就是具有依赖注入功能的容器,IOC容器负责实例化、定位、配置应用程序中的对象及建立这些对象之间的依赖。应用程序无需直接在代码中new相关的对象，应用程序由IOC容器进行组装。IOC容器管理对象之间的依赖关系,由IOC容器完成对象的注入,这样可以把复杂的对象依赖关系从应用中解放出来,简化了程序的开发过程。 模拟IOC容器创建、注入SpringIOCTest项目结构: 123">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-14T08:46:46.805Z">
+<meta property="article:modified_time" content="2021-12-14T08:46:18.448Z">
+<meta property="article:author" content="dml">
+<meta property="article:tag" content="spring">
+<meta property="article:tag" content="spring ioc">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://wodangminlong.github.io/2021/12/14/spring-ioc/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>SpringIOC基本原理 | 知足常乐</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">知足常乐</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/12/14/spring-ioc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringIOC基本原理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-12-14 16:46:46 / 修改时间：16:46:18" itemprop="dateCreated datePublished" datetime="2021-12-14T16:46:46+08:00">2021-12-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring/" itemprop="url" rel="index"><span itemprop="name">spring</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring/spring-ioc/" itemprop="url" rel="index"><span itemprop="name">spring ioc</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="IOC容器的概念"><a href="#IOC容器的概念" class="headerlink" title="IOC容器的概念"></a>IOC容器的概念</h3><p>IOC容器就是具有依赖注入功能的容器,IOC容器负责实例化、定位、配置应用程序中的对象及建立这些对象之间的依赖。应用程序无需直接在代码中new相关的对象，<br>应用程序由IOC容器进行组装。<br>IOC容器管理对象之间的依赖关系,由IOC容器完成对象的注入,这样可以把复杂的对象依赖关系从应用中解放出来,简化了程序的开发过程。</p>
+<h3 id="模拟IOC容器创建、注入"><a href="#模拟IOC容器创建、注入" class="headerlink" title="模拟IOC容器创建、注入"></a>模拟IOC容器创建、注入</h3><p>SpringIOCTest项目结构:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">SpringIOCTest:</span><br><span class="line">....</span><br><span class="line">java:</span><br><span class="line">  com:</span><br><span class="line">    config:</span><br><span class="line">      ConfigManager.java</span><br><span class="line">    context:</span><br><span class="line">      BeanFactory.java</span><br><span class="line">      ClassPathXmlApplicationContext.java</span><br><span class="line">    pojo:</span><br><span class="line">      Bean.java</span><br><span class="line">      Person.java</span><br><span class="line">      Property.java</span><br><span class="line">      Student.java</span><br><span class="line">      Teacher.java</span><br><span class="line">    Test.java  </span><br><span class="line">resources:</span><br><span class="line">  applicationContext.xml   </span><br><span class="line">....  </span><br><span class="line">pom.xml   </span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h3 id="ConfigManager-java内容"><a href="#ConfigManager-java内容" class="headerlink" title="ConfigManager.java内容"></a>ConfigManager.java内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">public class ConfigManager &#123;</span><br><span class="line"></span><br><span class="line">    private static final Map&lt;String, Bean&gt; MAP = new HashMap&lt;&gt;(16);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    public static Map&lt;String, Bean&gt; getConfig(String path) &#123;</span><br><span class="line">        SAXReader saxReader = new SAXReader();</span><br><span class="line">        File file = new File(path);</span><br><span class="line">        Document document;</span><br><span class="line">        try &#123;</span><br><span class="line">            InputStream inputStream = new FileInputStream(file);</span><br><span class="line">            document = saxReader.read(inputStream);</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            return new HashMap&lt;&gt;(1);</span><br><span class="line">        &#125;</span><br><span class="line">        String xPath = &quot;//bean&quot;;</span><br><span class="line">        List&lt;Element&gt; elementList = document.selectNodes(xPath);</span><br><span class="line">        for (Element element: elementList) &#123;</span><br><span class="line">            Bean bean = new Bean();</span><br><span class="line">            String name = element.attributeValue(&quot;name&quot;);</span><br><span class="line">            bean.setName(name);</span><br><span class="line">            String className = element.attributeValue(&quot;class&quot;);</span><br><span class="line">            bean.setClassName(className);</span><br><span class="line">            String scope = element.attributeValue(&quot;scope&quot;);</span><br><span class="line">            if (scope != null) &#123;</span><br><span class="line">                bean.setScope(scope);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            List&lt;Element&gt; childElementList = element.elements(&quot;property&quot;);</span><br><span class="line">            for (Element childElement: childElementList) &#123;</span><br><span class="line">                Property property = new Property();</span><br><span class="line">                String childName = childElement.attributeValue(&quot;name&quot;);</span><br><span class="line">                property.setName(childName);</span><br><span class="line">                String childValue = childElement.attributeValue(&quot;value&quot;);</span><br><span class="line">                property.setValue(childValue);</span><br><span class="line">                String childRef = childElement.attributeValue(&quot;ref&quot;);</span><br><span class="line">                property.setRef(childRef);</span><br><span class="line">                bean.getPropertyList().add(property);</span><br><span class="line">            &#125;</span><br><span class="line">            MAP.put(name, bean);</span><br><span class="line">        &#125;</span><br><span class="line">        return MAP;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="BeanFactory-java内容"><a href="#BeanFactory-java内容" class="headerlink" title="BeanFactory.java内容"></a>BeanFactory.java内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public interface BeanFactory &#123;</span><br><span class="line"></span><br><span class="line">    Object getBean(String name);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ClassPathXmlApplicationContext-java内容"><a href="#ClassPathXmlApplicationContext-java内容" class="headerlink" title="ClassPathXmlApplicationContext.java内容"></a>ClassPathXmlApplicationContext.java内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">public class ClassPathXmlApplicationContext implements BeanFactory &#123;</span><br><span class="line"></span><br><span class="line">    private final Map&lt;String, Bean&gt; map;</span><br><span class="line"></span><br><span class="line">    private final Map&lt;String, Object&gt; context = new HashMap&lt;&gt;(16);</span><br><span class="line"></span><br><span class="line">    public ClassPathXmlApplicationContext(String path) &#123;</span><br><span class="line">        map = ConfigManager.getConfig(path);</span><br><span class="line">        for (Map.Entry&lt;String, Bean&gt; e: map.entrySet()) &#123;</span><br><span class="line">            String beanName = e.getKey();</span><br><span class="line">            Bean bean = e.getValue();</span><br><span class="line">            Object existBean = context.get(beanName);</span><br><span class="line">            if (existBean != null &amp;&amp; &quot;singleton&quot;.equals(bean.getScope())) &#123;</span><br><span class="line">                Object object = createBean(bean);</span><br><span class="line">                context.put(beanName, object);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private Object createBean(Bean bean) &#123;</span><br><span class="line">        Class&lt;?&gt; c = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            c = Class.forName(bean.getClassName());</span><br><span class="line">        &#125; catch (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        Object o = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            assert c != null;</span><br><span class="line">            o = c.newInstance();</span><br><span class="line">        &#125; catch (InstantiationException | IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        for (Property p: bean.getPropertyList()) &#123;</span><br><span class="line">            String name = p.getName();</span><br><span class="line">            String value = p.getValue();</span><br><span class="line">            if (value != null) &#123;</span><br><span class="line">                Map&lt;String, String[]&gt; paramMap = new HashMap&lt;&gt;(2);</span><br><span class="line">                paramMap.put(name, new String[]&#123;value&#125;);</span><br><span class="line">                try &#123;</span><br><span class="line">                    BeanUtils.populate(o, paramMap);</span><br><span class="line">                &#125; catch (IllegalAccessException | InvocationTargetException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            String ref = p.getRef();</span><br><span class="line">            if (ref != null) &#123;</span><br><span class="line">                Object existBean = context.get(ref);</span><br><span class="line">                if (existBean == null) &#123;</span><br><span class="line">                    existBean = createBean(map.get(ref));</span><br><span class="line">                    if (&quot;singleton&quot;.equals(map.get(ref).getScope())) &#123;</span><br><span class="line">                        context.put(ref, existBean);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                try &#123;</span><br><span class="line">                    BeanUtils.setProperty(o, name, existBean);</span><br><span class="line">                &#125; catch (IllegalAccessException | InvocationTargetException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return o;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object getBean(String name) &#123;</span><br><span class="line">        Object o = context.get(name);</span><br><span class="line">        if (o == null) &#123;</span><br><span class="line">            o = createBean(map.get(name));</span><br><span class="line">        &#125;</span><br><span class="line">        return o;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Bean-java内容"><a href="#Bean-java内容" class="headerlink" title="Bean.java内容"></a>Bean.java内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">public class Bean &#123;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    private String className;</span><br><span class="line"></span><br><span class="line">    private String scope = &quot;singleton&quot;;</span><br><span class="line"></span><br><span class="line">    private List&lt;Property&gt; propertyList = new ArrayList&lt;&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Person-java内容"><a href="#Person-java内容" class="headerlink" title="Person.java内容"></a>Person.java内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">public class Person &#123;</span><br><span class="line"></span><br><span class="line">    private Student student;</span><br><span class="line"></span><br><span class="line">    private Teacher teacher;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Property-java内容"><a href="#Property-java内容" class="headerlink" title="Property.java内容"></a>Property.java内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">public class Property &#123;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    private String value;</span><br><span class="line"></span><br><span class="line">    private String ref;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Student-java内容"><a href="#Student-java内容" class="headerlink" title="Student.java内容"></a>Student.java内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">public class Student &#123;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Teacher-java内容"><a href="#Teacher-java内容" class="headerlink" title="Teacher.java内容"></a>Teacher.java内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">public class Teacher &#123;</span><br><span class="line"></span><br><span class="line">    private Student student;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Test-java内容"><a href="#Test-java内容" class="headerlink" title="Test.java内容"></a>Test.java内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        URL url = TestBean.class.getClassLoader().getResource(&quot;./&quot;);</span><br><span class="line">        assert url != null;</span><br><span class="line">        String path = url.getPath() + &quot;applicationContext.xml&quot;;</span><br><span class="line">        System.out.println(path);</span><br><span class="line">        BeanFactory beanFactory = new ClassPathXmlApplicationContext(path);</span><br><span class="line">        Person personA = (Person) beanFactory.getBean(&quot;person&quot;);</span><br><span class="line">        Person personB = (Person) beanFactory.getBean(&quot;person&quot;);</span><br><span class="line">        System.out.println(JSON.toJSONString(personA));</span><br><span class="line">        System.out.println(JSON.toJSONString(personB));</span><br><span class="line">        System.out.println(personA == personB);</span><br><span class="line"></span><br><span class="line">        Student studentA = (Student) beanFactory.getBean(&quot;student&quot;);</span><br><span class="line">        Student studentB = (Student) beanFactory.getBean(&quot;student&quot;);</span><br><span class="line"></span><br><span class="line">        System.out.println(JSON.toJSONString(studentA));</span><br><span class="line">        System.out.println(JSON.toJSONString(studentB));</span><br><span class="line">        System.out.println(studentA == studentB);</span><br><span class="line"></span><br><span class="line">        String name = studentA.getName();</span><br><span class="line">        System.out.println(name);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        Person personC = new Person();</span><br><span class="line"></span><br><span class="line">        Student studentC = new Student();</span><br><span class="line">        studentC.setName(&quot;哎呦不错哦&quot;);</span><br><span class="line">        Teacher teacherC = new Teacher();</span><br><span class="line">        teacherC.setStudent(studentC);</span><br><span class="line">        personC.setStudent(studentC);</span><br><span class="line">        personC.setTeacher(teacherC);</span><br><span class="line">        System.out.println(JSON.toJSONString(personC, SerializerFeature.DisableCircularReferenceDetect));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="applicationContext-xml内容"><a href="#applicationContext-xml内容" class="headerlink" title="applicationContext.xml内容"></a>applicationContext.xml内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span><br><span class="line">&lt;beans&gt;</span><br><span class="line">    &lt;bean name=&quot;student&quot; class=&quot;com.pojo.Student&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;name&quot; value=&quot;知足常乐&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">    &lt;bean name=&quot;teacher&quot; class=&quot;com.pojo.Teacher&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;student&quot; ref=&quot;student&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">    &lt;bean name=&quot;person&quot; class=&quot;com.pojo.Person&quot; scope=&quot;prototype&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;teacher&quot; ref=&quot;teacher&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;property name=&quot;student&quot; ref=&quot;student&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="scope为prototype时容器不会保存实例对象-每次使用都会new一个新的对象"><a href="#scope为prototype时容器不会保存实例对象-每次使用都会new一个新的对象" class="headerlink" title="scope为prototype时容器不会保存实例对象,每次使用都会new一个新的对象"></a>scope为prototype时容器不会保存实例对象,每次使用都会new一个新的对象</h3><h3 id="scope为singleton-单例-时容器会保存实例对象-每次使用从容器拿就可以了"><a href="#scope为singleton-单例-时容器会保存实例对象-每次使用从容器拿就可以了" class="headerlink" title="scope为singleton(单例)时容器会保存实例对象,每次使用从容器拿就可以了"></a>scope为singleton(单例)时容器会保存实例对象,每次使用从容器拿就可以了</h3><h3 id="pom-xml需要导入的jar包"><a href="#pom-xml需要导入的jar包" class="headerlink" title="pom.xml需要导入的jar包"></a>pom.xml需要导入的jar包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;dom4j&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;dom4j&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.6.1&lt;/version&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;jaxen&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;jaxen&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.2.0&lt;/version&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;commons-beanutils&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;commons-beanutils&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.8.3&lt;/version&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;commons-logging&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;commons-logging&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.1.1&lt;/version&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;fastjson&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.2.78&lt;/version&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.18.22&lt;/version&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="执行test类的main方法-查看结果为"><a href="#执行test类的main方法-查看结果为" class="headerlink" title="执行test类的main方法,查看结果为:"></a>执行test类的main方法,查看结果为:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/C:/Users/Administrator/Desktop/test/SpringIOCTest/target/classes/applicationContext.xml</span><br><span class="line">&#123;&quot;student&quot;:&#123;&quot;name&quot;:&quot;知足常乐&quot;&#125;,&quot;teacher&quot;:&#123;&quot;student&quot;:&#123;&quot;$ref&quot;:&quot;$.student&quot;&#125;&#125;&#125;</span><br><span class="line">&#123;&quot;student&quot;:&#123;&quot;name&quot;:&quot;知足常乐&quot;&#125;,&quot;teacher&quot;:&#123;&quot;student&quot;:&#123;&quot;$ref&quot;:&quot;$.student&quot;&#125;&#125;&#125;</span><br><span class="line">false</span><br><span class="line">&#123;&quot;name&quot;:&quot;知足常乐&quot;&#125;</span><br><span class="line">&#123;&quot;name&quot;:&quot;知足常乐&quot;&#125;</span><br><span class="line">true</span><br><span class="line">知足常乐</span><br><span class="line">&#123;&quot;student&quot;:&#123;&quot;name&quot;:&quot;哎呦不错哦&quot;&#125;,&quot;teacher&quot;:&#123;&quot;student&quot;:&#123;&quot;name&quot;:&quot;哎呦不错哦&quot;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="可以看到不为单例时创建了两个对象-单例时只创建了一个对象"><a href="#可以看到不为单例时创建了两个对象-单例时只创建了一个对象" class="headerlink" title="可以看到不为单例时创建了两个对象,单例时只创建了一个对象"></a>可以看到不为单例时创建了两个对象,单例时只创建了一个对象</h3><h3 id="JSON-toJSONString-personA-方法出现-ref和-student问题是由于数据中有相同的对象-student表示同一级有相同的student对象-使用fastjson的SerializerFeature-DisableCircularReferenceDetect属性解决"><a href="#JSON-toJSONString-personA-方法出现-ref和-student问题是由于数据中有相同的对象-student表示同一级有相同的student对象-使用fastjson的SerializerFeature-DisableCircularReferenceDetect属性解决" class="headerlink" title="JSON.toJSONString(personA)方法出现$ref和$.student问题是由于数据中有相同的对象,$.student表示同一级有相同的student对象,使用fastjson的SerializerFeature.DisableCircularReferenceDetect属性解决"></a>JSON.toJSONString(personA)方法出现$ref和$.student问题是由于数据中有相同的对象,$.student表示同一级有相同的student对象,使用fastjson的SerializerFeature.DisableCircularReferenceDetect属性解决</h3>
+    </div>
+
+    
+    
+    
+
+   
+   <div>
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+   </div>
+  
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>dml
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://wodangminlong.github.io/2021/12/14/spring-ioc/" title="SpringIOC基本原理">https://wodangminlong.github.io/2021/12/14/spring-ioc/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/spring/" rel="tag"># spring</a>
+              <a href="/tags/spring-ioc/" rel="tag"># spring ioc</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/10/centos-seata1.4.2/" rel="prev" title="Centos7安装Seata1.4.2服务端连接至Nacos">
+      <i class="fa fa-chevron-left"></i> Centos7安装Seata1.4.2服务端连接至Nacos
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81NDU1MS8zMTAyMg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC%E5%AE%B9%E5%99%A8%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">IOC容器的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9FIOC%E5%AE%B9%E5%99%A8%E5%88%9B%E5%BB%BA%E3%80%81%E6%B3%A8%E5%85%A5"><span class="nav-number">2.</span> <span class="nav-text">模拟IOC容器创建、注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConfigManager-java%E5%86%85%E5%AE%B9"><span class="nav-number">3.</span> <span class="nav-text">ConfigManager.java内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanFactory-java%E5%86%85%E5%AE%B9"><span class="nav-number">4.</span> <span class="nav-text">BeanFactory.java内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ClassPathXmlApplicationContext-java%E5%86%85%E5%AE%B9"><span class="nav-number">5.</span> <span class="nav-text">ClassPathXmlApplicationContext.java内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bean-java%E5%86%85%E5%AE%B9"><span class="nav-number">6.</span> <span class="nav-text">Bean.java内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Person-java%E5%86%85%E5%AE%B9"><span class="nav-number">7.</span> <span class="nav-text">Person.java内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Property-java%E5%86%85%E5%AE%B9"><span class="nav-number">8.</span> <span class="nav-text">Property.java内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Student-java%E5%86%85%E5%AE%B9"><span class="nav-number">9.</span> <span class="nav-text">Student.java内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Teacher-java%E5%86%85%E5%AE%B9"><span class="nav-number">10.</span> <span class="nav-text">Teacher.java内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Test-java%E5%86%85%E5%AE%B9"><span class="nav-number">11.</span> <span class="nav-text">Test.java内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#applicationContext-xml%E5%86%85%E5%AE%B9"><span class="nav-number">12.</span> <span class="nav-text">applicationContext.xml内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scope%E4%B8%BAprototype%E6%97%B6%E5%AE%B9%E5%99%A8%E4%B8%8D%E4%BC%9A%E4%BF%9D%E5%AD%98%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1-%E6%AF%8F%E6%AC%A1%E4%BD%BF%E7%94%A8%E9%83%BD%E4%BC%9Anew%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="nav-number">13.</span> <span class="nav-text">scope为prototype时容器不会保存实例对象,每次使用都会new一个新的对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scope%E4%B8%BAsingleton-%E5%8D%95%E4%BE%8B-%E6%97%B6%E5%AE%B9%E5%99%A8%E4%BC%9A%E4%BF%9D%E5%AD%98%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1-%E6%AF%8F%E6%AC%A1%E4%BD%BF%E7%94%A8%E4%BB%8E%E5%AE%B9%E5%99%A8%E6%8B%BF%E5%B0%B1%E5%8F%AF%E4%BB%A5%E4%BA%86"><span class="nav-number">14.</span> <span class="nav-text">scope为singleton(单例)时容器会保存实例对象,每次使用从容器拿就可以了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pom-xml%E9%9C%80%E8%A6%81%E5%AF%BC%E5%85%A5%E7%9A%84jar%E5%8C%85"><span class="nav-number">15.</span> <span class="nav-text">pom.xml需要导入的jar包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8Ctest%E7%B1%BB%E7%9A%84main%E6%96%B9%E6%B3%95-%E6%9F%A5%E7%9C%8B%E7%BB%93%E6%9E%9C%E4%B8%BA"><span class="nav-number">16.</span> <span class="nav-text">执行test类的main方法,查看结果为:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E4%B8%8D%E4%B8%BA%E5%8D%95%E4%BE%8B%E6%97%B6%E5%88%9B%E5%BB%BA%E4%BA%86%E4%B8%A4%E4%B8%AA%E5%AF%B9%E8%B1%A1-%E5%8D%95%E4%BE%8B%E6%97%B6%E5%8F%AA%E5%88%9B%E5%BB%BA%E4%BA%86%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1"><span class="nav-number">17.</span> <span class="nav-text">可以看到不为单例时创建了两个对象,单例时只创建了一个对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON-toJSONString-personA-%E6%96%B9%E6%B3%95%E5%87%BA%E7%8E%B0-ref%E5%92%8C-student%E9%97%AE%E9%A2%98%E6%98%AF%E7%94%B1%E4%BA%8E%E6%95%B0%E6%8D%AE%E4%B8%AD%E6%9C%89%E7%9B%B8%E5%90%8C%E7%9A%84%E5%AF%B9%E8%B1%A1-student%E8%A1%A8%E7%A4%BA%E5%90%8C%E4%B8%80%E7%BA%A7%E6%9C%89%E7%9B%B8%E5%90%8C%E7%9A%84student%E5%AF%B9%E8%B1%A1-%E4%BD%BF%E7%94%A8fastjson%E7%9A%84SerializerFeature-DisableCircularReferenceDetect%E5%B1%9E%E6%80%A7%E8%A7%A3%E5%86%B3"><span class="nav-number">18.</span> <span class="nav-text">JSON.toJSONString(personA)方法出现$ref和$.student问题是由于数据中有相同的对象,$.student表示同一级有相同的student对象,使用fastjson的SerializerFeature.DisableCircularReferenceDetect属性解决</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="dml"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">dml</p>
+  <div class="site-description" itemprop="description">胜利垂青于有准备的人</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dml</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共24.2k字</span>
+</div>
+<a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

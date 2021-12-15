@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/12/07/spring-transactional/">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/02/kafka2.12-3.0.0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/12/07/spring-transactional/" class="post-title-link" itemprop="url">Spring中的Transactional</a>
+            <a href="/2021/11/02/kafka2.12-3.0.0/" class="post-title-link" itemprop="url">Centos7安装kafka_2.12-3.0.0并设置开机启动</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-12-07 16:49:53 / 修改时间：16:49:40" itemprop="dateCreated datePublished" datetime="2021-12-07T16:49:53+08:00">2021-12-07</time>
+              <time title="创建时间：2021-11-02 11:37:04 / 修改时间：11:36:53" itemprop="dateCreated datePublished" datetime="2021-11-02T11:37:04+08:00">2021-11-02</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -197,11 +197,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index"><span itemprop="name">spring</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/spring-transactional/" itemprop="url" rel="index"><span itemprop="name">spring transactional</span></a>
+                  <a href="/categories/kafka/" itemprop="url" rel="index"><span itemprop="name">kafka</span></a>
                 </span>
             </span>
 
@@ -216,12 +212,655 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="Spring的事务管理方式有两种-1-编程式2-声明式。"><a href="#Spring的事务管理方式有两种-1-编程式2-声明式。" class="headerlink" title="Spring的事务管理方式有两种,1.编程式2.声明式。"></a>Spring的事务管理方式有两种,1.编程式2.声明式。</h3><h3 id="1-编程式事务是通过编码方式实现事务"><a href="#1-编程式事务是通过编码方式实现事务" class="headerlink" title="1.编程式事务是通过编码方式实现事务"></a>1.编程式事务是通过编码方式实现事务</h3><h3 id="2-声明式事务基于AOP-可以使业务代码和事务处理解耦-在实际使用中声明式事务用的比较多"><a href="#2-声明式事务基于AOP-可以使业务代码和事务处理解耦-在实际使用中声明式事务用的比较多" class="headerlink" title="2.声明式事务基于AOP,可以使业务代码和事务处理解耦,在实际使用中声明式事务用的比较多"></a>2.声明式事务基于AOP,可以使业务代码和事务处理解耦,在实际使用中声明式事务用的比较多</h3><h3 id="在Springboot中使用Transactional"><a href="#在Springboot中使用Transactional" class="headerlink" title="在Springboot中使用Transactional"></a>在Springboot中使用Transactional</h3><p>直接在需要增加的事务方法上加@Transactional注解</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Transactional</span><br><span class="line">public int testAdd() &#123;</span><br><span class="line">    // do smoething</span><br><span class="line">    return 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Springboot在启动时会使用DataSourceTransactionManagerAutoConfiguration配置一个事务管理器DataSourceTransactionManager"><a href="#Springboot在启动时会使用DataSourceTransactionManagerAutoConfiguration配置一个事务管理器DataSourceTransactionManager" class="headerlink" title="Springboot在启动时会使用DataSourceTransactionManagerAutoConfiguration配置一个事务管理器DataSourceTransactionManager"></a>Springboot在启动时会使用DataSourceTransactionManagerAutoConfiguration配置一个事务管理器DataSourceTransactionManager</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@ConditionalOnSingleCandidate(DataSource.class)</span><br><span class="line">static class JdbcTransactionManagerConfiguration &#123;</span><br><span class="line">    JdbcTransactionManagerConfiguration() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    @ConditionalOnMissingBean(&#123;TransactionManager.class&#125;)</span><br><span class="line">    DataSourceTransactionManager transactionManager(Environment environment, DataSource dataSource, ObjectProvider&lt;TransactionManagerCustomizers&gt; transactionManagerCustomizers) &#123;</span><br><span class="line">        DataSourceTransactionManager transactionManager = this.createTransactionManager(environment, dataSource);</span><br><span class="line">        transactionManagerCustomizers.ifAvailable((customizers) -&gt; &#123;</span><br><span class="line">            customizers.customize(transactionManager);</span><br><span class="line">        &#125;);</span><br><span class="line">        return transactionManager;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private DataSourceTransactionManager createTransactionManager(Environment environment, DataSource dataSource) &#123;</span><br><span class="line">        return (DataSourceTransactionManager)((Boolean)environment.getProperty(&quot;spring.dao.exceptiontranslation.enabled&quot;, Boolean.class, Boolean.TRUE) ? new JdbcTransactionManager(dataSource) : new DataSourceTransactionManager(dataSource));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h3 id="一、下载kafka-2-12-3-0-0-tgz安装包"><a href="#一、下载kafka-2-12-3-0-0-tgz安装包" class="headerlink" title="一、下载kafka_2.12-3.0.0.tgz安装包"></a>一、下载kafka_2.12-3.0.0.tgz安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="http://kafka.apache.org/">http://kafka.apache.org</a></p>
+<h3 id="二、将文件拷贝至服务器-usr-local-目录下并解压"><a href="#二、将文件拷贝至服务器-usr-local-目录下并解压" class="headerlink" title="二、将文件拷贝至服务器/usr/local 目录下并解压"></a>二、将文件拷贝至服务器/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf kafka_2.12-3.0.0.tgz</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/12/07/spring-transactional/#more" rel="contents">
+              <a class="btn" href="/2021/11/02/kafka2.12-3.0.0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/01/zookeeper3.7.0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/01/zookeeper3.7.0/" class="post-title-link" itemprop="url">Centos7安装zookeeper3.7.0并设置开机启动</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-01 08:45:18 / 修改时间：08:44:49" itemprop="dateCreated datePublished" datetime="2021-11-01T08:45:18+08:00">2021-11-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="一、下载apache-zookeeper-3-7-0-bin-tar安装包"><a href="#一、下载apache-zookeeper-3-7-0-bin-tar安装包" class="headerlink" title="一、下载apache-zookeeper-3.7.0-bin.tar安装包"></a>一、下载apache-zookeeper-3.7.0-bin.tar安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://zookeeper.apache.org/">https://zookeeper.apache.org/</a></p>
+<h3 id="二、将文件拷贝至服务器-usr-local-目录下并解压"><a href="#二、将文件拷贝至服务器-usr-local-目录下并解压" class="headerlink" title="二、将文件拷贝至服务器/usr/local 目录下并解压"></a>二、将文件拷贝至服务器/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -xvf apache-zookeeper-3.7.0-bin.tar</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/01/zookeeper3.7.0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/31/mysql5.7.24-master-slave/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/31/mysql5.7.24-master-slave/" class="post-title-link" itemprop="url">Centos7安装mysql5.7.36主从实现读写分离</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-31 08:57:46 / 修改时间：08:56:57" itemprop="dateCreated datePublished" datetime="2021-10-31T08:57:46+08:00">2021-10-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="一、分别在两台服务器安装mysql5-7-36服务"><a href="#一、分别在两台服务器安装mysql5-7-36服务" class="headerlink" title="一、分别在两台服务器安装mysql5.7.36服务"></a>一、分别在两台服务器安装mysql5.7.36服务</h3><p>具体安装步骤见: <a href="https://wodangminlong.github.io/2021/10/30/mysql5.7.24/">Centos7安装mysql5.7.36</a></p>
+<h3 id="二、修改主服务器-etc-my-conf文件-在最后一行增加以下内容"><a href="#二、修改主服务器-etc-my-conf文件-在最后一行增加以下内容" class="headerlink" title="二、修改主服务器/etc/my.conf文件,在最后一行增加以下内容"></a>二、修改主服务器/etc/my.conf文件,在最后一行增加以下内容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server-id=1</span><br><span class="line">log_bin=master</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/31/mysql5.7.24-master-slave/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/30/mysql5.7.24/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/30/mysql5.7.24/" class="post-title-link" itemprop="url">Centos7安装mysql5.7.36</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-30 08:22:16 / 修改时间：08:22:02" itemprop="dateCreated datePublished" datetime="2021-10-30T08:22:16+08:00">2021-10-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="一、下载mysql-5-7-36-1-el7-x86-64-rpm-bundle-tar安装包"><a href="#一、下载mysql-5-7-36-1-el7-x86-64-rpm-bundle-tar安装包" class="headerlink" title="一、下载mysql-5.7.36-1.el7.x86_64.rpm-bundle.tar安装包"></a>一、下载mysql-5.7.36-1.el7.x86_64.rpm-bundle.tar安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/5.7.html#download">https://dev.mysql.com/downloads/mysql/5.7.html#download</a> </br><br>选择 Red Hat Enterprise Linux / Oracle Linux | Red Hat Enterprise Linux 7/Oracle Linux7(x86,64-bit) </br><br>选择 RPM Bundle 文件下载</p>
+<h3 id="二、将文件拷贝至服务器-usr-local-目录下并解压"><a href="#二、将文件拷贝至服务器-usr-local-目录下并解压" class="headerlink" title="二、将文件拷贝至服务器/usr/local 目录下并解压"></a>二、将文件拷贝至服务器/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -xvf mysql-5.7.36-1.el7.x86_64.rpm-bundle.tar</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/30/mysql5.7.24/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/29/nginx1.20.1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/29/nginx1.20.1/" class="post-title-link" itemprop="url">Centos7安装nginx1.20.1并设置开机启动</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-29 08:41:22 / 修改时间：08:45:09" itemprop="dateCreated datePublished" datetime="2021-10-29T08:41:22+08:00">2021-10-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nginx/" itemprop="url" rel="index"><span itemprop="name">nginx</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="一、下载nginx-1-20-1-tar-gz安装包"><a href="#一、下载nginx-1-20-1-tar-gz安装包" class="headerlink" title="一、下载nginx-1.20.1.tar.gz安装包"></a>一、下载nginx-1.20.1.tar.gz安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">http://nginx.org/en/download.html</a></p>
+<h3 id="二、将文件拷贝至服务器-usr-local-目录下并解压"><a href="#二、将文件拷贝至服务器-usr-local-目录下并解压" class="headerlink" title="二、将文件拷贝至服务器/usr/local 目录下并解压"></a>二、将文件拷贝至服务器/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf nginx-1.20.1.tar.gz</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/29/nginx1.20.1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/28/nacos2.0.3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/28/nacos2.0.3/" class="post-title-link" itemprop="url">Centos7安装nacos2.0.3单机版并设置开机启动</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-28 08:46:22 / 修改时间：14:57:57" itemprop="dateCreated datePublished" datetime="2021-10-28T08:46:22+08:00">2021-10-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nacos/" itemprop="url" rel="index"><span itemprop="name">nacos</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="一、下载nacos-server-2-0-3-tar-gz安装包"><a href="#一、下载nacos-server-2-0-3-tar-gz安装包" class="headerlink" title="一、下载nacos-server-2.0.3.tar.gz安装包"></a>一、下载nacos-server-2.0.3.tar.gz安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://github.com/alibaba/nacos/tags">https://github.com/alibaba/nacos/tags</a></p>
+<h3 id="二、将文件拷贝至服务器-usr-local-目录下并解压"><a href="#二、将文件拷贝至服务器-usr-local-目录下并解压" class="headerlink" title="二、将文件拷贝至服务器/usr/local 目录下并解压"></a>二、将文件拷贝至服务器/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf nacos-server-2.0.3.tar.gz</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/28/nacos2.0.3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/27/rabbitmq3.9.7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/27/rabbitmq3.9.7/" class="post-title-link" itemprop="url">Centos7安装rabbitmq3.9.7</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-27 10:16:35 / 修改时间：11:02:13" itemprop="dateCreated datePublished" datetime="2021-10-27T10:16:35+08:00">2021-10-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/rabbitmq/" itemprop="url" rel="index"><span itemprop="name">rabbitmq</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="一、因为rabbitmq是使用erlang语言编写的-所以需要先安装erlang"><a href="#一、因为rabbitmq是使用erlang语言编写的-所以需要先安装erlang" class="headerlink" title="一、因为rabbitmq是使用erlang语言编写的,所以需要先安装erlang"></a>一、因为rabbitmq是使用erlang语言编写的,所以需要先安装erlang</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://www.erlang.org/downloads">https://www.erlang.org/downloads</a> </br><br>选择 OTP 24.0+ Source File 下载</p>
+<h3 id="二、将文件拷贝至服务器-usr-local-目录下并解压"><a href="#二、将文件拷贝至服务器-usr-local-目录下并解压" class="headerlink" title="二、将文件拷贝至服务器/usr/local 目录下并解压"></a>二、将文件拷贝至服务器/usr/local 目录下并解压</h3><p>解压命令(在/usr/local 目录下执行)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar -zxvf otp_src_24.0.tar.gz</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/27/rabbitmq3.9.7/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/26/redis5.0.5-cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/26/redis5.0.5-cluster/" class="post-title-link" itemprop="url">Centos7redis5.0.5集群搭建</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-26 21:07:29" itemprop="dateCreated datePublished" datetime="2021-10-26T21:07:29+08:00">2021-10-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-27 11:02:42" itemprop="dateModified" datetime="2021-10-27T11:02:42+08:00">2021-10-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="准备工作："><a href="#准备工作：" class="headerlink" title="准备工作："></a>准备工作：</h3><h4 id="1-2台服务器IP分别为192-168-1-100-192-168-1-101-IP地址为示例-根据实际情况更改即可-单台伪集群也适用"><a href="#1-2台服务器IP分别为192-168-1-100-192-168-1-101-IP地址为示例-根据实际情况更改即可-单台伪集群也适用" class="headerlink" title="1. 2台服务器IP分别为192.168.1.100;192.168.1.101 (IP地址为示例,根据实际情况更改即可;单台伪集群也适用)"></a>1. 2台服务器IP分别为192.168.1.100;192.168.1.101 (IP地址为示例,根据实际情况更改即可;单台伪集群也适用)</h4><h4 id="2-分别在两台服务器上传redis-5-0-5-tar-gz包-gt-解压-gt-make-gt-make-install-至-usr-local-redis"><a href="#2-分别在两台服务器上传redis-5-0-5-tar-gz包-gt-解压-gt-make-gt-make-install-至-usr-local-redis" class="headerlink" title="2. 分别在两台服务器上传redis-5.0.5.tar.gz包-&gt;解压-&gt;make-&gt;make install 至/usr/local/redis"></a>2. 分别在两台服务器上传redis-5.0.5.tar.gz包-&gt;解压-&gt;make-&gt;make install 至/usr/local/redis</h4><p>安装好后开始配置集群</p>
+<h3 id="一、分别在两台服务器-usr-local-redis-目录下创建conf目录用于放集群文件"><a href="#一、分别在两台服务器-usr-local-redis-目录下创建conf目录用于放集群文件" class="headerlink" title="一、分别在两台服务器/usr/local/redis/ 目录下创建conf目录用于放集群文件"></a>一、分别在两台服务器/usr/local/redis/ 目录下创建conf目录用于放集群文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir /usr/local/redis/conf</span></span><br></pre></td></tr></table></figure>
+<h3 id="二、拷贝目录下的redis-conf至conf目录并指定名称为redis-6379-conf"><a href="#二、拷贝目录下的redis-conf至conf目录并指定名称为redis-6379-conf" class="headerlink" title="二、拷贝目录下的redis.conf至conf目录并指定名称为redis-6379.conf"></a>二、拷贝目录下的redis.conf至conf目录并指定名称为redis-6379.conf</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># copy /usr/local/redis/redis.conf /usr/local/redis/conf/redis-6379.conf</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/26/redis5.0.5-cluster/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/10/24/redis5.0.5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/24/redis5.0.5/" class="post-title-link" itemprop="url">Centos7安装redis5.0.5单机版设置远程访问和开机启动</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-24 21:46:43" itemprop="dateCreated datePublished" datetime="2021-10-24T21:46:43+08:00">2021-10-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-27 11:03:14" itemprop="dateModified" datetime="2021-10-27T11:03:14+08:00">2021-10-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>每次增加新的环境或服务器时需要安装一大堆基础服务,记录一下redis安装步骤,以后不用百度啦~</p>
+<h3 id="一、安装gcc"><a href="#一、安装gcc" class="headerlink" title="一、安装gcc"></a>一、安装gcc</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install gcc</span></span><br></pre></td></tr></table></figure>
+<h3 id="二、下载redis"><a href="#二、下载redis" class="headerlink" title="二、下载redis"></a>二、下载redis</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wget http://download.redis.io/releases/redis-5.0.5.tar.gz</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/24/redis5.0.5/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -246,7 +885,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
   </nav>
 
 
@@ -314,20 +953,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-count">61</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -367,7 +1006,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共22.7k字</span>
+  <span class="post-count">博客全站共24.2k字</span>
 </div>
 <a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
 

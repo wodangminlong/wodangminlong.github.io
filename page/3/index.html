@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/12/09/mysql5.7.36charsetutf8/">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/23/centos-cpu-info/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/12/09/mysql5.7.36charsetutf8/" class="post-title-link" itemprop="url">mysql5.7.36中文乱码问题</a>
+            <a href="/2021/11/23/centos-cpu-info/" class="post-title-link" itemprop="url">Centos查看cpu信息</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-12-09 16:46:17 / 修改时间：16:45:57" itemprop="dateCreated datePublished" datetime="2021-12-09T16:46:17+08:00">2021-12-09</time>
+              <time title="创建时间：2021-11-23 15:32:59 / 修改时间：15:32:37" itemprop="dateCreated datePublished" datetime="2021-11-23T15:32:59+08:00">2021-11-23</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -197,11 +197,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/mysql-%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">mysql 中文乱码问题</span></a>
+                  <a href="/categories/centos-cpu/" itemprop="url" rel="index"><span itemprop="name">centos cpu</span></a>
                 </span>
             </span>
 
@@ -216,10 +212,735 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="linux服务器安装mysql后发现出现中文乱码问题-解决方案为修改my-cnf"><a href="#linux服务器安装mysql后发现出现中文乱码问题-解决方案为修改my-cnf" class="headerlink" title="linux服务器安装mysql后发现出现中文乱码问题,解决方案为修改my.cnf"></a>linux服务器安装mysql后发现出现中文乱码问题,解决方案为修改my.cnf</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim /etc/my.cnf</span><br></pre></td></tr></table></figure>
-<h3 id="在最后一行新增character-set-server-utf8"><a href="#在最后一行新增character-set-server-utf8" class="headerlink" title="在最后一行新增character-set-server=utf8"></a>在最后一行新增character-set-server=utf8</h3><h3 id="如果旧项目中出现表-字段-视图大小写与实际不匹配时-可以更改my-cnf"><a href="#如果旧项目中出现表-字段-视图大小写与实际不匹配时-可以更改my-cnf" class="headerlink" title="如果旧项目中出现表/字段/视图大小写与实际不匹配时,可以更改my.cnf"></a>如果旧项目中出现表/字段/视图大小写与实际不匹配时,可以更改my.cnf</h3><h3 id="在最后一行新增lower-case-table-names-1"><a href="#在最后一行新增lower-case-table-names-1" class="headerlink" title="在最后一行新增lower_case_table_names=1"></a>在最后一行新增lower_case_table_names=1</h3><p>lower_case_table_names=1表示不校验大小写,为0时校验大小写</p>
-<h3 id="如果出现STR-TO-DATE为null或”this-is-incompatible-with-sql-mode-only-full-group-by”的情况-可以更改my-cnf"><a href="#如果出现STR-TO-DATE为null或”this-is-incompatible-with-sql-mode-only-full-group-by”的情况-可以更改my-cnf" class="headerlink" title="如果出现STR_TO_DATE为null或”this is incompatible with sql_mode=only_full_group_by”的情况,可以更改my.cnf"></a>如果出现STR_TO_DATE为null或”this is incompatible with sql_mode=only_full_group_by”的情况,可以更改my.cnf</h3><h3 id="在最后一行新增sql-mode-’STRICT-TRANS-TABLES’"><a href="#在最后一行新增sql-mode-’STRICT-TRANS-TABLES’" class="headerlink" title="在最后一行新增sql_mode=’STRICT_TRANS_TABLES’"></a>在最后一行新增sql_mode=’STRICT_TRANS_TABLES’</h3><p>这样把sql_mode中的NO_ZERO_IN_DATE和NO_ZERO_DATE去掉就可以了</p>
-<h3 id="最重要还是代码和sql规范编写"><a href="#最重要还是代码和sql规范编写" class="headerlink" title="最重要还是代码和sql规范编写"></a>最重要还是代码和sql规范编写</h3>
+          <h3 id="查看CPU物理个数"><a href="#查看CPU物理个数" class="headerlink" title="查看CPU物理个数"></a>查看CPU物理个数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># grep &#x27;physical id&#x27; /proc/cpuinfo | sort -u |wc -l</span><br></pre></td></tr></table></figure>
+<h3 id="查看CPU核心数量"><a href="#查看CPU核心数量" class="headerlink" title="查看CPU核心数量"></a>查看CPU核心数量</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># grep &#x27;core id&#x27; /proc/cpuinfo | sort -u |wc -l</span><br></pre></td></tr></table></figure>
+<h3 id="查看CPU线程数"><a href="#查看CPU线程数" class="headerlink" title="查看CPU线程数"></a>查看CPU线程数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># grep &#x27;processor&#x27; /proc/cpuinfo | sort -u |wc -l</span><br></pre></td></tr></table></figure>
+<h3 id="查看CPU详细信息"><a href="#查看CPU详细信息" class="headerlink" title="查看CPU详细信息"></a>查看CPU详细信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cat /proc/cpuinfo</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/23/nginx-mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/23/nginx-mysql/" class="post-title-link" itemprop="url">nginx配置连接mysql</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-23 11:55:55 / 修改时间：11:55:05" itemprop="dateCreated datePublished" datetime="2021-11-23T11:55:55+08:00">2021-11-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nginx/" itemprop="url" rel="index"><span itemprop="name">nginx</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nginx/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="nginx添加stream模块"><a href="#nginx添加stream模块" class="headerlink" title="nginx添加stream模块"></a>nginx添加stream模块</h3><p>在nginx编译目录下执行(注意不要执行make install,此步骤会覆盖安装)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ./configure --prefix=/usr/local/nginx --with-http_ssl_module --with-stream --with-stream_ssl_module</span><br><span class="line"># make</span><br></pre></td></tr></table></figure>
+<h3 id="备份原有的nginx文件"><a href="#备份原有的nginx文件" class="headerlink" title="备份原有的nginx文件"></a>备份原有的nginx文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cp /usr/local/nginx/sbin/nginx  /usr/local/nginx/sbin/nginx.bak</span><br></pre></td></tr></table></figure>
+<h3 id="将编译好的nginx文件复制到-usr-local-nginx-sbin-目录下"><a href="#将编译好的nginx文件复制到-usr-local-nginx-sbin-目录下" class="headerlink" title="将编译好的nginx文件复制到/usr/local/nginx/sbin/目录下"></a>将编译好的nginx文件复制到/usr/local/nginx/sbin/目录下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cp ./objs/nginx /usr/local/nginx/sbin/</span><br></pre></td></tr></table></figure>
+<h3 id="查看新的模块"><a href="#查看新的模块" class="headerlink" title="查看新的模块"></a>查看新的模块</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># /usr/local/nginx/sbin/nginx -V</span><br></pre></td></tr></table></figure>
+<p>如果显示内容包含 –with-stream –with-stream_ssl_module 表示正常</p>
+<h3 id="修改nginx配置文件-在最后一行增加内容"><a href="#修改nginx配置文件-在最后一行增加内容" class="headerlink" title="修改nginx配置文件,在最后一行增加内容"></a>修改nginx配置文件,在最后一行增加内容</h3><p>内容如下(此处以mysql服务器地址192.168.17.131为例,根据实际情况更改):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">stream &#123;</span><br><span class="line">        upstream mysql &#123;</span><br><span class="line">                zone myapp1 64k;</span><br><span class="line">                server 192.168.17.131:3306;</span><br><span class="line">        &#125;</span><br><span class="line">        server &#123;</span><br><span class="line">            listen 3306;</span><br><span class="line">            proxy_connect_timeout 1s;</span><br><span class="line">            proxy_timeout 3s;</span><br><span class="line">            proxy_pass mysql;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="测试nginx配置文件是否正常-正常后重启"><a href="#测试nginx配置文件是否正常-正常后重启" class="headerlink" title="测试nginx配置文件是否正常,正常后重启"></a>测试nginx配置文件是否正常,正常后重启</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># /usr/local/nginx/sbin/nginx -t</span><br><span class="line"># /usr/local/nginx/sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
+<h3 id="查看3306端口是否已监听"><a href="#查看3306端口是否已监听" class="headerlink" title="查看3306端口是否已监听"></a>查看3306端口是否已监听</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># netstat -ntlp</span><br></pre></td></tr></table></figure>
+<h3 id="连接mysql"><a href="#连接mysql" class="headerlink" title="连接mysql"></a>连接mysql</h3>
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/23/mongodb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/23/mongodb/" class="post-title-link" itemprop="url">Centos7安装mongodb</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-23 10:35:38 / 修改时间：10:35:17" itemprop="dateCreated datePublished" datetime="2021-11-23T10:35:38+08:00">2021-11-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mongodb/" itemprop="url" rel="index"><span itemprop="name">mongodb</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="下载mongodb-linux-x86-64-rhel80-5-0-4-tgz安装包"><a href="#下载mongodb-linux-x86-64-rhel80-5-0-4-tgz安装包" class="headerlink" title="下载mongodb-linux-x86_64-rhel80-5.0.4.tgz安装包"></a>下载mongodb-linux-x86_64-rhel80-5.0.4.tgz安装包</h3><p>下载地址: <a target="_blank" rel="noopener" href="https://www.mongodb.com/try/download/community">https://www.mongodb.com/try/download/community</a><br>platform选择centos,package选择tgz</p>
+<h3 id="上传至服务器-usr-local目录下并解压"><a href="#上传至服务器-usr-local目录下并解压" class="headerlink" title="上传至服务器/usr/local目录下并解压"></a>上传至服务器/usr/local目录下并解压</h3><p>解压命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># tar -zxvf mongodb-linux-x86_64-rhel80-5.0.4.tgz</span><br></pre></td></tr></table></figure>
+<h3 id="mongodb目录名称更改"><a href="#mongodb目录名称更改" class="headerlink" title="mongodb目录名称更改"></a>mongodb目录名称更改</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mv /usr/local/mongodb-linux-x86_64-rhel80-5.0.4 /usr/local/mongodb</span><br></pre></td></tr></table></figure>
+<h3 id="修改系统配置文件"><a href="#修改系统配置文件" class="headerlink" title="修改系统配置文件"></a>修改系统配置文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim /etc/profile</span><br></pre></td></tr></table></figure>
+<p>在最后一行增加以下内容:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/usr/local/mongodb/bin:$PATH</span><br></pre></td></tr></table></figure>
+<h3 id="刷新系统配置文件"><a href="#刷新系统配置文件" class="headerlink" title="刷新系统配置文件"></a>刷新系统配置文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># source /etc/profile</span><br></pre></td></tr></table></figure>
+<h3 id="创建对应的目录"><a href="#创建对应的目录" class="headerlink" title="创建对应的目录"></a>创建对应的目录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># mkdir -p /var/lib/mongo</span><br><span class="line"># mkdir -p /var/log/mongodb</span><br></pre></td></tr></table></figure>
+<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mongod --dbpath /var/lib/mongo --logpath /var/log/mongodb/mongod.log --fork</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/23/mybatis-plus-adds-and-returns-the-primary-key/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/23/mybatis-plus-adds-and-returns-the-primary-key/" class="post-title-link" itemprop="url">mybatis plus 新增返回主键</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-23 09:59:50 / 修改时间：09:59:27" itemprop="dateCreated datePublished" datetime="2021-11-23T09:59:50+08:00">2021-11-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mybatis-plus/" itemprop="url" rel="index"><span itemprop="name">mybatis plus</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="mybatis-mapper调用insert新增方法返回的是int类型"><a href="#mybatis-mapper调用insert新增方法返回的是int类型" class="headerlink" title="mybatis mapper调用insert新增方法返回的是int类型"></a>mybatis mapper调用insert新增方法返回的是int类型</h3><h3 id="但是在新增完成后会将新增成功的主键id设置到model中"><a href="#但是在新增完成后会将新增成功的主键id设置到model中" class="headerlink" title="但是在新增完成后会将新增成功的主键id设置到model中"></a>但是在新增完成后会将新增成功的主键id设置到model中</h3><h3 id="所以如果想获取到新增后的主键id-直接在insert方法完成后判断是否返回大于0"><a href="#所以如果想获取到新增后的主键id-直接在insert方法完成后判断是否返回大于0" class="headerlink" title="所以如果想获取到新增后的主键id,直接在insert方法完成后判断是否返回大于0"></a>所以如果想获取到新增后的主键id,直接在insert方法完成后判断是否返回大于0</h3><h3 id="大于0时直接获取model的主键id就可以拿到"><a href="#大于0时直接获取model的主键id就可以拿到" class="headerlink" title="大于0时直接获取model的主键id就可以拿到"></a>大于0时直接获取model的主键id就可以拿到</h3>
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/23/logback-spring/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/23/logback-spring/" class="post-title-link" itemprop="url">Spring配置logback(包含写入kafka)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-23 09:26:53 / 修改时间：09:24:29" itemprop="dateCreated datePublished" datetime="2021-11-23T09:26:53+08:00">2021-11-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring-logback/" itemprop="url" rel="index"><span itemprop="name">spring logback</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring-logback/logback-spring/" itemprop="url" rel="index"><span itemprop="name">logback-spring</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="导入maven配置"><a href="#导入maven配置" class="headerlink" title="导入maven配置"></a>导入maven配置</h3><p>根据实际情况选择合适的匹配版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.github.danielwegener&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;logback-kafka-appender&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;0.2.0-RC2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;logback-classic&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.2.3&lt;/version&gt;</span><br><span class="line">  &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;net.logstash.logback&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;logstash-logback-encoder&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;5.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="resources文件夹下增加logback-spring-xml文件"><a href="#resources文件夹下增加logback-spring-xml文件" class="headerlink" title="resources文件夹下增加logback-spring.xml文件"></a>resources文件夹下增加logback-spring.xml文件</h3><p>内容如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">    scan：当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。</span><br><span class="line">    scanPeriod：设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒；当scan为true时，此属性生效。默认的时间间隔为1分钟。</span><br><span class="line">    debug：当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。</span><br><span class="line">--&gt;</span><br><span class="line">&lt;configuration scan=&quot;false&quot; scanPeriod=&quot;60 seconds&quot; debug=&quot;false&quot;&gt;</span><br><span class="line">    &lt;!-- 定义日志的根目录 --&gt;</span><br><span class="line">    &lt;springProperty name=&quot;LOG_HOME&quot; source=&quot;logging.file.path&quot;/&gt;</span><br><span class="line">    &lt;!-- 定义kafka地址 --&gt;</span><br><span class="line">    &lt;springProperty name=&quot;KAFKA_HOME&quot; source=&quot;spring.kafka.bootstrap-servers&quot;/&gt;</span><br><span class="line">    &lt;!-- 定义kafka topic --&gt;</span><br><span class="line">    &lt;springProperty name=&quot;KAFKA_TOPIC&quot; source=&quot;spring.kafka.template.default-topic&quot;/&gt;</span><br><span class="line">    &lt;!-- 定义kafka server name --&gt;</span><br><span class="line">    &lt;springProperty name=&quot;KAFKA_SERVER_NAME&quot; source=&quot;spring.application.name&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- ch.qos.logback.core.ConsoleAppender 表示控制台输出 --&gt;</span><br><span class="line">    &lt;appender name=&quot;CONSOLE&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;</span><br><span class="line">        &lt;!--</span><br><span class="line">        日志输出格式：</span><br><span class="line">			%d表示日期时间，</span><br><span class="line">			%thread表示线程名，</span><br><span class="line">			%-5level：级别从左显示5个字符宽度</span><br><span class="line">			%logger&#123;50&#125; 表示logger名字最长50个字符，否则按照句点分割。</span><br><span class="line">			%msg：日志消息，</span><br><span class="line">			%n是换行符</span><br><span class="line">        --&gt;</span><br><span class="line">        &lt;layout class=&quot;ch.qos.logback.classic.PatternLayout&quot;&gt;</span><br><span class="line">            &lt;!-- dev config --&gt;</span><br><span class="line">            &lt;springProfile name=&quot;dev&quot;&gt;</span><br><span class="line">                &lt;pattern&gt;%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; ---&gt; [%thread] ---&gt; %-5level %logger&#123;50&#125; - %msg%n&lt;/pattern&gt;</span><br><span class="line">            &lt;/springProfile&gt;</span><br><span class="line">            &lt;!-- default config --&gt;</span><br><span class="line">            &lt;springProfile name=&quot;!dev&quot;&gt;</span><br><span class="line">                &lt;pattern&gt;%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; ==== [%thread] ==== %-5level %logger&#123;50&#125; - %msg%n&lt;/pattern&gt;</span><br><span class="line">            &lt;/springProfile&gt;</span><br><span class="line">        &lt;/layout&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 --&gt;</span><br><span class="line">    &lt;appender name=&quot;FILE&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;</span><br><span class="line">        &lt;!-- 指定日志文件的名称 --&gt;</span><br><span class="line">        &lt;file&gt;$&#123;LOG_HOME&#125;/$&#123;KAFKA_SERVER_NAME&#125;.log&lt;/file&gt;</span><br><span class="line">        &lt;!--</span><br><span class="line">        当发生滚动时，决定 RollingFileAppender 的行为，涉及文件移动和重命名</span><br><span class="line">        TimeBasedRollingPolicy： 最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责出发滚动。</span><br><span class="line">        --&gt;</span><br><span class="line">        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;</span><br><span class="line">            &lt;!--</span><br><span class="line">            滚动时产生的文件的存放位置及文件名称 %d&#123;yyyy-MM-dd&#125;：按天进行日志滚动</span><br><span class="line">            %i：当文件大小超过maxFileSize时，按照i进行文件滚动</span><br><span class="line">            --&gt;</span><br><span class="line">            &lt;fileNamePattern&gt;$&#123;LOG_HOME&#125;/$&#123;KAFKA_SERVER_NAME&#125;-%d&#123;yyyy-MM-dd&#125;-%i.log&lt;/fileNamePattern&gt;</span><br><span class="line">            &lt;!--</span><br><span class="line">            可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件。假设设置每天滚动，</span><br><span class="line">            且maxHistory是365，则只保存最近365天的文件，删除之前的旧文件。注意，删除旧文件是，</span><br><span class="line">            那些为了归档而创建的目录也会被删除。</span><br><span class="line">            --&gt;</span><br><span class="line">            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;</span><br><span class="line">            &lt;!--</span><br><span class="line">            当日志文件超过maxFileSize指定的大小时，根据上面提到的%i进行日志文件滚动</span><br><span class="line">            注意此处配置SizeBasedTriggeringPolicy是无法实现按文件大小进行滚动的，必须配置timeBasedFileNamingAndTriggeringPolicy</span><br><span class="line">            --&gt;</span><br><span class="line">            &lt;timeBasedFileNamingAndTriggeringPolicy class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;&gt;</span><br><span class="line">                &lt;maxFileSize&gt;1024MB&lt;/maxFileSize&gt;</span><br><span class="line">            &lt;/timeBasedFileNamingAndTriggeringPolicy&gt;</span><br><span class="line">        &lt;/rollingPolicy&gt;</span><br><span class="line">        &lt;!-- 日志输出格式： --&gt;</span><br><span class="line">        &lt;layout class=&quot;ch.qos.logback.classic.PatternLayout&quot;&gt;</span><br><span class="line">            &lt;pattern&gt;%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; [ %thread ] - [ %-5level ] [ %logger&#123;50&#125; : %line ] - %msg%n&lt;/pattern&gt;</span><br><span class="line">        &lt;/layout&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;appender name=&quot;ERROR_FILE&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;</span><br><span class="line">        &lt;file&gt;$&#123;LOG_HOME&#125;/error.log&lt;/file&gt;</span><br><span class="line">        &lt;append&gt;true&lt;/append&gt;</span><br><span class="line">        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy&quot;&gt;</span><br><span class="line">            &lt;fileNamePattern&gt;$&#123;LOG_HOME&#125;/%d&#123;yyyy-MM-dd&#125;-error.%i.log&lt;/fileNamePattern&gt;</span><br><span class="line">            &lt;maxFileSize&gt;1024MB&lt;/maxFileSize&gt;</span><br><span class="line">            &lt;maxHistory&gt;90&lt;/maxHistory&gt;</span><br><span class="line">            &lt;totalSizeCap&gt;20GB&lt;/totalSizeCap&gt;</span><br><span class="line">        &lt;/rollingPolicy&gt;</span><br><span class="line">        &lt;encoder&gt;</span><br><span class="line">            &lt;pattern&gt;</span><br><span class="line">                %d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; [ %thread ] - [ %-5level ] [ %logger&#123;50&#125; : %line ] - %msg%n</span><br><span class="line">            &lt;/pattern&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">        &lt;filter class=&quot;ch.qos.logback.classic.filter.LevelFilter&quot;&gt;</span><br><span class="line">            &lt;level&gt;ERROR&lt;/level&gt;</span><br><span class="line">            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;</span><br><span class="line">            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;</span><br><span class="line">        &lt;/filter&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;appender name=&quot;kafkaAppender&quot; class=&quot;com.github.danielwegener.logback.kafka.KafkaAppender&quot;&gt;</span><br><span class="line">        &lt;encoder charset=&quot;UTF-8&quot; class=&quot;net.logstash.logback.encoder.LogstashEncoder&quot; &gt;</span><br><span class="line">            &lt;customFields&gt;&#123;&quot;appname&quot;: &quot;$&#123;KAFKA_SERVER_NAME&#125;&quot;&#125;&lt;/customFields&gt;</span><br><span class="line">            &lt;includeMdc&gt;true&lt;/includeMdc&gt;</span><br><span class="line">            &lt;includeContext&gt;true&lt;/includeContext&gt;</span><br><span class="line">            &lt;throwableConverter class=&quot;net.logstash.logback.stacktrace.ShortenedThrowableConverter&quot;&gt;</span><br><span class="line">                &lt;maxDepthPerThrowable&gt;30&lt;/maxDepthPerThrowable&gt;</span><br><span class="line">                &lt;rootCauseFirst&gt;true&lt;/rootCauseFirst&gt;</span><br><span class="line">            &lt;/throwableConverter&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">        &lt;topic&gt;$&#123;KAFKA_TOPIC&#125;&lt;/topic&gt;</span><br><span class="line">        &lt;keyingStrategy class=&quot;com.github.danielwegener.logback.kafka.keying.HostNameKeyingStrategy&quot; /&gt;</span><br><span class="line">        &lt;deliveryStrategy class=&quot;com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy&quot; /&gt;</span><br><span class="line">        &lt;producerConfig&gt;bootstrap.servers=$&#123;KAFKA_HOME&#125;&lt;/producerConfig&gt;</span><br><span class="line">        &lt;!-- don&#x27;t wait for a broker to ack the reception of a batch.  --&gt;</span><br><span class="line">        &lt;producerConfig&gt;acks=0&lt;/producerConfig&gt;</span><br><span class="line">        &lt;!-- wait up to 1ms and collect log messages before sending them as a batch --&gt;</span><br><span class="line">        &lt;producerConfig&gt;linger.ms=1&lt;/producerConfig&gt;</span><br><span class="line">        &lt;!-- even if the producer buffer runs full, do not block the application but start to drop messages --&gt;</span><br><span class="line">        &lt;!--&lt;producerConfig&gt;max.block.ms=0&lt;/producerConfig&gt;--&gt;</span><br><span class="line">        &lt;producerConfig&gt;block.on.buffer.full=false&lt;/producerConfig&gt;</span><br><span class="line">        &lt;!-- kafka连接失败后，使用下面配置进行日志输出 --&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;FILE&quot; /&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;appender name=&quot;kafkaAppenderERROR&quot; class=&quot;com.github.danielwegener.logback.kafka.KafkaAppender&quot;&gt;</span><br><span class="line">        &lt;encoder charset=&quot;UTF-8&quot; class=&quot;net.logstash.logback.encoder.LogstashEncoder&quot; &gt;</span><br><span class="line">            &lt;customFields&gt;&#123;&quot;appname&quot;:&quot;$&#123;KAFKA_SERVER_NAME&#125;&quot;&#125;&lt;/customFields&gt;</span><br><span class="line">            &lt;includeMdc&gt;true&lt;/includeMdc&gt;</span><br><span class="line">            &lt;includeContext&gt;true&lt;/includeContext&gt;</span><br><span class="line">            &lt;throwableConverter class=&quot;net.logstash.logback.stacktrace.ShortenedThrowableConverter&quot;&gt;</span><br><span class="line">                &lt;maxDepthPerThrowable&gt;30&lt;/maxDepthPerThrowable&gt;</span><br><span class="line">                &lt;rootCauseFirst&gt;true&lt;/rootCauseFirst&gt;</span><br><span class="line">            &lt;/throwableConverter&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">        &lt;topic&gt;$&#123;KAFKA_TOPIC&#125;&lt;/topic&gt;</span><br><span class="line">        &lt;keyingStrategy class=&quot;com.github.danielwegener.logback.kafka.keying.HostNameKeyingStrategy&quot; /&gt;</span><br><span class="line">        &lt;deliveryStrategy class=&quot;com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy&quot; /&gt;</span><br><span class="line">        &lt;deliveryStrategy class=&quot;com.github.danielwegener.logback.kafka.delivery.BlockingDeliveryStrategy&quot;&gt;</span><br><span class="line">            &lt;!-- wait indefinitely until the kafka producer was able to send the message --&gt;</span><br><span class="line">            &lt;timeout&gt;10&lt;/timeout&gt;</span><br><span class="line">        &lt;/deliveryStrategy&gt;</span><br><span class="line">        &lt;producerConfig&gt;bootstrap.servers=$&#123;KAFKA_HOME&#125;&lt;/producerConfig&gt;</span><br><span class="line">        &lt;!-- don&#x27;t wait for a broker to ack the reception of a batch.  --&gt;</span><br><span class="line">        &lt;producerConfig&gt;acks=0&lt;/producerConfig&gt;</span><br><span class="line">        &lt;!-- wait up to 1ms and collect log messages before sending them as a batch --&gt;</span><br><span class="line">        &lt;producerConfig&gt;linger.ms=1&lt;/producerConfig&gt;</span><br><span class="line">        &lt;!-- even if the producer buffer runs full, do not block the application but start to drop messages --&gt;</span><br><span class="line">        &lt;producerConfig&gt;max.block.ms=0&lt;/producerConfig&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;ERROR_FILE&quot; /&gt;</span><br><span class="line">        &lt;filter class=&quot;ch.qos.logback.classic.filter.LevelFilter&quot;&gt;&lt;!-- 只打印错误日志 --&gt;</span><br><span class="line">            &lt;level&gt;ERROR&lt;/level&gt;</span><br><span class="line">            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;</span><br><span class="line">            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;</span><br><span class="line">        &lt;/filter&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--</span><br><span class="line">		logger主要用于存放日志对象，也可以定义日志类型、级别</span><br><span class="line">		name：表示匹配的logger类型前缀，也就是包的前半部分</span><br><span class="line">		level：要记录的日志级别，包括 TRACE &lt; DEBUG &lt; INFO &lt; WARN &lt; ERROR</span><br><span class="line">		additivity：作用在于children-logger是否使用 rootLogger配置的appender进行输出，</span><br><span class="line">		false：表示只用当前logger的appender-ref，true：</span><br><span class="line">		表示当前logger的appender-ref和rootLogger的appender-ref都有效</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;!-- Spring framework logger --&gt;</span><br><span class="line">    &lt;logger name=&quot;org.springframework&quot; level=&quot;debug&quot; additivity=&quot;false&quot;/&gt;</span><br><span class="line">    &lt;!--</span><br><span class="line">        root与logger是父子关系，没有特别定义则默认为root，任何一个类只会和一个logger对应，</span><br><span class="line">        要么是定义的logger，要么是root，判断的关键在于找到这个logger，然后判断这个logger的appender和level。</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;root level=&quot;info&quot;&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;CONSOLE&quot; /&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;kafkaAppenderERROR&quot; /&gt;</span><br><span class="line">    &lt;/root&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--debug 日志级别--&gt;</span><br><span class="line">    &lt;logger name=&quot;com.test&quot; level=&quot;debug&quot;&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;FILE&quot;/&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;ERROR_FILE&quot;/&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;kafkaAppender&quot;/&gt;</span><br><span class="line">    &lt;/logger&gt;</span><br><span class="line"></span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="配置文件中添加内容"><a href="#配置文件中添加内容" class="headerlink" title="配置文件中添加内容"></a>配置文件中添加内容</h3><p>以kafka服务IP为192.168.1.100,端口9092为例,根据实际情况更改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  kafka:</span><br><span class="line">    bootstrap-servers: 192.168.1.100:9092</span><br><span class="line">    template:</span><br><span class="line">      default-topic: log-topic-test</span><br><span class="line">    listener:</span><br><span class="line">      client-id: test</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/16/spring-cloud-webflux-openfeign/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/16/spring-cloud-webflux-openfeign/" class="post-title-link" itemprop="url">SpringCloud webflux openfeign配置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-16 20:56:05 / 修改时间：20:55:53" itemprop="dateCreated datePublished" datetime="2021-11-16T20:56:05+08:00">2021-11-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring-cloud-webflux/" itemprop="url" rel="index"><span itemprop="name">spring cloud webflux</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring-cloud-webflux/openfeign/" itemprop="url" rel="index"><span itemprop="name">openfeign</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="导入maven配置"><a href="#导入maven配置" class="headerlink" title="导入maven配置"></a>导入maven配置</h3><p>根据实际情况选择合适的匹配版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-webflux&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="其他方式和web调用openfeign一样-需要注意调用时使用异步方法调用"><a href="#其他方式和web调用openfeign一样-需要注意调用时使用异步方法调用" class="headerlink" title="其他方式和web调用openfeign一样,需要注意调用时使用异步方法调用"></a>其他方式和web调用openfeign一样,需要注意调用时使用异步方法调用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Slf4j</span><br><span class="line">@RestController</span><br><span class="line">public class TestController &#123;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private TestFeignClient testFeignClient;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;test/&#123;id&#125;&quot;)</span><br><span class="line">    public Mono&lt;ApiResponse&gt; test(@PathVariable(name = &quot;id&quot;) Integer id) &#123;</span><br><span class="line">        log.info(&quot;consumer test id: &#123;&#125;&quot;, id);</span><br><span class="line">        return Mono.defer(() -&gt; Mono.just(testFeignClient.test(id))).subscribeOn(Schedulers.boundedElastic());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/15/spring-cloud-openfeign/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/15/spring-cloud-openfeign/" class="post-title-link" itemprop="url">SpringCloud openfeign配置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-15 22:56:43 / 修改时间：22:56:18" itemprop="dateCreated datePublished" datetime="2021-11-15T22:56:43+08:00">2021-11-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring-cloud/" itemprop="url" rel="index"><span itemprop="name">spring cloud</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring-cloud/openfeign/" itemprop="url" rel="index"><span itemprop="name">openfeign</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="导入maven配置"><a href="#导入maven配置" class="headerlink" title="导入maven配置"></a>导入maven配置</h3><p>根据实际情况选择合适的匹配版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="application启动类增加-EnableFeignClients注解和messageConverters方法"><a href="#application启动类增加-EnableFeignClients注解和messageConverters方法" class="headerlink" title="application启动类增加@EnableFeignClients注解和messageConverters方法"></a>application启动类增加@EnableFeignClients注解和messageConverters方法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">@EnableDiscoveryClient</span><br><span class="line">@EnableFeignClients</span><br><span class="line">public class TestApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(TestApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @Bean</span><br><span class="line">    @ConditionalOnMissingBean</span><br><span class="line">    public HttpMessageConverters messageConverters(ObjectProvider&lt;HttpMessageConverter&lt;?&gt;&gt; converters) &#123;</span><br><span class="line">        return new HttpMessageConverters(converters.orderedStream().collect(Collectors.toList()));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/15/spring-cloud-openfeign/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/14/spring-mysql-master-slave/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/14/spring-mysql-master-slave/" class="post-title-link" itemprop="url">Springboot配置使用mysql主从</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-14 09:12:10 / 修改时间：09:12:00" itemprop="dateCreated datePublished" datetime="2021-11-14T09:12:10+08:00">2021-11-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/springboot-mysql/" itemprop="url" rel="index"><span itemprop="name">springboot mysql</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>##jdbc连接方式</p>
+<h3 id="导入maven配置"><a href="#导入maven配置" class="headerlink" title="导入maven配置"></a>导入maven配置</h3><p>根据实际情况选择合适的匹配版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;druid&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.2.8&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="新增配置文件内容"><a href="#新增配置文件内容" class="headerlink" title="新增配置文件内容"></a>新增配置文件内容</h3><p>properties文件内容如下(根据实际情况更改)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spring.datasource.master.url= jdbc:mysql://127.0.0.1:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=true&amp;serverTimezone=CTT&amp;useOldAliasMetadataBehavior=true</span><br><span class="line">spring.datasource.master.username= test</span><br><span class="line">spring.datasource.master.password= test</span><br><span class="line">spring.datasource.slave.url= jdbc:mysql://127.0.0.1:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=true&amp;serverTimezone=CTT&amp;useOldAliasMetadataBehavior=true</span><br><span class="line">spring.datasource.slave.username= test</span><br><span class="line">spring.datasource.slave.password= test</span><br></pre></td></tr></table></figure>
+<p>yml文件内容如下(根据实际情况更改)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  datasource:</span><br><span class="line">    master:</span><br><span class="line">      url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=true&amp;serverTimezone=CTT&amp;useOldAliasMetadataBehavior=true</span><br><span class="line">      username: test</span><br><span class="line">      password: test</span><br><span class="line">    slave:</span><br><span class="line">      url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=true&amp;serverTimezone=CTT&amp;useOldAliasMetadataBehavior=true</span><br><span class="line">      username: test</span><br><span class="line">      password: test</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/14/spring-mysql-master-slave/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/13/spring-mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/13/spring-mysql/" class="post-title-link" itemprop="url">Springboot配置使用mysql</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-13 10:00:22 / 修改时间：12:16:40" itemprop="dateCreated datePublished" datetime="2021-11-13T10:00:22+08:00">2021-11-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/springboot-mysql/" itemprop="url" rel="index"><span itemprop="name">springboot mysql</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="jdbc连接方式"><a href="#jdbc连接方式" class="headerlink" title="jdbc连接方式"></a>jdbc连接方式</h2><h3 id="导入maven配置"><a href="#导入maven配置" class="headerlink" title="导入maven配置"></a>导入maven配置</h3><p>根据实际情况选择合适的匹配版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;druid&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.2.8&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="新增配置文件内容"><a href="#新增配置文件内容" class="headerlink" title="新增配置文件内容"></a>新增配置文件内容</h3><p>properties文件内容如下(根据实际情况更改)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spring.datasource.url= jdbc:mysql://127.0.0.1:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=true&amp;serverTimezone=CTT&amp;useOldAliasMetadataBehavior=true</span><br><span class="line">spring.datasource.username= test</span><br><span class="line">spring.datasource.password= test</span><br></pre></td></tr></table></figure>
+<p>yml文件内容如下(根据实际情况更改)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  datasource:</span><br><span class="line">    url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=true&amp;serverTimezone=CTT&amp;useOldAliasMetadataBehavior=true</span><br><span class="line">    username: test</span><br><span class="line">    password: test</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/13/spring-mysql/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/12/spring-rabbitmq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/12/spring-rabbitmq/" class="post-title-link" itemprop="url">Springboot配置使用rabbitmq</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-12 15:29:02 / 修改时间：15:28:12" itemprop="dateCreated datePublished" datetime="2021-11-12T15:29:02+08:00">2021-11-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/rabbitmq/" itemprop="url" rel="index"><span itemprop="name">rabbitmq</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/rabbitmq/springboot-rabbitmq/" itemprop="url" rel="index"><span itemprop="name">springboot rabbitmq</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="导入maven配置"><a href="#导入maven配置" class="headerlink" title="导入maven配置"></a>导入maven配置</h3><p>根据实际情况选择合适的匹配版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-amqp&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="新增配置文件内容"><a href="#新增配置文件内容" class="headerlink" title="新增配置文件内容"></a>新增配置文件内容</h3><p>properties文件内容如下(根据实际情况更改)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">spring.rabbitmq.host=192.168.17.133</span><br><span class="line">spring.rabbitmq.port=5672</span><br><span class="line">spring.rabbitmq.username=admin</span><br><span class="line">spring.rabbitmq.password=admin</span><br><span class="line">spring.rabbitmq.virtual-host=/</span><br><span class="line">spring.rabbitmq.publisher-returns=true</span><br><span class="line">spring.rabbitmq.listener.simple.acknowledge-mode=manual</span><br></pre></td></tr></table></figure>
+<p>yml文件内容如下(根据实际情况更改)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  rabbitmq:</span><br><span class="line">    host: 192.168.17.133</span><br><span class="line">    port: 5672</span><br><span class="line">    username: admin</span><br><span class="line">    password: admin</span><br><span class="line">    virtual-host: /</span><br><span class="line">    listener:</span><br><span class="line">      simple:</span><br><span class="line">        acknowledge-mode: manual</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/12/spring-rabbitmq/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -239,7 +960,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -307,20 +1028,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-count">61</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -360,7 +1081,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共22.7k字</span>
+  <span class="post-count">博客全站共24.2k字</span>
 </div>
 <a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
 
