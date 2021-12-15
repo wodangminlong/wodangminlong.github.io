@@ -164,6 +164,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/12/03/message-queue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/03/message-queue/" class="post-title-link" itemprop="url">消息队列通信模式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-12-03 10:25:44 / 修改时间：10:24:13" itemprop="dateCreated datePublished" datetime="2021-12-03T10:25:44+08:00">2021-12-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">消息队列</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">消息队列通信模式</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="消息队列通信模式"><a href="#消息队列通信模式" class="headerlink" title="消息队列通信模式"></a>消息队列通信模式</h3><h5 id="1-点对点模式"><a href="#1-点对点模式" class="headerlink" title="1.点对点模式"></a>1.点对点模式</h5><p>点对点通信模式基于拉取或轮询的消息传送模型，这个模型的特点是发送到队列的消息被一个且只有一个消费者进行处理。<br>消息产生时先进入生产者的消息队列，再由消费者拉取消费。<br>点对点通信模式优点是消费者拉取消息的频率可以由消费者自己控制，但是消费者无法感知消息队列中是否有消息，想要实现这点需要消耗额外的线程监控。</p>
+<h5 id="2-发布订阅模式"><a href="#2-发布订阅模式" class="headerlink" title="2.发布订阅模式"></a>2.发布订阅模式</h5><p>发布订阅模式是一个基于消息订阅、推送的消息传送模型，这个模型的特点是可以有多个订阅者。<br>生产者的消息放入队列后会主动推送消息至订阅者，消费者无需额外的线程监控队列中是否有消息。<br>发布订阅模式可以弥补点对点模式的不足。<br>发布订阅模式需要解决订阅者处理速度的问题，队列中消息量过大时会造成订阅者无法及时消费的问题，从而导致消息大量积压和消息队列处理不及时产生的其他问题。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/12/01/windows-server2016-.net_framework4.6deleted_by_mistake/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -914,84 +989,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/11/23/centos-chinese/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="dml">
-      <meta itemprop="description" content="胜利垂青于有准备的人">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="知足常乐">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/23/centos-chinese/" class="post-title-link" itemprop="url">Centos中文小方格解决方案</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-11-23 17:11:33 / 修改时间：17:10:51" itemprop="dateCreated datePublished" datetime="2021-11-23T17:11:33+08:00">2021-11-23</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/centos-chinese/" itemprop="url" rel="index"><span itemprop="name">centos chinese</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/centos-chinese/centos-zh-CN/" itemprop="url" rel="index"><span itemprop="name">centos zh_CN</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="查看当前Locale信息"><a href="#查看当前Locale信息" class="headerlink" title="查看当前Locale信息"></a>查看当前Locale信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># localectl status</span><br></pre></td></tr></table></figure>
-<h3 id="列出系统中的Locale信息"><a href="#列出系统中的Locale信息" class="headerlink" title="列出系统中的Locale信息"></a>列出系统中的Locale信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># localectl list-locales</span><br></pre></td></tr></table></figure>
-<h3 id="查找中文语言包"><a href="#查找中文语言包" class="headerlink" title="查找中文语言包"></a>查找中文语言包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum search Chinese</span><br></pre></td></tr></table></figure>
-<p>查找到的结果</p>
-<h3 id="安装搜索到的中文包"><a href="#安装搜索到的中文包" class="headerlink" title="安装搜索到的中文包"></a>安装搜索到的中文包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install langpacks-zh_CN</span><br></pre></td></tr></table></figure>
-<h3 id="修改Locale配置"><a href="#修改Locale配置" class="headerlink" title="修改Locale配置"></a>修改Locale配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># localectl set-locale LANG=zh_CN.utf8</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-   
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1063,20 +1060,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1116,7 +1113,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共24.2k字</span>
+  <span class="post-count">博客全站共24.6k字</span>
 </div>
 <a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
 

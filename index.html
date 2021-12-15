@@ -164,6 +164,86 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/12/15/spring-ioc_cyclic_dependence/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/15/spring-ioc_cyclic_dependence/" class="post-title-link" itemprop="url">SpringIOC如何解决循环依赖</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-12-15 10:14:55 / 修改时间：10:14:40" itemprop="dateCreated datePublished" datetime="2021-12-15T10:14:55+08:00">2021-12-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring-ioc/" itemprop="url" rel="index"><span itemprop="name">spring ioc</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring-ioc/spring-ioc-%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/" itemprop="url" rel="index"><span itemprop="name">spring ioc 循环依赖</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="我们都知道Spring会解决对象之间的依赖-那么如果两个对象中有各自的相互依赖-Spring是如何解决这样的相互依赖的呢？"><a href="#我们都知道Spring会解决对象之间的依赖-那么如果两个对象中有各自的相互依赖-Spring是如何解决这样的相互依赖的呢？" class="headerlink" title="我们都知道Spring会解决对象之间的依赖,那么如果两个对象中有各自的相互依赖,Spring是如何解决这样的相互依赖的呢？"></a>我们都知道Spring会解决对象之间的依赖,那么如果两个对象中有各自的相互依赖,Spring是如何解决这样的相互依赖的呢？</h3><h3 id="SpringIOC通过三级缓存来解决循环依赖问题"><a href="#SpringIOC通过三级缓存来解决循环依赖问题" class="headerlink" title="SpringIOC通过三级缓存来解决循环依赖问题"></a>SpringIOC通过三级缓存来解决循环依赖问题</h3><h3 id="singletonObjects"><a href="#singletonObjects" class="headerlink" title="singletonObjects"></a>singletonObjects</h3><p>singletonObjects为一级缓存,单例缓存池,key为实例名称,value为实例对象</p>
+<h3 id="earlySingletonObjects"><a href="#earlySingletonObjects" class="headerlink" title="earlySingletonObjects"></a>earlySingletonObjects</h3><p>earlySingletonObjects为二级缓存,早期对象,key为实例名称,value为实例对象,已经实例化但还没有进行属性注入的实例对象</p>
+<h3 id="singletonFactories"><a href="#singletonFactories" class="headerlink" title="singletonFactories"></a>singletonFactories</h3><p>singletonFactories为三级缓存,key为实例名称,value为对象工厂(ObjectFactory)</p>
+<p>在实际使用中,获取实例对象时先从一级缓存开始查询,没有再找二级缓存,再没有继续在三级缓存中查询。缓存实例对象的时候先从三级缓存开始,<br>再缓存到二级缓存,最后到一级缓存,缓存实例对象时三个缓存是互斥的,这样能保证同一个实例对象相同时间内只会缓存至其中的一个缓存中,并最终缓存至一级缓存中。</p>
+<h3 id="创建实例-gt-缓存-gt-属性注入"><a href="#创建实例-gt-缓存-gt-属性注入" class="headerlink" title="创建实例-&gt;缓存-&gt;属性注入"></a>创建实例-&gt;缓存-&gt;属性注入</h3><p>当实例创建的时候,先将实例放入缓存,当循环依赖的对象都创建好了,再处理后续的属性注入。</p>
+<h3 id="SpringIOC无法解决的循环依赖"><a href="#SpringIOC无法解决的循环依赖" class="headerlink" title="SpringIOC无法解决的循环依赖"></a>SpringIOC无法解决的循环依赖</h3><p>非单例对象,由于非单例对象不会缓存每次使用都会new一个。</p>
+<p>通过构造器函数注入的循环依赖。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+   
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/12/14/spring-ioc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -920,81 +1000,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/12/03/message-queue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="dml">
-      <meta itemprop="description" content="胜利垂青于有准备的人">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="知足常乐">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/03/message-queue/" class="post-title-link" itemprop="url">消息队列通信模式</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-12-03 10:25:44 / 修改时间：10:24:13" itemprop="dateCreated datePublished" datetime="2021-12-03T10:25:44+08:00">2021-12-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">消息队列</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">消息队列通信模式</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="消息队列通信模式"><a href="#消息队列通信模式" class="headerlink" title="消息队列通信模式"></a>消息队列通信模式</h3><h5 id="1-点对点模式"><a href="#1-点对点模式" class="headerlink" title="1.点对点模式"></a>1.点对点模式</h5><p>点对点通信模式基于拉取或轮询的消息传送模型，这个模型的特点是发送到队列的消息被一个且只有一个消费者进行处理。<br>消息产生时先进入生产者的消息队列，再由消费者拉取消费。<br>点对点通信模式优点是消费者拉取消息的频率可以由消费者自己控制，但是消费者无法感知消息队列中是否有消息，想要实现这点需要消耗额外的线程监控。</p>
-<h5 id="2-发布订阅模式"><a href="#2-发布订阅模式" class="headerlink" title="2.发布订阅模式"></a>2.发布订阅模式</h5><p>发布订阅模式是一个基于消息订阅、推送的消息传送模型，这个模型的特点是可以有多个订阅者。<br>生产者的消息放入队列后会主动推送消息至订阅者，消费者无需额外的线程监控队列中是否有消息。<br>发布订阅模式可以弥补点对点模式的不足。<br>发布订阅模式需要解决订阅者处理速度的问题，队列中消息量过大时会造成订阅者无法及时消费的问题，从而导致消息大量积压和消息队列处理不及时产生的其他问题。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-   
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1066,20 +1071,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1119,7 +1124,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共24.2k字</span>
+  <span class="post-count">博客全站共24.6k字</span>
 </div>
 <a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
 
