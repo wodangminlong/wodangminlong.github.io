@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/long.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/long.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/long.png">
+  <link rel="mask-icon" href="/images/long.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"wodangminlong.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="pom文件内容,版本就用最新版本就可以123456789101112131415161718192021222324252627282930313233343536373839404142&lt;dependency&gt;  &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;  &lt;artifactId&gt;spring-boot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis Plus 自动生成代码">
+<meta property="og:url" content="https://wodangminlong.github.io/2021/12/20/mybatis-plus_generator/index.html">
+<meta property="og:site_name" content="知足常乐">
+<meta property="og:description" content="pom文件内容,版本就用最新版本就可以123456789101112131415161718192021222324252627282930313233343536373839404142&lt;dependency&gt;  &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;  &lt;artifactId&gt;spring-boot">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-20T09:57:21.015Z">
+<meta property="article:modified_time" content="2021-12-20T09:57:04.674Z">
+<meta property="article:author" content="dml">
+<meta property="article:tag" content="mybatis plus">
+<meta property="article:tag" content="mybatis plus generator">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://wodangminlong.github.io/2021/12/20/mybatis-plus_generator/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Mybatis Plus 自动生成代码 | 知足常乐</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">知足常乐</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wodangminlong.github.io/2021/12/20/mybatis-plus_generator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="dml">
+      <meta itemprop="description" content="胜利垂青于有准备的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知足常乐">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mybatis Plus 自动生成代码
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-12-20 17:57:21 / 修改时间：17:57:04" itemprop="dateCreated datePublished" datetime="2021-12-20T17:57:21+08:00">2021-12-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mybatis-plus/" itemprop="url" rel="index"><span itemprop="name">mybatis plus</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mybatis-plus/mybatis-plus-generator/" itemprop="url" rel="index"><span itemprop="name">mybatis plus generator</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="pom文件内容-版本就用最新版本就可以"><a href="#pom文件内容-版本就用最新版本就可以" class="headerlink" title="pom文件内容,版本就用最新版本就可以"></a>pom文件内容,版本就用最新版本就可以</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-freemarker&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.baomidou&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;$&#123;mybatis-plus.version&#125;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.baomidou&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;mybatis-plus-generator&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;$&#123;mybatis-plus-generator.version&#125;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;$&#123;druid.version&#125;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;fastjson&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;$&#123;fastjson.version&#125;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;javax.validation&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;validation-api&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;$&#123;validation.version&#125;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="项目resources目录下新建templates文件夹-文件夹下新建controller-java-ftl、service-java-ftl、serviceimpl-java-ftl"><a href="#项目resources目录下新建templates文件夹-文件夹下新建controller-java-ftl、service-java-ftl、serviceimpl-java-ftl" class="headerlink" title="项目resources目录下新建templates文件夹,文件夹下新建controller.java.ftl、service.java.ftl、serviceimpl.java.ftl"></a>项目resources目录下新建templates文件夹,文件夹下新建controller.java.ftl、service.java.ftl、serviceimpl.java.ftl</h3><h3 id="controller-java-ftl文件内容"><a href="#controller-java-ftl文件内容" class="headerlink" title="controller.java.ftl文件内容"></a>controller.java.ftl文件内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">package $&#123;package.Controller&#125;;</span><br><span class="line"></span><br><span class="line">import com.example.aspect.Log;</span><br><span class="line">import com.example.exception.ExceptionAdvice;</span><br><span class="line">import com.example.util.ApiResponse;</span><br><span class="line">import com.example.util.PageModule;</span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.springframework.validation.annotation.Validated;</span><br><span class="line">import org.springframework.web.bind.annotation.*;</span><br><span class="line">import $&#123;package.Service&#125;.$&#123;table.serviceName&#125;;</span><br><span class="line">import $&#123;package.Entity&#125;.$&#123;entity&#125;;</span><br><span class="line">import javax.annotation.Resource;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line">&lt;#if superControllerClassPackage??&gt;</span><br><span class="line">import $&#123;superControllerClassPackage&#125;;</span><br><span class="line">&lt;/#if&gt;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * $&#123;table.controllerName&#125;</span><br><span class="line"> *</span><br><span class="line"> * @author $&#123;author&#125;</span><br><span class="line"> * @date $&#123;date&#125;</span><br><span class="line"> */</span><br><span class="line">@Slf4j</span><br><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/&lt;#if controllerMappingHyphenStyle??&gt;$&#123;controllerMappingHyphen&#125;&lt;#else&gt;$&#123;table.entityPath&#125;&lt;/#if&gt;/&quot;)</span><br><span class="line">public class $&#123;table.controllerName&#125; extends ExceptionAdvice &#123;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private $&#123;table.serviceName&#125; $&#123;table.serviceName?uncap_first&#125;;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 查询分页数据</span><br><span class="line">     *</span><br><span class="line">     * @param pageModule pageModule</span><br><span class="line">     * @return ApiResponse</span><br><span class="line">     */</span><br><span class="line">    @Log(&quot;查询$&#123;table.entityName&#125;列表数据&quot;)</span><br><span class="line">    @PostMapping(&quot;listGet$&#123;table.entityName&#125;ByPage&quot;)</span><br><span class="line">    public ApiResponse listGet$&#123;table.entityName&#125;ByPage(@Validated PageModule pageModule) &#123;</span><br><span class="line">        return $&#123;table.serviceName?uncap_first&#125;.listGet$&#123;table.entityName&#125;ByPage(pageModule);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 添加</span><br><span class="line">     *</span><br><span class="line">     * @param $&#123;entity?uncap_first&#125; $&#123;entity?uncap_first&#125;</span><br><span class="line">     * @return ApiResponse</span><br><span class="line">     */</span><br><span class="line">    @Log(&quot;新增$&#123;table.entityName&#125;数据&quot;)</span><br><span class="line">    @PostMapping(&quot;add&quot;)</span><br><span class="line">    public ApiResponse add$&#123;table.entityName&#125;(@RequestBody $&#123;entity&#125; $&#123;entity?uncap_first&#125;) &#123;</span><br><span class="line">        int result = $&#123;table.serviceName?uncap_first&#125;.add$&#123;table.entityName&#125;($&#123;entity?uncap_first&#125;);</span><br><span class="line">        if (result &gt; 0) &#123;</span><br><span class="line">            return ApiResponse.success();</span><br><span class="line">        &#125;</span><br><span class="line">        return ApiResponse.error();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 删除</span><br><span class="line">     *</span><br><span class="line">     * @param id 主键</span><br><span class="line">     * @return ApiResponse</span><br><span class="line">     */</span><br><span class="line">    @Log(&quot;删除$&#123;table.entityName&#125;数据&quot;)</span><br><span class="line">    @PostMapping(&quot;delete/&#123;id&#125;&quot;)</span><br><span class="line">    public ApiResponse delete$&#123;table.entityName&#125;ById(@PathVariable(value = &quot;id&quot;) Long id) &#123;</span><br><span class="line">        int result = $&#123;table.serviceName?uncap_first&#125;.delete$&#123;table.entityName&#125;ById(id);</span><br><span class="line">        if (result &gt; 0) &#123;</span><br><span class="line">            return ApiResponse.success();</span><br><span class="line">        &#125;</span><br><span class="line">        return ApiResponse.error();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 修改信息</span><br><span class="line">     *</span><br><span class="line">     * @param $&#123;entity?uncap_first&#125; $&#123;entity?uncap_first&#125;</span><br><span class="line">     * @return ApiResponse</span><br><span class="line">     */</span><br><span class="line">    @Log(&quot;更新$&#123;table.entityName&#125;数据&quot;)</span><br><span class="line">    @PostMapping(&quot;update&quot;)</span><br><span class="line">    public ApiResponse update$&#123;table.entityName&#125;(@RequestBody $&#123;entity&#125; $&#123;entity?uncap_first&#125;) &#123;</span><br><span class="line">        int result = $&#123;table.serviceName?uncap_first&#125;.update$&#123;table.entityName&#125;($&#123;entity?uncap_first&#125;);</span><br><span class="line">        if (result &gt; 0) &#123;</span><br><span class="line">            return ApiResponse.success();</span><br><span class="line">        &#125;</span><br><span class="line">        return ApiResponse.error();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="service-java-ftl文件内容"><a href="#service-java-ftl文件内容" class="headerlink" title="service.java.ftl文件内容"></a>service.java.ftl文件内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">package $&#123;package.Service&#125;;</span><br><span class="line"></span><br><span class="line">import $&#123;package.Entity&#125;.$&#123;entity&#125;;</span><br><span class="line">import $&#123;superServiceClassPackage&#125;;</span><br><span class="line">import com.example.util.ApiResponse;</span><br><span class="line">import com.example.util.PageModule;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * $&#123;table.serviceName&#125;</span><br><span class="line"> *</span><br><span class="line"> * @author $&#123;author&#125;</span><br><span class="line"> * @date $&#123;date&#125;</span><br><span class="line"> */</span><br><span class="line">public interface $&#123;table.serviceName&#125; extends $&#123;superServiceClass&#125;&lt;$&#123;entity&#125;&gt; &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 查询分页数据</span><br><span class="line">     *</span><br><span class="line">     * @param pageModule pageModule</span><br><span class="line">     * @return ApiResponse</span><br><span class="line">     */</span><br><span class="line">    ApiResponse listGet$&#123;table.entityName&#125;ByPage(PageModule pageModule);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 添加</span><br><span class="line">     *</span><br><span class="line">     * @param $&#123;entity?uncap_first&#125; $&#123;entity?uncap_first&#125;</span><br><span class="line">     * @return int</span><br><span class="line">     */</span><br><span class="line">    int add$&#123;table.entityName&#125;($&#123;entity&#125; $&#123;entity?uncap_first&#125;);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 删除</span><br><span class="line">     *</span><br><span class="line">     * @param id 主键</span><br><span class="line">     * @return int</span><br><span class="line">     */</span><br><span class="line">    int delete$&#123;table.entityName&#125;ById(Long id);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 修改信息</span><br><span class="line">     *</span><br><span class="line">     * @param $&#123;entity?uncap_first&#125; $&#123;entity?uncap_first&#125;</span><br><span class="line">     * @return int</span><br><span class="line">     */</span><br><span class="line">    int update$&#123;table.entityName&#125;($&#123;entity&#125; $&#123;entity?uncap_first&#125;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="serviceimpl-java-ftl文件内容"><a href="#serviceimpl-java-ftl文件内容" class="headerlink" title="serviceimpl.java.ftl文件内容"></a>serviceimpl.java.ftl文件内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">package $&#123;package.ServiceImpl&#125;;</span><br><span class="line"></span><br><span class="line">import com.baomidou.mybatisplus.core.toolkit.StringUtils;</span><br><span class="line">import $&#123;package.Entity&#125;.$&#123;entity&#125;;</span><br><span class="line">import $&#123;package.Mapper&#125;.$&#123;table.mapperName&#125;;</span><br><span class="line">import $&#123;package.Service&#125;.$&#123;table.serviceName&#125;;</span><br><span class="line">import $&#123;superServiceImplClassPackage&#125;;</span><br><span class="line">import com.example.util.ApiResponse;</span><br><span class="line">import com.example.util.PageModule;</span><br><span class="line">import org.springframework.stereotype.Service;</span><br><span class="line">import com.baomidou.mybatisplus.extension.plugins.pagination.Page;</span><br><span class="line">import com.baomidou.mybatisplus.core.metadata.IPage;</span><br><span class="line">import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;</span><br><span class="line"></span><br><span class="line">import javax.annotation.Resource;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * $&#123;table.serviceImplName&#125;</span><br><span class="line"> *</span><br><span class="line"> * @author $&#123;author&#125;</span><br><span class="line"> * @date $&#123;date&#125;</span><br><span class="line"> */</span><br><span class="line">@Service</span><br><span class="line">public class $&#123;table.serviceImplName&#125; extends $&#123;superServiceImplClass&#125;&lt;$&#123;table.mapperName&#125;, $&#123;entity&#125;&gt; implements $&#123;table.serviceName&#125; &#123;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private $&#123;table.mapperName&#125; $&#123;table.mapperName?uncap_first&#125;;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public ApiResponse listGet$&#123;table.entityName&#125;ByPage(PageModule pageModule) &#123;</span><br><span class="line">        QueryWrapper&lt;$&#123;entity&#125;&gt; queryWrapper = new QueryWrapper&lt;&gt;();</span><br><span class="line">        if (StringUtils.isNotEmpty(pageModule.getSearch())) &#123;</span><br><span class="line">            queryWrapper.like(&quot;&quot;, pageModule.getSearch());</span><br><span class="line">        &#125;</span><br><span class="line">        IPage&lt;$&#123;entity&#125;&gt; wherePage = new Page&lt;&gt;(pageModule.getPageNo(), pageModule.getPageSize());</span><br><span class="line">        IPage&lt;$&#123;entity&#125;&gt; iPage = $&#123;table.mapperName?uncap_first&#125;.selectPage(wherePage, queryWrapper);</span><br><span class="line">        return ApiResponse.success(iPage);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int add$&#123;table.entityName&#125;($&#123;entity&#125; $&#123;entity?uncap_first&#125;) &#123;</span><br><span class="line">        return $&#123;table.mapperName?uncap_first&#125;.insert($&#123;entity?uncap_first&#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int delete$&#123;table.entityName&#125;ById(Long id) &#123;</span><br><span class="line">        return $&#123;table.mapperName?uncap_first&#125;.deleteById(id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int update$&#123;table.entityName&#125;($&#123;entity&#125; $&#123;entity?uncap_first&#125;) &#123;</span><br><span class="line">        return $&#123;table.mapperName?uncap_first&#125;.updateById($&#123;entity?uncap_first&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="新建MybatisPlusConfig文件"><a href="#新建MybatisPlusConfig文件" class="headerlink" title="新建MybatisPlusConfig文件"></a>新建MybatisPlusConfig文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@MapperScan(&quot;com.example.mapper&quot;)</span><br><span class="line">public class MybatisPlusConfig &#123;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public MybatisPlusInterceptor mybatisPlusInterceptor() &#123;</span><br><span class="line">        MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();</span><br><span class="line">        mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));</span><br><span class="line">        return mybatisPlusInterceptor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="新建Test测试类"><a href="#新建Test测试类" class="headerlink" title="新建Test测试类"></a>新建Test测试类</h3><p>以mysqlIP地址192.168.17.131数据库test账号密码test为例,根据实际情况更改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 运行这个main方法进行代码生成</span><br><span class="line">     */</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        String url = &quot;jdbc:mysql://192.168.17.131:3306/test&quot;;</span><br><span class="line">        String username = &quot;test&quot;;</span><br><span class="line">        String password = &quot;test&quot;;</span><br><span class="line"></span><br><span class="line">        FastAutoGenerator.create(url, username, password)</span><br><span class="line">                .globalConfig(builder -&gt; &#123;</span><br><span class="line">                    String projectPath = System.getProperty(&quot;user.dir&quot;);</span><br><span class="line">                    builder.outputDir(projectPath + &quot;/src/main/java&quot;)</span><br><span class="line">                            .author(&quot;dml&quot;)</span><br><span class="line">                            .disableOpenDir();</span><br><span class="line">                &#125;)</span><br><span class="line">                .packageConfig(builder -&gt; builder.parent(&quot;com.example&quot;))</span><br><span class="line">                .templateConfig(builder -&gt; builder.disable(TemplateType.XML)</span><br><span class="line">                        .controller(&quot;templates/controller.java&quot;)</span><br><span class="line">                        .service(&quot;templates/service.java&quot;)</span><br><span class="line">                        .serviceImpl(&quot;templates/serviceimpl.java&quot;))</span><br><span class="line">                .strategyConfig(builder -&gt; builder.likeTable(new LikeTable(&quot;tb_&quot;))</span><br><span class="line">                        .addTablePrefix(&quot;tb_&quot;)</span><br><span class="line">                        .controllerBuilder()</span><br><span class="line">                        .enableRestStyle()</span><br><span class="line">                        .enableHyphenStyle()</span><br><span class="line">                        .entityBuilder()</span><br><span class="line">                        .enableLombok()</span><br><span class="line">                        .naming(NamingStrategy.underline_to_camel)</span><br><span class="line">                        .columnNaming(NamingStrategy.underline_to_camel)</span><br><span class="line">                        .disableSerialVersionUID()</span><br><span class="line">                        .enableTableFieldAnnotation())</span><br><span class="line">                .templateEngine(new FreemarkerTemplateEngine())</span><br><span class="line">                .execute();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+   
+   <div>
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+   </div>
+  
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>dml
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://wodangminlong.github.io/2021/12/20/mybatis-plus_generator/" title="Mybatis Plus 自动生成代码">https://wodangminlong.github.io/2021/12/20/mybatis-plus_generator/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mybatis-plus/" rel="tag"># mybatis plus</a>
+              <a href="/tags/mybatis-plus-generator/" rel="tag"># mybatis plus generator</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/17/java-jar_xms_xmx/" rel="prev" title="Java启动jar包并设置占用内存大小">
+      <i class="fa fa-chevron-left"></i> Java启动jar包并设置占用内存大小
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81NDU1MS8zMTAyMg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#pom%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9-%E7%89%88%E6%9C%AC%E5%B0%B1%E7%94%A8%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E5%B0%B1%E5%8F%AF%E4%BB%A5"><span class="nav-number">1.</span> <span class="nav-text">pom文件内容,版本就用最新版本就可以</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AEresources%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%96%B0%E5%BB%BAtemplates%E6%96%87%E4%BB%B6%E5%A4%B9-%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E6%96%B0%E5%BB%BAcontroller-java-ftl%E3%80%81service-java-ftl%E3%80%81serviceimpl-java-ftl"><span class="nav-number">2.</span> <span class="nav-text">项目resources目录下新建templates文件夹,文件夹下新建controller.java.ftl、service.java.ftl、serviceimpl.java.ftl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#controller-java-ftl%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-number">3.</span> <span class="nav-text">controller.java.ftl文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#service-java-ftl%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-number">4.</span> <span class="nav-text">service.java.ftl文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#serviceimpl-java-ftl%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-number">5.</span> <span class="nav-text">serviceimpl.java.ftl文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BAMybatisPlusConfig%E6%96%87%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">新建MybatisPlusConfig文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BATest%E6%B5%8B%E8%AF%95%E7%B1%BB"><span class="nav-number">7.</span> <span class="nav-text">新建Test测试类</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="dml"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">dml</p>
+  <div class="site-description" itemprop="description">胜利垂青于有准备的人</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">66</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dml</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共26.6k字</span>
+</div>
+<a target="_blank" rel="noopener" href="https://info.flagcounter.com/n7Pv"><img src="https://s11.flagcounter.com/map/n7Pv/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
